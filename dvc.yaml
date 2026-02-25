@@ -1,0 +1,22 @@
+stages:
+  preprocessing:
+    cmd: python src/preprocessing.py
+    deps:
+      - src/preprocessing.py
+      - data/raw/churn_prediction_data.csv
+    outs:
+      - data/processed
+
+  training:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - data/processed
+    outs:
+      - models/model.pkl
+
+  evaluation:
+    cmd: python src/evaluate.py
+    deps:
+      - src/evaluate.py
+      - models/model.pkl

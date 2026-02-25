@@ -5,7 +5,7 @@ xgboost
 matplotlib 
 seaborn
 mlflow 
-dvc 
+dvc-s3 
 fastapi 
 uvicorn
 apache-airflow
