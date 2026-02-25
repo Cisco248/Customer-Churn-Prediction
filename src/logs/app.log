@@ -3054,3 +3054,392 @@ Training: XGBoost
 2026-02-25 20:43:17,534 [DEBUG] [urllib3.connectionpool] https://dagshub.com:443 "GET /Cisco248/customer-churn-prediction.mlflow/api/2.0/mlflow/runs/get?run_uuid=19c280cf249c469198a860b106029ef4&run_id=19c280cf249c469198a860b106029ef4 HTTP/1.1" 200 None
 2026-02-25 20:43:17,874 [DEBUG] [urllib3.connectionpool] https://dagshub.com:443 "POST /Cisco248/customer-churn-prediction.mlflow/api/2.0/mlflow/runs/update HTTP/1.1" 200 None
 2026-02-25 20:43:17,875 [INFO] [root] Training completed successfully.
+2026-02-25 21:02:07,999 [INFO] [root] Running final evaluation on best model …
+2026-02-25 21:23:48,258 [INFO] [root] Running final evaluation on best model …
+2026-02-25 21:23:48,335 [INFO] [root] ==============================
+Logistic Regression Evaluation Metrics
+==============================
+2026-02-25 21:23:48,335 [INFO] [root]   eval_accuracy: 0.8055
+2026-02-25 21:23:48,335 [INFO] [root]   eval_precision: 0.6572
+2026-02-25 21:23:48,335 [INFO] [root]   eval_recall: 0.5588
+2026-02-25 21:23:48,336 [INFO] [root]   eval_f1: 0.604
+2026-02-25 21:23:48,336 [INFO] [root]   eval_roc_auc: 0.8419
+2026-02-25 21:23:48,627 [INFO] [root] ==============================
+Random Forest Evaluation Metrics
+==============================
+2026-02-25 21:23:48,627 [INFO] [root]   eval_accuracy: 0.8041
+2026-02-25 21:23:48,627 [INFO] [root]   eval_precision: 0.6623
+2026-02-25 21:23:48,627 [INFO] [root]   eval_recall: 0.5348
+2026-02-25 21:23:48,627 [INFO] [root]   eval_f1: 0.5917
+2026-02-25 21:23:48,627 [INFO] [root]   eval_roc_auc: 0.8379
+2026-02-25 21:23:48,697 [INFO] [root] ==================================================
+XG Boost Evaluation Metrics
+==================================================
+2026-02-25 21:23:48,697 [INFO] [root]   eval_accuracy: 0.802
+2026-02-25 21:23:48,697 [INFO] [root]   eval_precision: 0.6568
+2026-02-25 21:23:48,698 [INFO] [root]   eval_recall: 0.5321
+2026-02-25 21:23:48,698 [INFO] [root]   eval_f1: 0.5879
+2026-02-25 21:23:48,698 [INFO] [root]   eval_roc_auc: 0.8434
+2026-02-25 21:23:48,767 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:23:48,865 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:23:48,913 [DEBUG] [git.util] sys.platform='win32', git_executable='git'
+2026-02-25 21:23:48,915 [DEBUG] [git.cmd] Popen(['git', 'check-ignore', 'C:\\Users\\lahir\\Desktop\\Projects\\Customer-Churn-Prediction\\src'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:23:48,968 [DEBUG] [git.cmd] Popen(['git', 'cat-file', '--batch-check'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=<valid stream>, shell=False, universal_newlines=False)
+2026-02-25 21:23:49,070 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): dagshub.com:443
+2026-02-25 21:23:50,415 [DEBUG] [urllib3.connectionpool] https://dagshub.com:443 "POST /Cisco248/customer-churn-prediction.mlflow/api/2.0/mlflow/runs/create HTTP/1.1" 403 0
+2026-02-25 21:23:50,419 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): config.mlflow-telemetry.io:443
+2026-02-25 21:26:18,770 [INFO] [root] Running final evaluation on best model …
+2026-02-25 21:26:18,839 [INFO] [root] 
+==============================
+Logistic Regression Evaluation Metrics
+==============================
+
+2026-02-25 21:26:18,839 [INFO] [root]   eval_accuracy: 0.8055
+2026-02-25 21:26:18,840 [INFO] [root]   eval_precision: 0.6572
+2026-02-25 21:26:18,840 [INFO] [root]   eval_recall: 0.5588
+2026-02-25 21:26:18,840 [INFO] [root]   eval_f1: 0.604
+2026-02-25 21:26:18,840 [INFO] [root]   eval_roc_auc: 0.8419
+2026-02-25 21:26:19,109 [INFO] [root] 
+==============================
+Random Forest Evaluation Metrics
+==============================
+
+2026-02-25 21:26:19,109 [INFO] [root]   eval_accuracy: 0.8041
+2026-02-25 21:26:19,109 [INFO] [root]   eval_precision: 0.6623
+2026-02-25 21:26:19,109 [INFO] [root]   eval_recall: 0.5348
+2026-02-25 21:26:19,109 [INFO] [root]   eval_f1: 0.5917
+2026-02-25 21:26:19,110 [INFO] [root]   eval_roc_auc: 0.8379
+2026-02-25 21:26:19,177 [INFO] [root] 
+==================================================
+XG Boost Evaluation Metrics
+==================================================
+
+2026-02-25 21:26:19,177 [INFO] [root]   eval_accuracy: 0.802
+2026-02-25 21:26:19,177 [INFO] [root]   eval_precision: 0.6568
+2026-02-25 21:26:19,177 [INFO] [root]   eval_recall: 0.5321
+2026-02-25 21:26:19,178 [INFO] [root]   eval_f1: 0.5879
+2026-02-25 21:26:19,178 [INFO] [root]   eval_roc_auc: 0.8434
+2026-02-25 21:26:19,247 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:26:19,345 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:26:19,396 [DEBUG] [git.util] sys.platform='win32', git_executable='git'
+2026-02-25 21:26:19,397 [DEBUG] [git.cmd] Popen(['git', 'check-ignore', 'C:\\Users\\lahir\\Desktop\\Projects\\Customer-Churn-Prediction\\src'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:26:19,451 [DEBUG] [git.cmd] Popen(['git', 'cat-file', '--batch-check'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=<valid stream>, shell=False, universal_newlines=False)
+2026-02-25 21:26:19,550 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): dagshub.com:443
+2026-02-25 21:26:20,645 [DEBUG] [urllib3.connectionpool] https://dagshub.com:443 "POST /Cisco248/customer-churn-prediction.mlflow/api/2.0/mlflow/runs/create HTTP/1.1" 403 0
+2026-02-25 21:26:20,652 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): config.mlflow-telemetry.io:443
+2026-02-25 21:31:47,776 [INFO] [root] Running final evaluation on best model …
+2026-02-25 21:31:47,846 [INFO] [root] 
+==============================
+Logistic Regression Evaluation Metrics
+==============================
+
+2026-02-25 21:31:47,847 [INFO] [root]   eval_accuracy: 0.8055
+2026-02-25 21:31:47,847 [INFO] [root]   eval_precision: 0.6572
+2026-02-25 21:31:47,847 [INFO] [root]   eval_recall: 0.5588
+2026-02-25 21:31:47,847 [INFO] [root]   eval_f1: 0.604
+2026-02-25 21:31:47,847 [INFO] [root]   eval_roc_auc: 0.8419
+2026-02-25 21:31:47,855 [INFO] [root] 
+==============================
+Logistic Regression Classification Report
+==============================
+              precision    recall  f1-score   support
+
+    No Churn       0.85      0.89      0.87      1035
+       Churn       0.66      0.56      0.60       374
+
+    accuracy                           0.81      1409
+   macro avg       0.75      0.73      0.74      1409
+weighted avg       0.80      0.81      0.80      1409
+
+2026-02-25 21:31:48,111 [INFO] [root] 
+==============================
+Random Forest Evaluation Metrics
+==============================
+
+2026-02-25 21:31:48,111 [INFO] [root]   eval_accuracy: 0.8041
+2026-02-25 21:31:48,111 [INFO] [root]   eval_precision: 0.6623
+2026-02-25 21:31:48,111 [INFO] [root]   eval_recall: 0.5348
+2026-02-25 21:31:48,111 [INFO] [root]   eval_f1: 0.5917
+2026-02-25 21:31:48,111 [INFO] [root]   eval_roc_auc: 0.8379
+2026-02-25 21:31:48,179 [INFO] [root] 
+==================================================
+XG Boost Evaluation Metrics
+==================================================
+
+2026-02-25 21:31:48,179 [INFO] [root]   eval_accuracy: 0.802
+2026-02-25 21:31:48,179 [INFO] [root]   eval_precision: 0.6568
+2026-02-25 21:31:48,179 [INFO] [root]   eval_recall: 0.5321
+2026-02-25 21:31:48,180 [INFO] [root]   eval_f1: 0.5879
+2026-02-25 21:31:48,180 [INFO] [root]   eval_roc_auc: 0.8434
+2026-02-25 21:31:48,247 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:31:48,341 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:31:48,392 [DEBUG] [git.util] sys.platform='win32', git_executable='git'
+2026-02-25 21:31:48,394 [DEBUG] [git.cmd] Popen(['git', 'check-ignore', 'C:\\Users\\lahir\\Desktop\\Projects\\Customer-Churn-Prediction\\src'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:31:48,446 [DEBUG] [git.cmd] Popen(['git', 'cat-file', '--batch-check'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=<valid stream>, shell=False, universal_newlines=False)
+2026-02-25 21:31:48,548 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): dagshub.com:443
+2026-02-25 21:31:50,002 [DEBUG] [urllib3.connectionpool] https://dagshub.com:443 "POST /Cisco248/customer-churn-prediction.mlflow/api/2.0/mlflow/runs/create HTTP/1.1" 403 0
+2026-02-25 21:31:50,006 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): config.mlflow-telemetry.io:443
+2026-02-25 21:33:07,882 [INFO] [root] Running final evaluation on best model …
+2026-02-25 21:33:07,949 [INFO] [root] 
+==================================================
+Logistic Regression Evaluation Metrics
+==================================================
+
+2026-02-25 21:33:07,949 [INFO] [root]   eval_accuracy: 0.8055
+2026-02-25 21:33:07,950 [INFO] [root]   eval_precision: 0.6572
+2026-02-25 21:33:07,950 [INFO] [root]   eval_recall: 0.5588
+2026-02-25 21:33:07,950 [INFO] [root]   eval_f1: 0.604
+2026-02-25 21:33:07,950 [INFO] [root]   eval_roc_auc: 0.8419
+2026-02-25 21:33:07,958 [INFO] [root] 
+==================================================
+Logistic Regression Classification Report
+==================================================
+              precision    recall  f1-score   support
+
+    No Churn       0.85      0.89      0.87      1035
+       Churn       0.66      0.56      0.60       374
+
+    accuracy                           0.81      1409
+   macro avg       0.75      0.73      0.74      1409
+weighted avg       0.80      0.81      0.80      1409
+
+2026-02-25 21:33:08,216 [INFO] [root] 
+==================================================
+Random Forest Evaluation Metrics
+==================================================
+
+2026-02-25 21:33:08,216 [INFO] [root]   eval_accuracy: 0.8041
+2026-02-25 21:33:08,216 [INFO] [root]   eval_precision: 0.6623
+2026-02-25 21:33:08,216 [INFO] [root]   eval_recall: 0.5348
+2026-02-25 21:33:08,217 [INFO] [root]   eval_f1: 0.5917
+2026-02-25 21:33:08,217 [INFO] [root]   eval_roc_auc: 0.8379
+2026-02-25 21:33:08,224 [INFO] [root] 
+==================================================
+Random Forest Classification Report
+==================================================
+              precision    recall  f1-score   support
+
+    No Churn       0.84      0.90      0.87      1035
+       Churn       0.66      0.53      0.59       374
+
+    accuracy                           0.80      1409
+   macro avg       0.75      0.72      0.73      1409
+weighted avg       0.79      0.80      0.80      1409
+
+2026-02-25 21:33:08,283 [INFO] [root] 
+==================================================
+XG Boost Evaluation Metrics
+==================================================
+
+2026-02-25 21:33:08,283 [INFO] [root]   eval_accuracy: 0.802
+2026-02-25 21:33:08,283 [INFO] [root]   eval_precision: 0.6568
+2026-02-25 21:33:08,284 [INFO] [root]   eval_recall: 0.5321
+2026-02-25 21:33:08,284 [INFO] [root]   eval_f1: 0.5879
+2026-02-25 21:33:08,284 [INFO] [root]   eval_roc_auc: 0.8434
+2026-02-25 21:33:08,292 [INFO] [root] 
+==================================================
+XG Boost Evaluation Classification Report
+==================================================
+              precision    recall  f1-score   support
+
+    No Churn       0.84      0.90      0.87      1035
+       Churn       0.66      0.53      0.59       374
+
+    accuracy                           0.80      1409
+   macro avg       0.75      0.72      0.73      1409
+weighted avg       0.79      0.80      0.79      1409
+
+2026-02-25 21:33:08,350 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:33:08,449 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:33:08,500 [DEBUG] [git.util] sys.platform='win32', git_executable='git'
+2026-02-25 21:33:08,502 [DEBUG] [git.cmd] Popen(['git', 'check-ignore', 'C:\\Users\\lahir\\Desktop\\Projects\\Customer-Churn-Prediction\\src'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:33:08,557 [DEBUG] [git.cmd] Popen(['git', 'cat-file', '--batch-check'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=<valid stream>, shell=False, universal_newlines=False)
+2026-02-25 21:33:08,660 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): dagshub.com:443
+2026-02-25 21:33:09,903 [DEBUG] [urllib3.connectionpool] https://dagshub.com:443 "POST /Cisco248/customer-churn-prediction.mlflow/api/2.0/mlflow/runs/create HTTP/1.1" 403 0
+2026-02-25 21:33:09,907 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): config.mlflow-telemetry.io:443
+2026-02-25 21:36:47,244 [INFO] [root] Running final evaluation on best model …
+2026-02-25 21:36:47,244 [INFO] [root] 
+==================================================
+Logistic Regression
+==================================================
+
+2026-02-25 21:36:47,315 [INFO] [root] 
+                                                  
+Evaluation Metrics
+                                                  
+
+2026-02-25 21:36:47,316 [INFO] [root]   eval_accuracy: 0.8055
+2026-02-25 21:36:47,316 [INFO] [root]   eval_precision: 0.6572
+2026-02-25 21:36:47,316 [INFO] [root]   eval_recall: 0.5588
+2026-02-25 21:36:47,316 [INFO] [root]   eval_f1: 0.604
+2026-02-25 21:36:47,316 [INFO] [root]   eval_roc_auc: 0.8419
+2026-02-25 21:36:47,323 [INFO] [root] 
+                                                  
+Classification Report
+                                                  
+              precision    recall  f1-score   support
+
+    No Churn       0.85      0.89      0.87      1035
+       Churn       0.66      0.56      0.60       374
+
+    accuracy                           0.81      1409
+   macro avg       0.75      0.73      0.74      1409
+weighted avg       0.80      0.81      0.80      1409
+
+2026-02-25 21:36:47,324 [INFO] [root] 
+==================================================
+Random Forest
+==================================================
+
+2026-02-25 21:36:47,587 [INFO] [root] 
+                                                  
+Evaluation Metrics
+                                                  
+
+2026-02-25 21:36:47,587 [INFO] [root]   eval_accuracy: 0.8041
+2026-02-25 21:36:47,587 [INFO] [root]   eval_precision: 0.6623
+2026-02-25 21:36:47,587 [INFO] [root]   eval_recall: 0.5348
+2026-02-25 21:36:47,588 [INFO] [root]   eval_f1: 0.5917
+2026-02-25 21:36:47,588 [INFO] [root]   eval_roc_auc: 0.8379
+2026-02-25 21:36:47,595 [INFO] [root] 
+                                                  
+Classification Report
+                                                  
+              precision    recall  f1-score   support
+
+    No Churn       0.84      0.90      0.87      1035
+       Churn       0.66      0.53      0.59       374
+
+    accuracy                           0.80      1409
+   macro avg       0.75      0.72      0.73      1409
+weighted avg       0.79      0.80      0.80      1409
+
+2026-02-25 21:36:47,597 [INFO] [root] 
+==================================================
+XG Boost
+==================================================
+
+2026-02-25 21:36:47,654 [INFO] [root] 
+                                                  
+Evaluation Metrics
+                                                  
+
+2026-02-25 21:36:47,655 [INFO] [root]   eval_accuracy: 0.802
+2026-02-25 21:36:47,655 [INFO] [root]   eval_precision: 0.6568
+2026-02-25 21:36:47,655 [INFO] [root]   eval_recall: 0.5321
+2026-02-25 21:36:47,655 [INFO] [root]   eval_f1: 0.5879
+2026-02-25 21:36:47,655 [INFO] [root]   eval_roc_auc: 0.8434
+2026-02-25 21:36:47,663 [INFO] [root] 
+                                                  
+Classification Report
+                                                  
+              precision    recall  f1-score   support
+
+    No Churn       0.84      0.90      0.87      1035
+       Churn       0.66      0.53      0.59       374
+
+    accuracy                           0.80      1409
+   macro avg       0.75      0.72      0.73      1409
+weighted avg       0.79      0.80      0.79      1409
+
+2026-02-25 21:36:47,724 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:36:47,823 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:36:47,873 [DEBUG] [git.util] sys.platform='win32', git_executable='git'
+2026-02-25 21:36:47,876 [DEBUG] [git.cmd] Popen(['git', 'check-ignore', 'C:\\Users\\lahir\\Desktop\\Projects\\Customer-Churn-Prediction\\src'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:36:47,930 [DEBUG] [git.cmd] Popen(['git', 'cat-file', '--batch-check'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=<valid stream>, shell=False, universal_newlines=False)
+2026-02-25 21:36:48,031 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): dagshub.com:443
+2026-02-25 21:36:49,183 [DEBUG] [urllib3.connectionpool] https://dagshub.com:443 "POST /Cisco248/customer-churn-prediction.mlflow/api/2.0/mlflow/runs/create HTTP/1.1" 403 0
+2026-02-25 21:36:49,188 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): config.mlflow-telemetry.io:443
+2026-02-25 21:38:05,365 [INFO] [root] Running final evaluation on best model …
+2026-02-25 21:38:05,365 [INFO] [root] 
+==================================================
+Logistic Regression
+==================================================
+
+2026-02-25 21:38:05,436 [INFO] [root] 
+--------------------------------------------------
+Evaluation Metrics
+--------------------------------------------------
+
+2026-02-25 21:38:05,436 [INFO] [root]   eval_accuracy: 0.8055
+2026-02-25 21:38:05,436 [INFO] [root]   eval_precision: 0.6572
+2026-02-25 21:38:05,436 [INFO] [root]   eval_recall: 0.5588
+2026-02-25 21:38:05,436 [INFO] [root]   eval_f1: 0.604
+2026-02-25 21:38:05,436 [INFO] [root]   eval_roc_auc: 0.8419
+2026-02-25 21:38:05,445 [INFO] [root] 
+--------------------------------------------------
+Classification Report
+--------------------------------------------------
+              precision    recall  f1-score   support
+
+    No Churn       0.85      0.89      0.87      1035
+       Churn       0.66      0.56      0.60       374
+
+    accuracy                           0.81      1409
+   macro avg       0.75      0.73      0.74      1409
+weighted avg       0.80      0.81      0.80      1409
+
+2026-02-25 21:38:05,445 [INFO] [root] 
+==================================================
+Random Forest
+==================================================
+
+2026-02-25 21:38:05,706 [INFO] [root] 
+--------------------------------------------------
+Evaluation Metrics
+--------------------------------------------------
+
+2026-02-25 21:38:05,706 [INFO] [root]   eval_accuracy: 0.8041
+2026-02-25 21:38:05,706 [INFO] [root]   eval_precision: 0.6623
+2026-02-25 21:38:05,706 [INFO] [root]   eval_recall: 0.5348
+2026-02-25 21:38:05,706 [INFO] [root]   eval_f1: 0.5917
+2026-02-25 21:38:05,706 [INFO] [root]   eval_roc_auc: 0.8379
+2026-02-25 21:38:05,714 [INFO] [root] 
+--------------------------------------------------
+Classification Report
+--------------------------------------------------
+              precision    recall  f1-score   support
+
+    No Churn       0.84      0.90      0.87      1035
+       Churn       0.66      0.53      0.59       374
+
+    accuracy                           0.80      1409
+   macro avg       0.75      0.72      0.73      1409
+weighted avg       0.79      0.80      0.80      1409
+
+2026-02-25 21:38:05,716 [INFO] [root] 
+==================================================
+XG Boost
+==================================================
+
+2026-02-25 21:38:05,773 [INFO] [root] 
+--------------------------------------------------
+Evaluation Metrics
+--------------------------------------------------
+
+2026-02-25 21:38:05,774 [INFO] [root]   eval_accuracy: 0.802
+2026-02-25 21:38:05,774 [INFO] [root]   eval_precision: 0.6568
+2026-02-25 21:38:05,774 [INFO] [root]   eval_recall: 0.5321
+2026-02-25 21:38:05,774 [INFO] [root]   eval_f1: 0.5879
+2026-02-25 21:38:05,774 [INFO] [root]   eval_roc_auc: 0.8434
+2026-02-25 21:38:05,783 [INFO] [root] 
+--------------------------------------------------
+Classification Report
+--------------------------------------------------
+              precision    recall  f1-score   support
+
+    No Churn       0.84      0.90      0.87      1035
+       Churn       0.66      0.53      0.59       374
+
+    accuracy                           0.80      1409
+   macro avg       0.75      0.72      0.73      1409
+weighted avg       0.79      0.80      0.79      1409
+
+2026-02-25 21:38:05,843 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:38:05,940 [DEBUG] [git.cmd] Popen(['git', 'version'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction\src, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:38:05,989 [DEBUG] [git.util] sys.platform='win32', git_executable='git'
+2026-02-25 21:38:05,991 [DEBUG] [git.cmd] Popen(['git', 'check-ignore', 'C:\\Users\\lahir\\Desktop\\Projects\\Customer-Churn-Prediction\\src'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=None, shell=False, universal_newlines=False)
+2026-02-25 21:38:06,043 [DEBUG] [git.cmd] Popen(['git', 'cat-file', '--batch-check'], cwd=C:\Users\lahir\Desktop\Projects\Customer-Churn-Prediction, stdin=<valid stream>, shell=False, universal_newlines=False)
+2026-02-25 21:38:06,144 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): dagshub.com:443
+2026-02-25 21:38:07,490 [DEBUG] [urllib3.connectionpool] https://dagshub.com:443 "POST /Cisco248/customer-churn-prediction.mlflow/api/2.0/mlflow/runs/create HTTP/1.1" 403 0
+2026-02-25 21:38:07,493 [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): config.mlflow-telemetry.io:443

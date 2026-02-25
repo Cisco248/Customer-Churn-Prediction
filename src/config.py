@@ -21,7 +21,6 @@ PREPROCESSOR_PATH = PROCESSED_DATA_DIR / "preprocessor.joblib"
 
 # ─── Model Paths ──────────────────────────────────────────────────────────────
 MODELS_DIR = ROOT_DIR / "models"
-BEST_MODEL_PATH = MODELS_DIR / "best_model.joblib"
 
 # ─── MLflow ───────────────────────────────────────────────────────────────────
 DAGSHUB_USERNAME = os.getenv("DAGSHUB_USERNAME")

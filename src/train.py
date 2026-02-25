@@ -1,12 +1,4 @@
-"""
-PART 2 – Model Training
-Trains Logistic Regression, Random Forest, and XGBoost models.
-All experiments are tracked with MLflow (hosted on DAGsHub).
-"""
-
-import os
 import joblib
-import warnings
 import pandas as pd
 import matplotlib.pyplot as plt
 import mlflow
@@ -30,47 +22,14 @@ from config import (
     TRAIN_DATA_PATH,
     TEST_DATA_PATH,
     MODELS_DIR,
-    MLFLOW_TRACKING_URI,
-    MLFLOW_EXPERIMENT_NAME,
     TARGET_COLUMN,
-    DAGSHUB_USERNAME,
-    DAGSHUB_REPO_NAME,
 )
 
 from utils.logger import setup_logger
-
-warnings.filterwarnings("ignore")
+from ml_flow import setup_mlflow
 
 logger = setup_logger()
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
-
-
-# ─────────────────────────────────────────────────────────────
-# MLflow Setup
-# ─────────────────────────────────────────────────────────────
-
-
-def setup_mlflow():
-    """Authenticate with DAGsHub and configure MLflow."""
-
-    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-
-    token = os.getenv("DAGSHUB_TOKEN")
-
-    if token:
-        import dagshub
-
-        dagshub.init(
-            repo_owner=DAGSHUB_USERNAME,
-            repo_name=DAGSHUB_REPO_NAME,
-            mlflow=True,
-        )
-        logger.info(f"MLflow -> DAGsHub: {MLFLOW_TRACKING_URI}")
-    else:
-        logger.info("DAGSHUB_TOKEN not set – using local tracking")
-
-    mlflow.set_experiment(MLFLOW_EXPERIMENT_NAME)
-
 
 # ─────────────────────────────────────────────────────────────
 # Metrics

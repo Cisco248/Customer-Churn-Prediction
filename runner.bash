@@ -1,0 +1,2 @@
+#@!bash
+venv\Scripts\activate
