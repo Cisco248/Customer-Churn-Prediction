@@ -18,16 +18,16 @@ stages:
       - data/processed/train.csv
 
   training:
-    cmd: python src/train.py
     matrix:
       model: [logistic-regression, random-forest, xgboost]
+    cmd: python src/train.py
     deps:
       - src/train.py
       - data/processed
     outs:
-      - models/logistic_regression.joblib
-      - models/random_forest.joblib
-      - models/xgboost.joblib
+      - models/logistic_regression.skops
+      - models/random_forest.skops
+      - models/xgboost.skops
 
       - artifacts/cm_Logistic_Regression.png
       - artifacts/cm_Random_Forest.png

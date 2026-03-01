@@ -11,3 +11,4 @@ uvicorn
 apache-airflow
 dagshub
 joblib
+airflow

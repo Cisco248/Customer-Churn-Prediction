@@ -52,6 +52,6 @@ def setup_logger() -> logging.Logger:
 
     formatter = logging.Formatter(FORMAT)
 
-    log_file_handler(LOG_FILE, formatter, logger)
+    log_file_handler(f"{ROOT_DIR}/{LOG_FILE}", formatter, logger)
 
     return logger

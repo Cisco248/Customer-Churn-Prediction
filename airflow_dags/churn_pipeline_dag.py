@@ -1,6 +1,5 @@
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from datetime import datetime
+from airflow.providers.standard.operators.python import PythonOperator
 import subprocess
 
 
@@ -16,11 +15,7 @@ def run_evaluation():
     subprocess.run(["python", "src/evaluate.py"])
 
 
-with DAG(
-    "churn_pipeline",
-    start_date=datetime(2024, 1, 1),
-    catchup=False,
-) as dag:
+with DAG("churn_pipeline", catchup=False) as dag:
 
     task1 = PythonOperator(task_id="preprocessing", python_callable=run_preprocessing)
 

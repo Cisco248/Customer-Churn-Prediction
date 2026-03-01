@@ -1,4 +1,4 @@
-import joblib
+import skops.io as sio
 import pandas as pd
 import matplotlib.pyplot as plt
 import mlflow
@@ -30,7 +30,7 @@ from utils.logger import setup_logger
 from ml_flow import setup_mlflow
 
 logger = setup_logger()
-MODELS_DIR.mkdir(parents=True, exist_ok=True)
+
 
 # ─────────────────────────────────────────────────────────────
 # Metrics
@@ -39,11 +39,11 @@ MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
 def compute_metrics(y_true, y_pred, y_prob) -> dict:
     return {
-        "accuracy": round(float(accuracy_score(y_true, y_pred)), 4),
-        "precision": round(float(precision_score(y_true, y_pred)), 4),
-        "recall": round(float(recall_score(y_true, y_pred)), 4),
-        "f1": round(float(f1_score(y_true, y_pred)), 4),
-        "roc_auc": round(float(roc_auc_score(y_true, y_prob)), 4),
+        "Accuracy": round(float(accuracy_score(y_true, y_pred)), 4),
+        "Precision": round(float(precision_score(y_true, y_pred)), 4),
+        "Recall": round(float(recall_score(y_true, y_pred)), 4),
+        "F1": round(float(f1_score(y_true, y_pred)), 4),
+        "Roc_auc": round(float(roc_auc_score(y_true, y_prob)), 4),
     }
 
 
@@ -135,15 +135,17 @@ def logistic_regression_train_model(X_train, y_train, X_test, y_test):
         metrics = compute_metrics(y_test, y_pred, y_prob)
         mlflow.log_metrics(metrics)
 
-        logger.info(f"Logistic Regression metrics: {metrics}")
+        logger.info(f"Logistic Regression Metrics: {str(metrics)}")
 
         log_confusion_matrix(y_test, y_pred, "Logistic Regression")
         log_roc_curve(y_test, y_prob, "Logistic Regression")
 
-        ml_sk.log_model(model, artifact_path="model")
+        ml_sk.log_model(
+            model, name="model", params=params, registered_model_name="lr-churn"
+        )
 
-        model_path = MODELS_DIR / "logistic_regression.joblib"
-        joblib.dump(model, model_path)
+        model_path = MODELS_DIR / "logistic_regression.skops"
+        sio.dump(model, model_path)
         mlflow.log_artifact(str(model_path))
 
 
@@ -186,15 +188,17 @@ def random_forest_train_model(X_train, y_train, X_test, y_test):
         metrics = compute_metrics(y_test, y_pred, y_prob)
         mlflow.log_metrics(metrics)
 
-        logger.info(f"Random Forest Metrics: {metrics}")
+        logger.info(f"Random Forest Metrics: {str(metrics)}")
 
         log_confusion_matrix(y_test, y_pred, "Random Forest")
         log_roc_curve(y_test, y_prob, "Random Forest")
 
-        ml_sk.log_model(model, artifact_path="model")
+        ml_sk.log_model(
+            model, name="model", params=params, registered_model_name="rf-churn"
+        )
 
-        model_path = MODELS_DIR / "random_forest.joblib"
-        joblib.dump(model, model_path)
+        model_path = MODELS_DIR / "random_forest.skops"
+        sio.dump(model, model_path)
         mlflow.log_artifact(str(model_path))
 
 
@@ -221,7 +225,7 @@ def xg_boost_train_model(X_train, y_train, X_test, y_test):
         mlflow.log_params(params)
 
         model = XGBClassifier(
-            max_depth=6,
+            max_depth=8,
             learning_rate=0.05,
             subsample=0.8,
             colsample_bytree=0.8,
@@ -237,15 +241,17 @@ def xg_boost_train_model(X_train, y_train, X_test, y_test):
         metrics = compute_metrics(y_test, y_pred, y_prob)
         mlflow.log_metrics(metrics)
 
-        logger.info(f"XGBoost Metrics: {metrics}")
+        logger.info(f"XGBoost Metrics: {str(metrics)}")
 
         log_confusion_matrix(y_test, y_pred, "XGBoost")
         log_roc_curve(y_test, y_prob, "XGBoost")
 
-        ml_xgb.log_model(model, artifact_path="model")
+        ml_xgb.log_model(
+            model, name="model", params=params, registered_model_name="xgb-churn"
+        )
 
-        model_path = MODELS_DIR / "xgboost.joblib"
-        joblib.dump(model, model_path)
+        model_path = MODELS_DIR / "xgboost.skops"
+        sio.dump(model, model_path)
         mlflow.log_artifact(str(model_path))
 
 
@@ -257,6 +263,10 @@ def xg_boost_train_model(X_train, y_train, X_test, y_test):
 def run_training():
 
     setup_mlflow()
+
+    if not MODELS_DIR:
+        MODELS_DIR.mkdir(parents=True, exist_ok=True)
+        logger.info("Building the Models Directory!")
 
     train_df = pd.read_csv(TRAIN_DATA_PATH)
     test_df = pd.read_csv(TEST_DATA_PATH)
