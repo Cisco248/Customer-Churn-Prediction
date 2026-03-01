@@ -21,21 +21,21 @@ stages:
     cmd: python src/train.py
     matrix:
       model: [logistic-regression, random-forest, xgboost]
-      deps:
-        - src/train.py
-        - data/processed
-      outs:
-        - models/logistic_regression.joblib
-        - models/random_forest.joblib
-        - models/xgboost.joblib
+    deps:
+      - src/train.py
+      - data/processed
+    outs:
+      - models/logistic_regression.joblib
+      - models/random_forest.joblib
+      - models/xgboost.joblib
 
-        - artifacts/cm_Logistic_Regression.png
-        - artifacts/cm_Random_Forest.png
-        - artifacts/cm_XGBoost.png
+      - artifacts/cm_Logistic_Regression.png
+      - artifacts/cm_Random_Forest.png
+      - artifacts/cm_XGBoost.png
 
-        - artifacts/roc_Logistic_Regression.png
-        - artifacts/roc_Random_Forest.png
-        - artifacts/roc_XGBoost.png
+      - artifacts/roc_Logistic_Regression.png
+      - artifacts/roc_Random_Forest.png
+      - artifacts/roc_XGBoost.png
 
   # Evaluation:
   #   cmd: python src/evaluate.py
