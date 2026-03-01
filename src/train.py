@@ -23,6 +23,7 @@ from config import (
     TEST_DATA_PATH,
     MODELS_DIR,
     TARGET_COLUMN,
+    ARTIFACT_PATH,
 )
 
 from utils.logger import setup_logger
@@ -73,7 +74,7 @@ def log_confusion_matrix(y_true, y_pred, run_name: str):
 
     plt.colorbar(im)
 
-    path = MODELS_DIR / f"cm_{run_name.replace(' ', '_')}.png"
+    path = ARTIFACT_PATH / f"cm_{run_name.replace(' ', '_')}.png"
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
 
@@ -92,7 +93,7 @@ def log_roc_curve(y_true, y_prob, run_name: str):
     ax.set_ylabel("TPR")
     ax.set_title(f"ROC Curve – {run_name}")
 
-    path = MODELS_DIR / f"roc_{run_name.replace(' ', '_')}.png"
+    path = ARTIFACT_PATH / f"roc_{run_name.replace(' ', '_')}.png"
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
 
@@ -125,6 +126,7 @@ def logistic_regression_train_model(X_train, y_train, X_test, y_test):
             solver="lbfgs",
             random_state=42,
         )
+
         model.fit(X_train, y_train)
 
         y_pred = model.predict(X_test)
@@ -175,6 +177,7 @@ def random_forest_train_model(X_train, y_train, X_test, y_test):
             random_state=42,
             n_jobs=-1,
         )
+
         model.fit(X_train, y_train)
 
         y_pred = model.predict(X_test)
@@ -183,7 +186,7 @@ def random_forest_train_model(X_train, y_train, X_test, y_test):
         metrics = compute_metrics(y_test, y_pred, y_prob)
         mlflow.log_metrics(metrics)
 
-        logger.info(f"Random Forest metrics: {metrics}")
+        logger.info(f"Random Forest Metrics: {metrics}")
 
         log_confusion_matrix(y_test, y_pred, "Random Forest")
         log_roc_curve(y_test, y_prob, "Random Forest")
@@ -225,6 +228,7 @@ def xg_boost_train_model(X_train, y_train, X_test, y_test):
             eval_metric="logloss",
             random_state=42,
         )
+
         model.fit(X_train, y_train)
 
         y_pred = model.predict(X_test)
@@ -233,7 +237,7 @@ def xg_boost_train_model(X_train, y_train, X_test, y_test):
         metrics = compute_metrics(y_test, y_pred, y_prob)
         mlflow.log_metrics(metrics)
 
-        logger.info(f"XGBoost metrics: {metrics}")
+        logger.info(f"XGBoost Metrics: {metrics}")
 
         log_confusion_matrix(y_test, y_pred, "XGBoost")
         log_roc_curve(y_test, y_prob, "XGBoost")
@@ -259,16 +263,17 @@ def run_training():
 
     X_train = train_df.drop(columns=[TARGET_COLUMN]).values
     y_train = train_df[TARGET_COLUMN].values
+
     X_test = test_df.drop(columns=[TARGET_COLUMN]).values
     y_test = test_df[TARGET_COLUMN].values
 
-    logger.info(f"Training features: {X_train.shape[1]}")
+    logger.info(f"Training Features: {X_train.shape[1]}")
 
     logistic_regression_train_model(X_train, y_train, X_test, y_test)
     random_forest_train_model(X_train, y_train, X_test, y_test)
     xg_boost_train_model(X_train, y_train, X_test, y_test)
 
-    logger.info("Training completed successfully.")
+    logger.info("Training Completed Successfully!")
 
 
 if __name__ == "__main__":

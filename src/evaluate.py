@@ -100,7 +100,7 @@ def run_evaluation():
         ax.set_xlabel("FPR")
         ax.set_ylabel("TPR")
 
-        roc_path = MODELS_DIR / "roc_curve.png"
+        roc_path = ARTIFACT_PATH / "roc_curve.png"
         fig.savefig(roc_path)
         plt.close(fig)
 
@@ -124,7 +124,7 @@ def run_evaluation():
             ax.barh(importance["feature"], importance["importance"])
             ax.set_title("Top 20 Feature Importances")
 
-            fi_path = MODELS_DIR / "feature_importance.png"
+            fi_path = ARTIFACT_PATH / "feature_importance.png"
             fig.savefig(fi_path)
             plt.close(fig)
 

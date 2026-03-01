@@ -1,22 +1,51 @@
 stages:
-  preprocessing:
+
+  Data_Ingestions:
+    cmd: python src/data_ingestion.py
+    deps: 
+      - src/data_ingestion.py
+      - data/raw/churn_prediction_data.csv
+    desc: "Load dataset and run basic validations"
+
+  Pre-Processing:
     cmd: python src/preprocessing.py
+    desc: "Save the different files for the training and testing purpose"
     deps:
       - src/preprocessing.py
       - data/raw/churn_prediction_data.csv
     outs:
-      - data/processed
+      - data/processed/test.csv
+      - data/processed/train.csv
 
-  training:
+  Training:
     cmd: python src/train.py
-    deps:
-      - src/train.py
-      - data/processed
-    outs:
-      - models/model.pkl
+    matrix:
+      model: [logistic-regression, random-forest, xgboost]
+      deps:
+        - src/train.py
+        - data/processed
+      outs:
+        - models/logistic_regression.joblib
+        - models/random_forest.joblib
+        - models/xgboost.joblib
 
-  evaluation:
-    cmd: python src/evaluate.py
-    deps:
-      - src/evaluate.py
-      - models/model.pkl
+        - artifacts/cm_Logistic_Regression.png
+        - artifacts/cm_Random_Forest.png
+        - artifacts/cm_XGBoost.png
+
+        - artifacts/roc_Logistic_Regression.png
+        - artifacts/roc_Random_Forest.png
+        - artifacts/roc_XGBoost.png
+
+  # Evaluation:
+  #   cmd: python src/evaluate.py
+  #   deps:
+  #     - src/evaluate.py
+
+  #     - models/logistic_regression.joblib
+  #     - models/random_forest.joblib
+  #     - models/xgboost.joblib
+
+  #   outs:
+  #     - artifacts/feature_importance.png
+  #     - artifacts/roc_curve.png

@@ -10,7 +10,6 @@ from config import (
     PROCESSED_DATA_DIR,
     TRAIN_DATA_PATH,
     TEST_DATA_PATH,
-    PREPROCESSOR_PATH,
     TARGET_COLUMN,
     NUMERIC_FEATURES,
     BINARY_FEATURES,
@@ -29,6 +28,7 @@ logger = setup_logger()
 def encode_binary(df: pd.DataFrame) -> pd.DataFrame:
     """Map Yes/No → 1/0 and gender → 1/0 in place."""
     yes_no_cols = [c for c in BINARY_FEATURES if df[c].dtype == object]
+
     for col in yes_no_cols:
         if col == "gender":
             df[col] = (df[col] == "Male").astype(int)
@@ -71,9 +71,10 @@ def build_preprocessor() -> ColumnTransformer:
 
 def run_preprocessing() -> tuple[pd.DataFrame, pd.DataFrame]:
 
-    if not PROCESSED_DATA_DIR:
-        logger.warning("Folder isn't available!")
-        PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    if PROCESSED_DATA_DIR:
+        logger.warning("Folder is available!")
+
+    PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
     df = run_ingestion()
 
@@ -95,8 +96,8 @@ def run_preprocessing() -> tuple[pd.DataFrame, pd.DataFrame]:
     logger.info(f"Train: {len(X_train):,}  |  Test: {len(X_test):,}")
 
     preprocessor = build_preprocessor()
-    X_train_t = preprocessor.fit_transform(X_train)
-    X_test_t = preprocessor.transform(X_test)
+    _X_train = preprocessor.fit_transform(X_train)
+    _X_test = preprocessor.transform(X_test)
 
     ohe_cols = (
         preprocessor.named_transformers_["cat"]
@@ -104,26 +105,25 @@ def run_preprocessing() -> tuple[pd.DataFrame, pd.DataFrame]:
         .get_feature_names_out(MULTI_FEATURES)
         .tolist()
     )
+
     passthrough_cols = [
         c for c in X_train.columns if c not in NUMERIC_FEATURES + MULTI_FEATURES
     ]
+
     all_cols = NUMERIC_FEATURES + ohe_cols + passthrough_cols
 
-    train_df = pd.DataFrame(X_train_t, columns=all_cols)
+    train_df = pd.DataFrame(_X_train, columns=all_cols)
     train_df[TARGET_COLUMN] = y_train.reset_index(drop=True)
 
-    test_df = pd.DataFrame(X_test_t, columns=all_cols)
+    test_df = pd.DataFrame(_X_test, columns=all_cols)
     test_df[TARGET_COLUMN] = y_test.reset_index(drop=True)
 
-    # 8. Persist
     train_df.to_csv(TRAIN_DATA_PATH, index=False)
     test_df.to_csv(TEST_DATA_PATH, index=False)
-    joblib.dump(preprocessor, PREPROCESSOR_PATH)
 
-    logger.info(f"Saved train -> {TRAIN_DATA_PATH}")
-    logger.info(f"Saved test  -> {TEST_DATA_PATH}")
-    logger.info(f"Saved preprocessor -> {PREPROCESSOR_PATH}")
-    logger.info("---> Preprocessing Completed...")
+    logger.info(f"Saved {TRAIN_DATA_PATH}")
+    logger.info(f"Saved {TEST_DATA_PATH}")
+    logger.info("Preprocessing Completed")
 
     return train_df, test_df
 

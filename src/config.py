@@ -22,6 +22,9 @@ PREPROCESSOR_PATH = PROCESSED_DATA_DIR / "preprocessor.joblib"
 # ─── Model Paths ──────────────────────────────────────────────────────────────
 MODELS_DIR = ROOT_DIR / "models"
 
+# ─── Artifact Paths ───────────────────────────────────────────────────────────
+ARTIFACT_PATH = ROOT_DIR / "artifacts"
+
 # ─── MLflow ───────────────────────────────────────────────────────────────────
 DAGSHUB_USERNAME = os.getenv("DAGSHUB_USERNAME")
 DAGSHUB_REPO_NAME = os.getenv("DAGSHUB_REPO_NAME")
@@ -89,3 +92,8 @@ XGB_PARAMS = {
     "eval_metric": "logloss",
     "random_state": RANDOM_STATE,
 }
+
+# Logger Constants
+
+LOG_FILE = "logs/model.log"
+FORMAT = "%(asctime)s [%(levelname)s] [%(name)s] %(message)s"
