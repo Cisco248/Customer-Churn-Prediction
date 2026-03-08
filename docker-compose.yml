@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  # PostgreSQL database for Airflow metadata
+  postgres:
+    image: postgres:15-alpine
+    container_name: churn-postgres
+    environment:
+      POSTGRES_DB: airflow
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Airflow Web Server
+  airflow-webserver:
+    build: .
+    container_name: churn-airflow-webserver
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'False'
+      AIRFLOW__CORE__EXPOSE_CONFIG: 'True'
+      AIRFLOW_HOME: /opt/airflow
+    volumes:
+      - ./airflow_dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./src:/app/src
+    ports:
+      - "8080:8080"
+    command: airflow-webserver
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Airflow Scheduler
+  airflow-scheduler:
+    build: .
+    container_name: churn-airflow-scheduler
+    depends_on:
+      postgres:
+        condition: service_healthy
+      airflow-webserver:
+        condition: service_healthy
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'False'
+      AIRFLOW__CORE__EXPOSE_CONFIG: 'True'
+      AIRFLOW_HOME: /opt/airflow
+    volumes:
+      - ./airflow_dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./src:/app/src
+    command: airflow-scheduler
+    restart: unless-stopped
+
+  # FastAPI Application
+  api:
+    build: .
+    container_name: churn-api
+    depends_on:
+      - airflow-webserver
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./src:/app/src
+    ports:
+      - "8000:8000"
+    command: api
+    restart: unless-stopped
+    environment:
+      PYTHONUNBUFFERED: 1
+
+volumes:
+  postgres-db-volume:
