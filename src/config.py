@@ -69,6 +69,30 @@ MULTI_FEATURES = [
 
 DROP_COLUMNS = ["customerID"]
 
+REQUIRED_COLS = [
+    "customerID",
+    "gender",
+    "SeniorCitizen",
+    "Partner",
+    "Dependents",
+    "tenure",
+    "PhoneService",
+    "MultipleLines",
+    "InternetService",
+    "OnlineSecurity",
+    "OnlineBackup",
+    "DeviceProtection",
+    "TechSupport",
+    "StreamingTV",
+    "StreamingMovies",
+    "Contract",
+    "PaperlessBilling",
+    "PaymentMethod",
+    "MonthlyCharges",
+    "TotalCharges",
+    TARGET_COLUMN,
+]
+
 # ─── Model Hyperparameters ────────────────────────────────────────────────────
 LR_PARAMS = {
     "C": 1.0,

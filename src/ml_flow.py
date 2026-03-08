@@ -6,6 +6,7 @@ from pathlib import Path
 import dagshub
 import os
 import mlflow
+import mlflow.sklearn
 from utils.logger import setup_logger
 from config import (
     ARTIFACT_PATH,

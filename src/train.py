@@ -27,7 +27,7 @@ from config import (
 )
 
 from utils.logger import setup_logger
-from ml_flow import setup_mlflow
+from ml_flow import MLflowConfig
 
 logger = setup_logger()
 
@@ -262,7 +262,8 @@ def xg_boost_train_model(X_train, y_train, X_test, y_test):
 
 def run_training():
 
-    setup_mlflow()
+    flow = MLflowConfig()
+    flow.initialize()
 
     if not MODELS_DIR:
         MODELS_DIR.mkdir(parents=True, exist_ok=True)

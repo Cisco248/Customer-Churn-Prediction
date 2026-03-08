@@ -23,37 +23,8 @@ def load_raw_data(path: Path = RAW_DATA_PATH) -> pd.DataFrame:
 
 
 def validate_data(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Basic data validation:
-      - Check required columns exist
-      - Report missing values
-      - Coerce TotalCharges to numeric (spaces → NaN)
-    """
-    required_cols = [
-        "customerID",
-        "gender",
-        "SeniorCitizen",
-        "Partner",
-        "Dependents",
-        "tenure",
-        "PhoneService",
-        "MultipleLines",
-        "InternetService",
-        "OnlineSecurity",
-        "OnlineBackup",
-        "DeviceProtection",
-        "TechSupport",
-        "StreamingTV",
-        "StreamingMovies",
-        "Contract",
-        "PaperlessBilling",
-        "PaymentMethod",
-        "MonthlyCharges",
-        "TotalCharges",
-        TARGET_COLUMN,
-    ]
 
-    missing_cols = [c for c in required_cols if c not in df.columns]
+    missing_cols = [c for c in REQUIRED_COLS if c not in df.columns]
     if missing_cols:
         raise ValueError(f"Dataset is Missing Columns: {missing_cols}")
 
@@ -80,7 +51,9 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def run_ingestion() -> pd.DataFrame:
+    logger.info("Data Ingestion Started")
     df = load_raw_data()
+    logger.info("Row Data Loaded")
     df = validate_data(df)
     logger.info("Data Ingestion Complete")
     return df
