@@ -6,6 +6,7 @@ All paths, hyperparameters, and settings live here.
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from xgboost import Booster, XGBClassifier
 
 load_dotenv()
 
@@ -19,8 +20,11 @@ TRAIN_DATA_PATH = PROCESSED_DATA_DIR / "train.csv"
 TEST_DATA_PATH = PROCESSED_DATA_DIR / "test.csv"
 PREPROCESSOR_PATH = PROCESSED_DATA_DIR / "preprocessor.joblib"
 
-# ─── Model Paths ──────────────────────────────────────────────────────────────
+# ─── Models ──────────────────────────────────────────────────────────────
 MODELS_DIR = ROOT_DIR / "models"
+REPORT_TITLE = "\nClassification Report:"
+TARGET_NAMES = ["No Churn", "Churn"]
+TRUST_LIST = [Booster, XGBClassifier]
 
 # ─── Artifact Paths ───────────────────────────────────────────────────────────
 ARTIFACT_PATH = ROOT_DIR / "artifacts"
@@ -97,3 +101,15 @@ XGB_PARAMS = {
 
 LOG_FILE = "logs/model.log"
 FORMAT = "%(asctime)s [%(levelname)s] [%(name)s] %(message)s"
+
+# Evaluation Parameters
+
+BEST_AUC = 0
+BEST_MODEL_NAME = None
+BEST_RESULTS = None
+
+EVALUTION_MODELS = {
+    "Logistic_Regression": MODELS_DIR / "logistic_regression.skops",
+    "Random_Forest": MODELS_DIR / "random_forest.skops",
+    "XGBoost": MODELS_DIR / "xgboost.skops",
+}

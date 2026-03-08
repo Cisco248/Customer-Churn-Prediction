@@ -214,7 +214,7 @@ def xg_boost_train_model(X_train, y_train, X_test, y_test):
     with mlflow.start_run(run_name="XGBoost"):
 
         params = {
-            "max_depth": 6,
+            "max_depth": 8,
             "learning_rate": 0.05,
             "subsample": 0.8,
             "colsample_bytree": 0.8,
