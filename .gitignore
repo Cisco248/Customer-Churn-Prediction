@@ -4,3 +4,5 @@ __pycache__/
 mlruns/
 /data-file.bin
 .env
+/logs
+/airflow_dags

@@ -1,16 +1,8 @@
 stages:
-
-  ingestions:
-    cmd: python src/data_ingestion.py
-    deps: 
-      - src/data_ingestion.py
-      - data/raw/churn_prediction_data.csv
-    desc: "Load dataset and run basic validations"
-
   preprocessing:
-    cmd: python src/preprocessing.py
-    desc: "Save the different files for the training and testing purpose"
+    cmd: venv\Scripts\python src/preprocessing.py
     deps:
+      - src/data_ingestion.py
       - src/preprocessing.py
       - data/raw/churn_prediction_data.csv
     outs:
@@ -19,33 +11,25 @@ stages:
 
   training:
     matrix:
-      model: [logistic-regression, random-forest, xgboost]
-    cmd: python src/train.py
+      model: [Logistic_Regression, Random_Forest, XGBoost]
+    cmd: venv\Scripts\python src/train.py --model_name ${item.model}
     deps:
       - src/train.py
-      - data/processed
+      - data/processed/train.csv
     outs:
-      - models/logistic_regression.skops
-      - models/random_forest.skops
-      - models/xgboost.skops
+      - artifacts/train/${item.model}_cm.png
+      - artifacts/train/${item.model}_roc.png
+      - models/${item.model}.skops
 
-      - artifacts/cm_Logistic_Regression.png
-      - artifacts/cm_Random_Forest.png
-      - artifacts/cm_XGBoost.png
-
-      - artifacts/roc_Logistic_Regression.png
-      - artifacts/roc_Random_Forest.png
-      - artifacts/roc_XGBoost.png
-
-  # Evaluation:
-  #   cmd: python src/evaluate.py
-  #   deps:
-  #     - src/evaluate.py
-
-  #     - models/logistic_regression.joblib
-  #     - models/random_forest.joblib
-  #     - models/xgboost.joblib
-
-  #   outs:
-  #     - artifacts/feature_importance.png
-  #     - artifacts/roc_curve.png
+  evaluation:
+    matrix:
+      model: [Logistic_Regression, Random_Forest, XGBoost]
+    cmd: venv\Scripts\python src/evaluate.py --model_name ${item.model}
+    deps:
+      - src/evaluate.py
+      - models/${item.model}.skops
+      - data/processed/test.csv
+    outs:
+      - artifacts/evaluation/${item.model}_feature.png
+      - artifacts/evaluation/${item.model}_roc.png
+      - data/generated/${item.model}_data.csv

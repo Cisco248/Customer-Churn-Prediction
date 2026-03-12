@@ -1,7 +1,7 @@
 schema: '2.0'
 stages:
-  Data_Ingestions:
-    cmd: python src/data_ingestion.py
+  preprocessing:
+    cmd: venv\Scripts\python src/preprocessing.py
     deps:
     - path: data/raw/churn_prediction_data.csv
       hash: md5
@@ -9,133 +9,174 @@ stages:
       size: 977501
     - path: src/data_ingestion.py
       hash: md5
-      md5: f6860dd381293fdc084a583272d0b302
-      size: 2374
-  Pre-Processing:
-    cmd: python src/preprocessing.py
-    deps:
-    - path: data/raw/churn_prediction_data.csv
-      hash: md5
-      md5: 0f9de68e012bd3aed5fa7cdc9fc421af
-      size: 977501
+      md5: 822aada83689a37a36442d6ae78690ae
+      size: 2379
     - path: src/preprocessing.py
       hash: md5
-      md5: 638b01767d4727114fb7b76a705a1070
-      size: 3643
+      md5: dbaf2a258b8b89da8ce72cf4b0434fac
+      size: 5146
     outs:
     - path: data/processed/test.csv
       hash: md5
-      md5: 5d8226ed9f6aac36caa1bebb5a74e4d2
-      size: 296525
+      md5: a11fe63be543fe95fd434199bea98f26
+      size: 296517
     - path: data/processed/train.csv
       hash: md5
-      md5: d3195dfee1f6d77c8af70b028d29082b
-      size: 1182759
-  Training@logistic-regression-src/train.py-models/logistic_regression.joblib:
-    cmd: python src/train.py
-  Training@logistic-regression-src/train.py-models/random_forest.joblib:
-    cmd: python src/train.py
-  Training@logistic-regression-src/train.py-models/xgboost.joblib:
-    cmd: python src/train.py
-  Training@logistic-regression-src/train.py-artifacts/cm_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@logistic-regression-src/train.py-artifacts/cm_Random_Forest.png:
-    cmd: python src/train.py
-  Training@logistic-regression-src/train.py-artifacts/cm_XGBoost.png:
-    cmd: python src/train.py
-  Training@logistic-regression-src/train.py-artifacts/roc_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@logistic-regression-src/train.py-artifacts/roc_Random_Forest.png:
-    cmd: python src/train.py
-  Training@logistic-regression-src/train.py-artifacts/roc_XGBoost.png:
-    cmd: python src/train.py
-  Training@logistic-regression-data/processed-models/logistic_regression.joblib:
-    cmd: python src/train.py
-  Training@logistic-regression-data/processed-models/random_forest.joblib:
-    cmd: python src/train.py
-  Training@logistic-regression-data/processed-models/xgboost.joblib:
-    cmd: python src/train.py
-  Training@logistic-regression-data/processed-artifacts/cm_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@logistic-regression-data/processed-artifacts/cm_Random_Forest.png:
-    cmd: python src/train.py
-  Training@logistic-regression-data/processed-artifacts/cm_XGBoost.png:
-    cmd: python src/train.py
-  Training@logistic-regression-data/processed-artifacts/roc_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@logistic-regression-data/processed-artifacts/roc_Random_Forest.png:
-    cmd: python src/train.py
-  Training@logistic-regression-data/processed-artifacts/roc_XGBoost.png:
-    cmd: python src/train.py
-  Training@random-forest-src/train.py-models/logistic_regression.joblib:
-    cmd: python src/train.py
-  Training@random-forest-src/train.py-models/random_forest.joblib:
-    cmd: python src/train.py
-  Training@random-forest-src/train.py-models/xgboost.joblib:
-    cmd: python src/train.py
-  Training@random-forest-src/train.py-artifacts/cm_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@random-forest-src/train.py-artifacts/cm_Random_Forest.png:
-    cmd: python src/train.py
-  Training@random-forest-src/train.py-artifacts/cm_XGBoost.png:
-    cmd: python src/train.py
-  Training@random-forest-src/train.py-artifacts/roc_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@random-forest-src/train.py-artifacts/roc_Random_Forest.png:
-    cmd: python src/train.py
-  Training@random-forest-src/train.py-artifacts/roc_XGBoost.png:
-    cmd: python src/train.py
-  Training@random-forest-data/processed-models/logistic_regression.joblib:
-    cmd: python src/train.py
-  Training@random-forest-data/processed-models/random_forest.joblib:
-    cmd: python src/train.py
-  Training@random-forest-data/processed-models/xgboost.joblib:
-    cmd: python src/train.py
-  Training@random-forest-data/processed-artifacts/cm_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@random-forest-data/processed-artifacts/cm_Random_Forest.png:
-    cmd: python src/train.py
-  Training@random-forest-data/processed-artifacts/cm_XGBoost.png:
-    cmd: python src/train.py
-  Training@random-forest-data/processed-artifacts/roc_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@random-forest-data/processed-artifacts/roc_Random_Forest.png:
-    cmd: python src/train.py
-  Training@random-forest-data/processed-artifacts/roc_XGBoost.png:
-    cmd: python src/train.py
-  Training@xgboost-src/train.py-models/logistic_regression.joblib:
-    cmd: python src/train.py
-  Training@xgboost-src/train.py-models/random_forest.joblib:
-    cmd: python src/train.py
-  Training@xgboost-src/train.py-models/xgboost.joblib:
-    cmd: python src/train.py
-  Training@xgboost-src/train.py-artifacts/cm_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@xgboost-src/train.py-artifacts/cm_Random_Forest.png:
-    cmd: python src/train.py
-  Training@xgboost-src/train.py-artifacts/cm_XGBoost.png:
-    cmd: python src/train.py
-  Training@xgboost-src/train.py-artifacts/roc_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@xgboost-src/train.py-artifacts/roc_Random_Forest.png:
-    cmd: python src/train.py
-  Training@xgboost-src/train.py-artifacts/roc_XGBoost.png:
-    cmd: python src/train.py
-  Training@xgboost-data/processed-models/logistic_regression.joblib:
-    cmd: python src/train.py
-  Training@xgboost-data/processed-models/random_forest.joblib:
-    cmd: python src/train.py
-  Training@xgboost-data/processed-models/xgboost.joblib:
-    cmd: python src/train.py
-  Training@xgboost-data/processed-artifacts/cm_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@xgboost-data/processed-artifacts/cm_Random_Forest.png:
-    cmd: python src/train.py
-  Training@xgboost-data/processed-artifacts/cm_XGBoost.png:
-    cmd: python src/train.py
-  Training@xgboost-data/processed-artifacts/roc_Logistic_Regression.png:
-    cmd: python src/train.py
-  Training@xgboost-data/processed-artifacts/roc_Random_Forest.png:
-    cmd: python src/train.py
-  Training@xgboost-data/processed-artifacts/roc_XGBoost.png:
-    cmd: python src/train.py
+      md5: 8337cb518267caaca47444a0950ed08e
+      size: 1182765
+  training@Logistic_Regression:
+    cmd: venv\Scripts\python src/train.py --model_name Logistic_Regression
+    deps:
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 8337cb518267caaca47444a0950ed08e
+      size: 1182765
+    - path: src/train.py
+      hash: md5
+      md5: 3df6b1bbc9b024d0d942aae892a32acb
+      size: 6854
+    outs:
+    - path: artifacts/train/Logistic_Regression_cm.png
+      hash: md5
+      md5: 84f1d7d6a04513bac8edc2c59385904a
+      size: 20391
+    - path: artifacts/train/Logistic_Regression_roc.png
+      hash: md5
+      md5: ba8750071d606d0355ce67645401f34f
+      size: 24590
+    - path: models/Logistic_Regression.skops
+      hash: md5
+      md5: b203271dba37d75030af9775c47ea0b0
+      size: 9403
+  training@Random_Forest:
+    cmd: venv\Scripts\python src/train.py --model_name Random_Forest
+    deps:
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 8337cb518267caaca47444a0950ed08e
+      size: 1182765
+    - path: src/train.py
+      hash: md5
+      md5: 3df6b1bbc9b024d0d942aae892a32acb
+      size: 6854
+    outs:
+    - path: artifacts/train/Random_Forest_cm.png
+      hash: md5
+      md5: d14636a4ff565d6c33c52195990bd159
+      size: 19404
+    - path: artifacts/train/Random_Forest_roc.png
+      hash: md5
+      md5: 024045a91e0d59ef38f1eb71fb659c2a
+      size: 23951
+    - path: models/Random_Forest.skops
+      hash: md5
+      md5: b935d161435a197f360f7b6720c7f6e1
+      size: 13718448
+  training@XGBoost:
+    cmd: venv\Scripts\python src/train.py --model_name XGBoost
+    deps:
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 8337cb518267caaca47444a0950ed08e
+      size: 1182765
+    - path: src/train.py
+      hash: md5
+      md5: 3df6b1bbc9b024d0d942aae892a32acb
+      size: 6854
+    outs:
+    - path: artifacts/train/XGBoost_cm.png
+      hash: md5
+      md5: 132815a64d36f429b749d38b916c4311
+      size: 19188
+    - path: artifacts/train/XGBoost_roc.png
+      hash: md5
+      md5: 8561e20b41eb8ab8efbfd553fd8649c6
+      size: 23575
+    - path: models/XGBoost.skops
+      hash: md5
+      md5: 2e56f30278b3291dc9670c074b2a8761
+      size: 691427
+  evaluation@Logistic_Regression:
+    cmd: venv\Scripts\python src/evaluate.py --model_name Logistic_Regression
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: a11fe63be543fe95fd434199bea98f26
+      size: 296517
+    - path: models/Logistic_Regression.skops
+      hash: md5
+      md5: b203271dba37d75030af9775c47ea0b0
+      size: 9403
+    - path: src/evaluate.py
+      hash: md5
+      md5: a6c40797c33f482909a68779d2487b18
+      size: 7751
+    outs:
+    - path: artifacts/evaluation/Logistic_Regression_feature.png
+      hash: md5
+      md5: 88bec8893cbf04fb2743b61d44ba17fd
+      size: 96940
+    - path: artifacts/evaluation/Logistic_Regression_roc.png
+      hash: md5
+      md5: d40b8aaaf5aa0d95d072b19477dce41b
+      size: 24768
+    - path: data/generated/Logistic_Regression_data.csv
+      hash: md5
+      md5: ef8d6a7b94b85a16cd9579af35e493e8
+      size: 1691
+  evaluation@Random_Forest:
+    cmd: venv\Scripts\python src/evaluate.py --model_name Random_Forest
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: a11fe63be543fe95fd434199bea98f26
+      size: 296517
+    - path: models/Random_Forest.skops
+      hash: md5
+      md5: b935d161435a197f360f7b6720c7f6e1
+      size: 13718448
+    - path: src/evaluate.py
+      hash: md5
+      md5: a6c40797c33f482909a68779d2487b18
+      size: 7751
+    outs:
+    - path: artifacts/evaluation/Random_Forest_feature.png
+      hash: md5
+      md5: a8ca99d4d72cb3c922297a059de5b950
+      size: 95886
+    - path: artifacts/evaluation/Random_Forest_roc.png
+      hash: md5
+      md5: 42baec5644b16332bc82af8586191fca
+      size: 24017
+    - path: data/generated/Random_Forest_data.csv
+      hash: md5
+      md5: 13022a2e33d1cd54f27d80b8da77cc7c
+      size: 1740
+  evaluation@XGBoost:
+    cmd: venv\Scripts\python src/evaluate.py --model_name XGBoost
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: a11fe63be543fe95fd434199bea98f26
+      size: 296517
+    - path: models/XGBoost.skops
+      hash: md5
+      md5: 2e56f30278b3291dc9670c074b2a8761
+      size: 691427
+    - path: src/evaluate.py
+      hash: md5
+      md5: a6c40797c33f482909a68779d2487b18
+      size: 7751
+    outs:
+    - path: artifacts/evaluation/XGBoost_feature.png
+      hash: md5
+      md5: fb9f70f5878a690fd19d50cce4673602
+      size: 96063
+    - path: artifacts/evaluation/XGBoost_roc.png
+      hash: md5
+      md5: 0791f9ea78b15f18f02138cd2a9fb492
+      size: 23580
+    - path: data/generated/XGBoost_data.csv
+      hash: md5
+      md5: e6acacf39ae5afb4321f21921d27e472
+      size: 1341

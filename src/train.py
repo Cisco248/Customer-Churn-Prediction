@@ -1,3 +1,4 @@
+import argparse
 import skops.io as sio
 import pandas as pd
 import mlflow
@@ -155,6 +156,22 @@ class ModelTrainer:
 
 if __name__ == "__main__":
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--model_name",
+        type=str,
+        required=True,
+        help="Choose: Logistic_Regression, Random_Forest, or XGBoost",
+    )
+    args = parser.parse_args()
+
+    ml_config = MLflowConfig(
+        MLFLOW_TRACKING_URI,
+        DAGSHUB_TOKEN,
+        DAGSHUB_USERNAME,
+        DAGSHUB_REPO_NAME,
+    )
+
     train_df = pd.read_csv(TRAIN_DATA_PATH)
     test_df = pd.read_csv(TEST_DATA_PATH)
 
@@ -164,59 +181,43 @@ if __name__ == "__main__":
     X_test = test_df[X_FEATURE_COLS].values
     y_test = test_df[Y_FEATURE_COLS].values
 
-    logistic_train = ModelTrainer(
-        X_train,
-        y_train,
-        X_test,
-        y_test,
-        LogisticRegression,
-        LR_PARAMS,
-        "Logistic Regression",
-        LR_EXPORT_PATH,
-        MLflowConfig(
-            MLFLOW_TRACKING_URI,
-            DAGSHUB_TOKEN,
-            DAGSHUB_USERNAME,
-            DAGSHUB_REPO_NAME,
-        ),
-    )
+    if args.model_name == "Logistic_Regression":
+        trainer = ModelTrainer(
+            X_train,
+            y_train,
+            X_test,
+            y_test,
+            LogisticRegression,
+            LR_PARAMS,
+            "Logistic Regression",
+            LR_EXPORT_PATH,
+            ml_config,
+        )
+    elif args.model_name == "Random_Forest":
+        trainer = ModelTrainer(
+            X_train,
+            y_train,
+            X_test,
+            y_test,
+            RandomForestClassifier,
+            RF_PARAMS,
+            "Random Forest",
+            RF_EXPORT_PATH,
+            ml_config,
+        )
+    elif args.model_name == "XGBoost":
+        trainer = ModelTrainer(
+            X_train,
+            y_train,
+            X_test,
+            y_test,
+            XGBClassifier,
+            XGB_PARAMS,
+            "XGBoost",
+            XGB_EXPORT_PATH,
+            ml_config,
+        )
+    else:
+        raise ValueError(f"Model {args.model_name} not recognized!")
 
-    logistic_train.run_training()
-
-    random_train = ModelTrainer(
-        X_train,
-        y_train,
-        X_test,
-        y_test,
-        RandomForestClassifier,
-        RF_PARAMS,
-        "Random Forest",
-        RF_EXPORT_PATH,
-        MLflowConfig(
-            MLFLOW_TRACKING_URI,
-            DAGSHUB_TOKEN,
-            DAGSHUB_USERNAME,
-            DAGSHUB_REPO_NAME,
-        ),
-    )
-
-    random_train.run_training()
-
-    xgb_train = ModelTrainer(
-        X_train,
-        y_train,
-        X_test,
-        y_test,
-        XGBClassifier,
-        XGB_PARAMS,
-        "XGBoost",
-        XGB_EXPORT_PATH,
-        MLflowConfig(
-            MLFLOW_TRACKING_URI,
-            DAGSHUB_TOKEN,
-            DAGSHUB_USERNAME,
-            DAGSHUB_REPO_NAME,
-        ),
-    )
-
-    xgb_train.run_training()
+    trainer.run_training()

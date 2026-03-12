@@ -1,3 +1,4 @@
+import argparse
 from pathlib import Path
 import skops.io as sio
 import pandas as pd
@@ -204,11 +205,20 @@ class EvaluationModel:
 
 if __name__ == "__main__":
 
-    models = [
-        ("Logistic_Regression", LR_EXPORT_PATH),
-        ("Random_Forest", RF_EXPORT_PATH),
-        ("XG_Boost", XGB_EXPORT_PATH),
-    ]
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--model_name",
+        type=str,
+        required=True,
+        help="Choose: Logistic_Regression, Random_Forest, or XG_Boost",
+    )
+    args = parser.parse_args()
+
+    models = {
+        "Logistic_Regression": LR_EXPORT_PATH,
+        "Random_Forest": RF_EXPORT_PATH,
+        "XGBoost": XGB_EXPORT_PATH,
+    }
 
     config = MLflowConfig(
         MLFLOW_TRACKING_URI,
@@ -217,11 +227,25 @@ if __name__ == "__main__":
         DAGSHUB_REPO_NAME,
     )
 
-    for name, filename in models:
-        evoluate = EvaluationModel(
-            name,
-            filename,
-            config,
-            ARTIFACT_EVOLUATION_PATH,
+    # for name, filename in models:
+    #     evoluate = EvaluationModel(
+    #         name,
+    #         filename,
+    #         config,
+    #         ARTIFACT_EVOLUATION_PATH,
+    #     )
+    #     evoluate.run_evaluation()
+
+    if args.model_name not in models:
+        raise ValueError(
+            f"Model {args.model_name} not recognized! Choose from {list(models.keys())}"
         )
-        evoluate.run_evaluation()
+
+    # 4. Run evaluation ONLY for the specified model
+    evaluate = EvaluationModel(
+        args.model_name,
+        models[args.model_name],
+        config,
+        ARTIFACT_EVOLUATION_PATH,
+    )
+    evaluate.run_evaluation()
