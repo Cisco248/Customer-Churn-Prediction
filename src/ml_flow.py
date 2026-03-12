@@ -1,14 +1,9 @@
-# ─────────────────────────────────────────────────────────────
-# MLflow Setup
-# ─────────────────────────────────────────────────────────────
-
 import dagshub
 import mlflow
-from src.utils.logger import setup_logger
+from utils.logger import setup_logger
 
 
 class MLflowConfig:
-    """Configuration for MLflow tracking and DAGsHub integration."""
 
     def __init__(
         self, uri: str, token: str | None, username: str | None, repo_name: str | None
@@ -21,21 +16,20 @@ class MLflowConfig:
 
         try:
             if not self.token:
-                self.logger.info("DAGsHub authentication unsuccessful")
+                self.logger.info("❌ ===> DAGsHub authentication unsuccessful")
 
-            self.logger.info("DAGsHub authentication successful")
+            self.logger.info("✅ ===> DAGsHub authentication successful")
             dagshub.init(
                 repo_owner=self.dagshub_username,
                 repo_name=self.dagshub_repo_name,
                 mlflow=True,
             )
             mlflow.set_tracking_uri(self.tracking_uri)
-            self.logger.info(f"MLflow: {self.tracking_uri}")
+            self.logger.info(f"✅ ===> MLflow: {self.tracking_uri}")
 
         except Exception as e:
-            self.logger.error(f"Error initializing DAGsHub: {e}")
+            self.logger.error(f"Error initializing DAGsHub: {e} ===> ❌")
 
     def init_experiment(self, name: str | None):
-        """Authenticate with DAGsHub and configure MLflow."""
         self.experiment_name = name
         mlflow.set_experiment(self.experiment_name)

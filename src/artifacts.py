@@ -9,7 +9,7 @@ from sklearn.metrics import (
     roc_curve,
 )
 import matplotlib.pyplot as plt
-from src.config import ARTIFACT_PATH
+from config import ARTIFACT_TRAIN_PATH, ARTIFACT_EVOLUATION_PATH
 
 
 class ComputeMatrics:
@@ -45,7 +45,7 @@ class Visualization:
         self.y_pred = y_pred
         self.run_name = run_name
 
-    def log_confusion_matrix(self):
+    def build_train_confusion_matrix(self):
 
         self.cm = confusion_matrix(self.y_true, self.y_pred)
 
@@ -67,18 +67,18 @@ class Visualization:
 
         plt.colorbar(self.im)
 
-        path = ARTIFACT_PATH / f"cm_{self.run_name.replace(' ', '_')}.png"
+        path = ARTIFACT_TRAIN_PATH / f"{self.run_name.replace(' ', '_')}_cm.png"
         self.fig.savefig(path, bbox_inches="tight")
         plt.close(self.fig)
 
         mlflow.log_artifact(str(path))
 
-    def log_roc_curve(self, run_name: str):
+    def build_train_roc_curve(self, run_name: str):
         self.run_name = run_name
 
         self.fpr, self.tpr, _ = roc_curve(self.y_true, self.y_prob)
 
-        self.fig, self.ax = plt.subplots(figsize=(6, 5))
+        self.fig, self.ax = plt.subplots()
         self.ax.plot(self.fpr, self.tpr)
         self.ax.plot([0, 1], [0, 1], "k--")
 
@@ -86,7 +86,7 @@ class Visualization:
         self.ax.set_ylabel("TPR")
         self.ax.set_title(f"ROC Curve – {self.run_name}")
 
-        self.path = ARTIFACT_PATH / f"roc_{self.run_name.replace(' ', '_')}.png"
+        self.path = ARTIFACT_TRAIN_PATH / f"{self.run_name.replace(' ', '_')}_roc.png"
         self.fig.savefig(self.path, bbox_inches="tight")
         plt.close(self.fig)
 

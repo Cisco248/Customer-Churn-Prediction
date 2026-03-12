@@ -1,4 +1,5 @@
 import pandas as pd
+from pyparsing import col
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
@@ -28,25 +29,43 @@ class DataPreprocessor:
         self.df = df.df
         self.logger = setup_logger()
 
+    def clean_data(self):
+
+        self.df["TotalCharges"] = pd.to_numeric(
+            self.df["TotalCharges"], errors="coerce"
+        ).fillna(0)
+
+        self.df = self.df.drop(columns=DROP_COLUMNS)
+
+        return self.df
+
     def _encode_binary(self) -> pd.DataFrame:
+        self.df = self.clean_data()
 
         self.yes_no_cols = [c for c in BINARY_FEATURES if self.df[c].dtype == object]
 
         for col in self.yes_no_cols:
             if col == "gender":
-                self.df[col] = (self.df[col] == "Male").astype(int)
+                self.df[col] = (
+                    self.df[col].map({"Male": 1, "Female": 0}).fillna(0).astype(int)
+                )
             else:
-                self.df[col] = (self.df[col] == "Yes").astype(int)
-
+                self.df[col] = (
+                    self.df[col].map({"Yes": 1, "No": 0}).fillna(0).astype(int)
+                )
         return self.df
 
     def _encode_target(self) -> pd.DataFrame:
-        self.df[TARGET_COLUMN] = (self.df[TARGET_COLUMN] == "Yes").astype(int)
+        self.df = self._encode_binary()
+
+        if self.df[TARGET_COLUMN].dtype == object:
+            self.df[TARGET_COLUMN] = (
+                self.df[TARGET_COLUMN].map({"Yes": 1, "No": 0}).fillna(0).astype(int)
+            )
 
         return self.df
 
     def setup_preprocessing(self) -> ColumnTransformer:
-        self.df = self._encode_binary()
         self.df = self._encode_target()
 
         self.numeric_pipeline = Pipeline(
@@ -81,11 +100,6 @@ class DataPreprocessor:
             self.logger.warning("⚠️ ===> Processed file already exists.")
         PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
         self.logger.info("ℹ️ ===> Build processed file.")
-
-        self.df = self.df.drop(columns=DROP_COLUMNS, errors="ignore")
-
-        self.df = self._encode_target()
-        self.df = self._encode_binary()
 
         self.X = self.df.drop(columns=[TARGET_COLUMN])
         self.y = self.df[TARGET_COLUMN]

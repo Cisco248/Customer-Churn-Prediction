@@ -23,7 +23,7 @@ def log_file_handler(loc: str, formatter, logger: logging.Logger) -> logging.Log
 def console_log_handler(formatter, logger: logging.Logger):
 
     console_handler = logging.StreamHandler(sys.stdout)  # force stdout
-    console_handler.setLevel(logging.DEBUG)
+    console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(formatter)
 
     logger.addHandler(console_handler)

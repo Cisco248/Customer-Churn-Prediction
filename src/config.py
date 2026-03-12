@@ -16,6 +16,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 # ─── Data Paths ───────────────────────────────────────────────────────────────
 RAW_DATA_PATH = ROOT_DIR / "data" / "raw" / "churn_prediction_data.csv"
 PROCESSED_DATA_DIR = ROOT_DIR / "data" / "processed"
+GENERATED_DATA_DIR = ROOT_DIR / "data" / "generated"
 TRAIN_DATA_PATH = PROCESSED_DATA_DIR / "train.csv"
 TEST_DATA_PATH = PROCESSED_DATA_DIR / "test.csv"
 PREPROCESSOR_PATH = PROCESSED_DATA_DIR / "preprocessor.joblib"
@@ -26,8 +27,6 @@ REPORT_TITLE = "\nClassification Report:"
 TARGET_NAMES = ["No Churn", "Churn"]
 TRUST_LIST = [Booster, XGBClassifier]
 
-# ─── Artifact Paths ───────────────────────────────────────────────────────────
-ARTIFACT_PATH = ROOT_DIR / "artifacts"
 
 # ─── MLflow ───────────────────────────────────────────────────────────────────
 DAGSHUB_USERNAME = os.getenv("DAGSHUB_USERNAME")
@@ -41,9 +40,10 @@ DAGSHUB_TOKEN = os.getenv("DAGSHUB_TOKEN")
 MLFLOW_EXPERIMENT_NAME = "customer-churn-prediction"
 
 # ─── Pre-processing ───────────────────────────────────────────────────────────
-TARGET_COLUMN = "Churn"
-TEST_SIZE = 0.20
+TEST_SIZE = 0.2
 RANDOM_STATE = 42
+
+TARGET_COLUMN = "Churn"
 
 NUMERIC_FEATURES = ["tenure", "MonthlyCharges", "TotalCharges"]
 
@@ -95,6 +95,52 @@ REQUIRED_COLS = [
     TARGET_COLUMN,
 ]
 
+X_FEATURE_COLS = [
+    "tenure",
+    "MonthlyCharges",
+    "TotalCharges",
+    "MultipleLines_No",
+    "MultipleLines_No phone service",
+    "MultipleLines_Yes",
+    "InternetService_DSL",
+    "InternetService_Fiber optic",
+    "InternetService_No",
+    "OnlineSecurity_No",
+    "OnlineSecurity_No internet service",
+    "OnlineSecurity_Yes",
+    "OnlineBackup_No",
+    "OnlineBackup_No internet service",
+    "OnlineBackup_Yes",
+    "DeviceProtection_No",
+    "DeviceProtection_No internet service",
+    "DeviceProtection_Yes",
+    "TechSupport_No",
+    "TechSupport_No internet service",
+    "TechSupport_Yes",
+    "StreamingTV_No",
+    "StreamingTV_No internet service",
+    "StreamingTV_Yes",
+    "StreamingMovies_No",
+    "StreamingMovies_No internet service",
+    "StreamingMovies_Yes",
+    "Contract_Month-to-month",
+    "Contract_One year",
+    "Contract_Two year",
+    "PaymentMethod_Bank transfer (automatic)",
+    "PaymentMethod_Credit card (automatic)",
+    "PaymentMethod_Electronic check",
+    "PaymentMethod_Mailed check",
+    "gender",
+    "SeniorCitizen",
+    "Partner",
+    "Dependents",
+    "PhoneService",
+    "PaperlessBilling",
+]
+
+Y_FEATURE_COLS = ["Churn"]
+
+
 # ─── Model Hyperparameters ────────────────────────────────────────────────────
 LR_PARAMS = {
     "C": 1.0,
@@ -123,6 +169,12 @@ XGB_PARAMS = {
     "random_state": RANDOM_STATE,
 }
 
+# Model locations for evaluation
+
+LR_EXPORT_PATH = str(MODELS_DIR / "logistic_regression.skops")
+RF_EXPORT_PATH = str(MODELS_DIR / "random_forest.skops")
+XGB_EXPORT_PATH = str(MODELS_DIR / "xgboost.skops")
+
 # Logger Constants
 
 LOG_FILE = "logs/model.log"
@@ -134,8 +186,8 @@ BEST_AUC = 0
 BEST_MODEL_NAME = None
 BEST_RESULTS = None
 
-# EVALUTION_MODELS = {
-#     "Logistic_Regression": MODELS_DIR / "logistic_regression.skops",
-#     "Random_Forest": MODELS_DIR / "random_forest.skops",
-#     "XGBoost": MODELS_DIR / "xgboost.skops",
-# }
+# ─── Artifact Paths ───────────────────────────────────────────────────────────
+ARTIFACT_PATH = ROOT_DIR / "artifacts"
+
+ARTIFACT_TRAIN_PATH = ARTIFACT_PATH / "train"
+ARTIFACT_EVOLUATION_PATH = ARTIFACT_PATH / "evaluation"

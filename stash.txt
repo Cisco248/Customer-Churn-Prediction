@@ -89,6 +89,67 @@ def run_evaluation():
 
 
 
+    # with mlflow.start_run(run_name="customer-churn-prediction"):
+
+    #     mlflow.set_tag("stage", "evaluation")
+    #     mlflow.set_tag("best_model", self.best_model_name)
+
+    #     mlflow.log_metrics(self.metrics)
+
+    # self.roc_artifact
+
+    # if self.roc_path is None:
+    #     raise ValueError("ROC path is None!")
+
+    # mlflow.log_artifact(str(self.roc_path))
+
+    # self.feature_importance_artifact
+
+    # self.artifacts_builder.build_roc_curve(
+    #     self.best["y_test"],
+    #     self.best["y_prob"],
+    #     loc=ARTIFACT_PATH / "roc_curve.png",
+    # )
+
+    # self.artifacts_builder.build_feature_importance_artifact(
+    #     self.best_model,
+    #     self.best["X_test"],
+    #     loc=ARTIFACT_PATH / "feature_importance.png",
+    # )
+
+    # def __init__(
+    #     self, uri: str, token: str | None, username: str | None, repo_name: str | None
+    # ) -> None:
+    #     self.tracking_uri = uri
+    #     self.token = token
+    #     self.dagshub_username = username
+    #     self.dagshub_repo_name = repo_name
+
+    #     try:
+    #         if not self.token:
+    #             logger.info("DAGsHub authentication unsuccessful")
+
+    #         logger.info("DAGsHub authentication successful")
+    #         dagshub.init(
+    #             repo_owner=self.dagshub_username,
+    #             repo_name=self.dagshub_repo_name,
+    #             mlflow=True,
+    #         )
+    #         mlflow.set_tracking_uri(self.tracking_uri)
+    #         logger.info(f"MLflow: {self.tracking_uri}")
+
+    #     except Exception as e:
+    #         logger.error(f"Error initializing DAGsHub: {e}")
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -421,3 +482,18 @@ def build_preprocessor() -> ColumnTransformer:
     logger.info("Preprocessing Completed")
 
     return train_df, test_df
+
+
+
+
+
+feature importance logic
+
+if hasattr(self.model, "feature_importances_"):
+
+            importance = pd.DataFrame(
+                {
+                    "feature": self.X_test.columns,
+                    "importance": self.model.feature_importances_,
+                }
+            ).sort_values("importance", ascending=False)
