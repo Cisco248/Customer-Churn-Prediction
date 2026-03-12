@@ -36,6 +36,8 @@ MLFLOW_TRACKING_URI = os.getenv(
     "MLFLOW_TRACKING_URI",
     "https://dagshub.com/Cisco248/customer-churn-prediction.mlflow",
 )
+DAGSHUB_TOKEN = os.getenv("DAGSHUB_TOKEN")
+
 MLFLOW_EXPERIMENT_NAME = "customer-churn-prediction"
 
 # ─── Pre-processing ───────────────────────────────────────────────────────────
@@ -124,7 +126,7 @@ XGB_PARAMS = {
 # Logger Constants
 
 LOG_FILE = "logs/model.log"
-FORMAT = "%(asctime)s [%(levelname)s] [%(name)s] %(message)s"
+FORMAT = "%(asctime)s [%(levelname)s] %(message)s"
 
 # Evaluation Parameters
 
@@ -132,8 +134,8 @@ BEST_AUC = 0
 BEST_MODEL_NAME = None
 BEST_RESULTS = None
 
-EVALUTION_MODELS = {
-    "Logistic_Regression": MODELS_DIR / "logistic_regression.skops",
-    "Random_Forest": MODELS_DIR / "random_forest.skops",
-    "XGBoost": MODELS_DIR / "xgboost.skops",
-}
+# EVALUTION_MODELS = {
+#     "Logistic_Regression": MODELS_DIR / "logistic_regression.skops",
+#     "Random_Forest": MODELS_DIR / "random_forest.skops",
+#     "XGBoost": MODELS_DIR / "xgboost.skops",
+# }

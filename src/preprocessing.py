@@ -16,116 +16,128 @@ from config import (
     DROP_COLUMNS,
     TEST_SIZE,
     RANDOM_STATE,
+    RAW_DATA_PATH,
 )
-
-from data_ingestion import run_ingestion
+from data_ingestion import DataIngestion
 from utils.logger import setup_logger
 
-logger = setup_logger()
 
+class DataPreprocessor:
 
-def encode_binary(df: pd.DataFrame) -> pd.DataFrame:
-    """Map Yes/No → 1/0 and gender → 1/0 in place."""
-    yes_no_cols = [c for c in BINARY_FEATURES if df[c].dtype == object]
+    def __init__(self, df: DataIngestion):
+        self.df = df.df
+        self.logger = setup_logger()
 
-    for col in yes_no_cols:
-        if col == "gender":
-            df[col] = (df[col] == "Male").astype(int)
-        else:
-            df[col] = (df[col] == "Yes").astype(int)
-    return df
+    def _encode_binary(self) -> pd.DataFrame:
 
+        self.yes_no_cols = [c for c in BINARY_FEATURES if self.df[c].dtype == object]
 
-def encode_target(df: pd.DataFrame) -> pd.DataFrame:
-    df[TARGET_COLUMN] = (df[TARGET_COLUMN] == "Yes").astype(int)
-    return df
+        for col in self.yes_no_cols:
+            if col == "gender":
+                self.df[col] = (self.df[col] == "Male").astype(int)
+            else:
+                self.df[col] = (self.df[col] == "Yes").astype(int)
 
+        return self.df
 
-def build_preprocessor() -> ColumnTransformer:
-    """Numeric: median impute + standard scale. Categorical: OHE."""
-    numeric_pipeline = Pipeline(
-        [
-            ("imputer", SimpleImputer(strategy="median")),
-            ("scaler", StandardScaler()),
+    def _encode_target(self) -> pd.DataFrame:
+        self.df[TARGET_COLUMN] = (self.df[TARGET_COLUMN] == "Yes").astype(int)
+
+        return self.df
+
+    def setup_preprocessing(self) -> ColumnTransformer:
+        self.df = self._encode_binary()
+        self.df = self._encode_target()
+
+        self.numeric_pipeline = Pipeline(
+            [
+                ("imputer", SimpleImputer(strategy="median")),
+                ("scaler", StandardScaler()),
+            ]
+        )
+
+        self.categorical_pipeline = Pipeline(
+            [
+                ("imputer", SimpleImputer(strategy="most_frequent")),
+                ("ohe", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
+            ]
+        )
+
+        self.preprocessor = ColumnTransformer(
+            [
+                ("num", self.numeric_pipeline, NUMERIC_FEATURES),
+                ("cat", self.categorical_pipeline, MULTI_FEATURES),
+            ],
+            remainder="passthrough",
+        )
+
+        return self.preprocessor
+
+    def build_preprocessor(self):
+        self.preprocessor = self.setup_preprocessing()
+        self.logger.info("🚀 ===> Preprocessor Stage: Started Processing ")
+
+        if PROCESSED_DATA_DIR.exists():
+            self.logger.warning("⚠️ ===> Processed file already exists.")
+        PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
+        self.logger.info("ℹ️ ===> Build processed file.")
+
+        self.df = self.df.drop(columns=DROP_COLUMNS, errors="ignore")
+
+        self.df = self._encode_target()
+        self.df = self._encode_binary()
+
+        self.X = self.df.drop(columns=[TARGET_COLUMN])
+        self.y = self.df[TARGET_COLUMN]
+
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
+            self.X,
+            self.y,
+            test_size=TEST_SIZE,
+            random_state=RANDOM_STATE,
+            stratify=self.y,
+        )
+
+        self.logger.info(f"Train: {len(self.X_train):,}  |  Test: {len(self.X_test):,}")
+
+        self._X_train = self.preprocessor.fit_transform(self.X_train)
+        self._X_test = self.preprocessor.transform(self.X_test)
+
+        self.ohe_cols = (
+            self.preprocessor.named_transformers_["cat"]
+            .named_steps["ohe"]
+            .get_feature_names_out(MULTI_FEATURES)
+            .tolist()
+        )
+
+        self.passthrough_cols = [
+            c
+            for c in self.X_train.columns
+            if c not in NUMERIC_FEATURES + MULTI_FEATURES
         ]
-    )
 
-    categorical_pipeline = Pipeline(
-        [
-            ("imputer", SimpleImputer(strategy="most_frequent")),
-            ("ohe", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
-        ]
-    )
+        self.all_cols = NUMERIC_FEATURES + self.ohe_cols + self.passthrough_cols
 
-    preprocessor = ColumnTransformer(
-        [
-            ("num", numeric_pipeline, NUMERIC_FEATURES),
-            ("cat", categorical_pipeline, MULTI_FEATURES),
-        ],
-        remainder="passthrough",
-    )
+        self.train_df = pd.DataFrame(self._X_train, columns=self.all_cols)  # type: ignore
+        self.train_df[TARGET_COLUMN] = self.y_train.reset_index(drop=True)
 
-    return preprocessor
+        self.test_df = pd.DataFrame(self._X_test, columns=self.all_cols)  # type: ignore
+        self.test_df[TARGET_COLUMN] = self.y_test.reset_index(drop=True)
 
+        self.train_df.to_csv(TRAIN_DATA_PATH, index=False)
+        self.test_df.to_csv(TEST_DATA_PATH, index=False)
 
-def run_preprocessing() -> tuple[pd.DataFrame, pd.DataFrame]:
+        self.logger.info(f" Saved Train Data ===> ℹ️")
+        self.logger.info(f" Saved Test Data ===> ℹ️")
+        self.logger.info("✅ ===> Preprocessing Stage: Completed Processing")
 
-    if PROCESSED_DATA_DIR:
-        logger.warning("Folder is available!")
-
-    PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
-
-    df = run_ingestion()
-
-    df = df.drop(columns=DROP_COLUMNS, errors="ignore")
-
-    df = encode_target(df)
-    df = encode_binary(df)
-
-    X = df.drop(columns=[TARGET_COLUMN])
-    y = df[TARGET_COLUMN]
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X,
-        y,
-        test_size=TEST_SIZE,
-        random_state=RANDOM_STATE,
-        stratify=y,
-    )
-    logger.info(f"Train: {len(X_train):,}  |  Test: {len(X_test):,}")
-
-    preprocessor = build_preprocessor()
-    _X_train = preprocessor.fit_transform(X_train)
-    _X_test = preprocessor.transform(X_test)
-
-    ohe_cols = (
-        preprocessor.named_transformers_["cat"]
-        .named_steps["ohe"]
-        .get_feature_names_out(MULTI_FEATURES)
-        .tolist()
-    )
-
-    passthrough_cols = [
-        c for c in X_train.columns if c not in NUMERIC_FEATURES + MULTI_FEATURES
-    ]
-
-    all_cols = NUMERIC_FEATURES + ohe_cols + passthrough_cols
-
-    train_df = pd.DataFrame(_X_train, columns=all_cols)
-    train_df[TARGET_COLUMN] = y_train.reset_index(drop=True)
-
-    test_df = pd.DataFrame(_X_test, columns=all_cols)
-    test_df[TARGET_COLUMN] = y_test.reset_index(drop=True)
-
-    train_df.to_csv(TRAIN_DATA_PATH, index=False)
-    test_df.to_csv(TEST_DATA_PATH, index=False)
-
-    logger.info(f"Saved {TRAIN_DATA_PATH}")
-    logger.info(f"Saved {TEST_DATA_PATH}")
-    logger.info("Preprocessing Completed")
-
-    return train_df, test_df
+        return self.train_df, self.test_df
 
 
 if __name__ == "__main__":
-    run_preprocessing()
+    ingestion = DataIngestion(RAW_DATA_PATH)
+    df = ingestion.load_dataset()
+    validated_df = ingestion.validate_data()
+
+    preprocessor = DataPreprocessor(ingestion)
+    train_df, test_df = preprocessor.build_preprocessor()

@@ -1,0 +1,423 @@
+def evaluate_model(model_name, model_path):
+
+    logger.info(f"\n{'='*50}\n{model_name}\n{'='*50}")
+
+    model = sio.load(
+        model_path,
+        trusted=TRUST_LIST,
+    )
+
+    test_df = pd.read_csv(TEST_DATA_PATH)
+
+    X_test = test_df.drop(columns=[TARGET_COLUMN])
+    y_test = test_df[TARGET_COLUMN]
+
+    y_pred = model.predict(X_test)
+    y_prob = model.predict_proba(X_test)[:, 1]
+
+    metrics = {
+        "accuracy": round(float(accuracy_score(y_test, y_pred)), 4),
+        "precision": round(float(precision_score(y_test, y_pred)), 4),
+        "recall": round(float(recall_score(y_test, y_pred)), 4),
+        "f1": round(float(f1_score(y_test, y_pred)), 4),
+        "roc_auc": round(float(roc_auc_score(y_test, y_prob)), 4),
+    }
+
+    logger.info("\nEvaluation Metrics:")
+    for k, v in metrics.items():
+        logger.info(f"{k}: {v}")
+
+    report = classification_report(y_test, y_pred, target_names=TARGET_NAMES)
+    logger.info(f"{REPORT_TITLE}\n{report}")
+
+    return model, metrics, y_test, y_prob, X_test
+
+def run_evaluation():
+
+    ml_config.setup_experiment()
+
+    logger.info("Running Final Evaluation on All Models")
+
+    results = []
+
+    for name, path in EVALUTION_MODELS.items():
+
+        model, metrics, y_test, y_prob, X_test = evaluate_model(name, path)
+
+        results.append(
+            {
+                "name": name,
+                "model": model,
+                "metrics": metrics,
+                "y_test": y_test,
+                "y_prob": y_prob,
+                "X_test": X_test,
+            }
+        )
+
+    best = max(results, key=lambda x: x["metrics"]["roc_auc"])
+
+    best_model = best["model"]
+    best_name = best["name"]
+    best_metrics = best["metrics"]
+
+    print(f"Best Model: {best_name}")
+    print(f"ROC-AUC: {best_metrics['roc_auc']}")
+
+    logger.info(f"\nBest Model: {best_name} | ROC-AUC: {best_metrics['roc_auc']}")
+
+    artifacts_builder = BuildEvaluationArtifacts()
+
+    with mlflow.start_run(run_name=f"[{best_name} Final Evaluation]"):
+
+        mlflow.log_metrics(best_metrics)
+
+        artifacts_builder.build_roc_curve(
+            best["y_test"],
+            best["y_prob"],
+            loc=ARTIFACT_PATH / "roc_curve.png",
+        )
+
+        artifacts_builder.build_feature_importance_artifact(
+            best_model,
+            best["X_test"],
+            loc=ARTIFACT_PATH / "feature_importance.png",
+        )
+
+    logger.info("Evaluation Complete")
+
+
+
+
+
+
+
+
+
+    # def setup_mlflow(
+    #     self,
+    #     # best_model_name: str,
+    #     # metrics: dict,
+    #     # roc_artifact: None,
+    #     # feature_importance_artifact: None,
+    # ):
+
+    #     # self.best_model_name = best_model_name
+    #     # self.metrics = metrics
+    #     # self.roc_artifact = roc_artifact
+    #     # self.roc_path = ARTIFACT_PATH / "roc_curve.png"
+    #     # self.feature_importance_artifact = feature_importance_artifact
+    #     # self.feature_importance_path = ARTIFACT_PATH / "feature_importance.png"
+    #     pass
+
+
+
+
+
+
+
+
+# def load_raw_data(path: Path = RAW_DATA_PATH) -> pd.DataFrame:
+
+#     self.logger.info(f"Loading raw data from: {path}")
+
+#     if not path.exists():
+#         logger.error(f"Raw data not found at {path}")
+#         raise FileNotFoundError(f"Raw data not found at {path}")
+
+#     df = pd.read_csv(path)
+
+#     logger.info(f"Loaded {len(df):,} rows | {df.shape[1]} columns")
+
+#     return df
+
+
+
+
+def run_ingestion() -> pd.DataFrame:
+#     logger.info("Data Ingestion Started")
+#     df = load_raw_data()
+#     logger.info("Row Data Loaded")
+#     df = validate_data(df)
+#     logger.info("Data Ingestion Complete")
+#     return df
+
+
+
+
+
+
+
+
+
+
+
+
+
+def logistic_regression_train_model(X_train, y_train, X_test, y_test):
+
+    logger.info("\nTraining: Logistic Regression")
+
+    with mlflow.start_run(run_name="Logistic Regression"):
+
+        params = {
+            "C": 1.0,
+            "max_iter": 1000,
+            "solver": "lbfgs",
+            "random_state": 42,
+        }
+
+        mlflow.log_params(params)
+
+        model = LogisticRegression(
+            C=1.0,
+            max_iter=1000,
+            solver="lbfgs",
+            random_state=42,
+        )
+
+        model.fit(X_train, y_train)
+
+        y_pred = model.predict(X_test)
+        y_prob = model.predict_proba(X_test)[:, 1]
+
+        metrics = compute_metrics(y_test, y_pred, y_prob)
+        mlflow.log_metrics(metrics)
+
+        logger.info(f"Logistic Regression Metrics: {str(metrics)}")
+
+        log_confusion_matrix(y_test, y_pred, "Logistic Regression")
+        log_roc_curve(y_test, y_prob, "Logistic Regression")
+
+        ml_sk.log_model(
+            model, name="model", params=params, registered_model_name="lr-churn"
+        )
+
+        model_path = MODELS_DIR / "logistic_regression.skops"
+        sio.dump(model, model_path)
+        mlflow.log_artifact(str(model_path))
+
+
+# ─────────────────────────────────────────────────────────────
+# Random Forest
+# ─────────────────────────────────────────────────────────────
+
+
+def random_forest_train_model(X_train, y_train, X_test, y_test):
+
+    logger.info("\nTraining: Random Forest")
+
+    with mlflow.start_run(run_name="Random Forest"):
+
+        params = {
+            "n_estimators": 200,
+            "max_depth": 10,
+            "min_samples_split": 5,
+            "min_samples_leaf": 2,
+            "random_state": 42,
+            "n_jobs": -1,
+        }
+
+        mlflow.log_params(params)
+
+        model = RandomForestClassifier(
+            n_estimators=200,
+            max_depth=10,
+            min_samples_split=5,
+            min_samples_leaf=2,
+            random_state=42,
+            n_jobs=-1,
+        )
+
+        model.fit(X_train, y_train)
+
+        y_pred = model.predict(X_test)
+        y_prob = model.predict_proba(X_test)[:, 1]
+
+        metrics = compute_metrics(y_test, y_pred, y_prob)
+        mlflow.log_metrics(metrics)
+
+        logger.info(f"Random Forest Metrics: {str(metrics)}")
+
+        log_confusion_matrix(y_test, y_pred, "Random Forest")
+        log_roc_curve(y_test, y_prob, "Random Forest")
+
+        ml_sk.log_model(
+            model, name="model", params=params, registered_model_name="rf-churn"
+        )
+
+        model_path = MODELS_DIR / "random_forest.skops"
+        sio.dump(model, model_path)
+        mlflow.log_artifact(str(model_path))
+
+
+# ─────────────────────────────────────────────────────────────
+# XGBoost
+# ─────────────────────────────────────────────────────────────
+
+
+def xg_boost_train_model(X_train, y_train, X_test, y_test):
+
+    logger.info("\nTraining: XGBoost")
+
+    with mlflow.start_run(run_name="XGBoost"):
+
+        params = {
+            "max_depth": 8,
+            "learning_rate": 0.05,
+            "subsample": 0.8,
+            "colsample_bytree": 0.8,
+            "eval_metric": "logloss",
+            "random_state": 42,
+        }
+
+        mlflow.log_params(params)
+
+        model = XGBClassifier(
+            max_depth=8,
+            learning_rate=0.05,
+            subsample=0.8,
+            colsample_bytree=0.8,
+            eval_metric="logloss",
+            random_state=42,
+        )
+
+        model.fit(X_train, y_train)
+
+        y_pred = model.predict(X_test)
+        y_prob = model.predict_proba(X_test)[:, 1]
+
+        metrics = compute_metrics(y_test, y_pred, y_prob)
+        mlflow.log_metrics(metrics)
+
+        logger.info(f"XGBoost Metrics: {str(metrics)}")
+
+        log_confusion_matrix(y_test, y_pred, "XGBoost")
+        log_roc_curve(y_test, y_prob, "XGBoost")
+
+        ml_xgb.log_model(
+            model, name="model", params=params, registered_model_name="xgb-churn"
+        )
+
+        model_path = MODELS_DIR / "xgboost.skops"
+        sio.dump(model, model_path)
+        mlflow.log_artifact(str(model_path))
+
+
+# ─────────────────────────────────────────────────────────────
+# Main Training Runner
+# ─────────────────────────────────────────────────────────────
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def encode_binary(df: pd.DataFrame) -> pd.DataFrame:
+    """Map Yes/No → 1/0 and gender → 1/0 in place."""
+    yes_no_cols = [c for c in BINARY_FEATURES if df[c].dtype == object]
+
+    for col in yes_no_cols:
+        if col == "gender":
+            df[col] = (df[col] == "Male").astype(int)
+        else:
+            df[col] = (df[col] == "Yes").astype(int)
+    return df
+
+
+
+def build_preprocessor() -> ColumnTransformer:
+    """Numeric: median impute + standard scale. Categorical: OHE."""
+    numeric_pipeline = Pipeline(
+        [
+            ("imputer", SimpleImputer(strategy="median")),
+            ("scaler", StandardScaler()),
+        ]
+    )
+
+    categorical_pipeline = Pipeline(
+        [
+            ("imputer", SimpleImputer(strategy="most_frequent")),
+            ("ohe", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
+        ]
+    )
+
+    preprocessor = ColumnTransformer(
+        [
+            ("num", numeric_pipeline, NUMERIC_FEATURES),
+            ("cat", categorical_pipeline, MULTI_FEATURES),
+        ],
+        remainder="passthrough",
+    )
+
+    return preprocessor
+
+
+
+
+
+    def run_preprocessing() -> tuple[pd.DataFrame, pd.DataFrame]:
+
+    if PROCESSED_DATA_DIR:
+        logger.warning("Folder is available!")
+
+    PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+    df = DataIngestion(RAW_DATA_PATH).validate_data()
+
+    df = df.drop(columns=DROP_COLUMNS, errors="ignore")
+
+    df = encode_target(df)
+    df = encode_binary(df)
+
+    X = df.drop(columns=[TARGET_COLUMN])
+    y = df[TARGET_COLUMN]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=TEST_SIZE,
+        random_state=RANDOM_STATE,
+        stratify=y,
+    )
+    logger.info(f"Train: {len(X_train):,}  |  Test: {len(X_test):,}")
+
+    preprocessor = build_preprocessor()
+    _X_train = preprocessor.fit_transform(X_train)
+    _X_test = preprocessor.transform(X_test)
+
+    ohe_cols = (
+        preprocessor.named_transformers_["cat"]
+        .named_steps["ohe"]
+        .get_feature_names_out(MULTI_FEATURES)
+        .tolist()
+    )
+
+    passthrough_cols = [
+        c for c in X_train.columns if c not in NUMERIC_FEATURES + MULTI_FEATURES
+    ]
+
+    all_cols = NUMERIC_FEATURES + ohe_cols + passthrough_cols
+
+    train_df = pd.DataFrame(_X_train, columns=all_cols)
+    train_df[TARGET_COLUMN] = y_train.reset_index(drop=True)
+
+    test_df = pd.DataFrame(_X_test, columns=all_cols)
+    test_df[TARGET_COLUMN] = y_test.reset_index(drop=True)
+
+    train_df.to_csv(TRAIN_DATA_PATH, index=False)
+    test_df.to_csv(TEST_DATA_PATH, index=False)
+
+    logger.info(f"Saved {TRAIN_DATA_PATH}")
+    logger.info(f"Saved {TEST_DATA_PATH}")
+    logger.info("Preprocessing Completed")
+
+    return train_df, test_df

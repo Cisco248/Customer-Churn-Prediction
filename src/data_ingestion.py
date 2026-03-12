@@ -1,63 +1,65 @@
-import logging
 import pandas as pd
 from pathlib import Path
-from config import *
+from config import REQUIRED_COLS, TARGET_COLUMN, RAW_DATA_PATH
 from utils.logger import setup_logger
 
-logger = setup_logger()
 
+class DataIngestion:
+    def __init__(self, path: Path):
+        self.logger = setup_logger()
+        self.location = path
 
-def load_raw_data(path: Path = RAW_DATA_PATH) -> pd.DataFrame:
+    def load_dataset(self) -> pd.DataFrame:
+        self.logger.info("🚀 ===> Data_Ingestion Stage: Start Processing")
 
-    logger.info(f"Loading raw data from: {path}")
+        if not self.location.exists():
+            self.logger.error(f"Raw data not found at {self.location} ===> ❌")
+            raise ValueError(f"Raw data not found at {self.location} ===> ❌")
 
-    if not path.exists():
-        logger.error(f"Raw data not found at {path}")
-        raise FileNotFoundError(f"Raw data not found at {path}")
+        self.df = pd.read_csv(self.location)
 
-    df = pd.read_csv(path)
+        self.logger.info(
+            f"DataFrame: {len(self.df):,} rows | {self.df.shape[1]} columns ===> ℹ️"
+        )
+        self.logger.info("✅ ===> Data_Ingestion Stage: Completed Processing")
 
-    logger.info(f"Loaded {len(df):,} rows | {df.shape[1]} columns")
+        return self.df
 
-    return df
+    def validate_data(self) -> pd.DataFrame:
 
+        self.logger.info("🚀 ===> Data_Ingestion Stage: Start Validating")
 
-def validate_data(df: pd.DataFrame) -> pd.DataFrame:
+        self.missing_cols = [c for c in REQUIRED_COLS if c not in self.df.columns]
 
-    missing_cols = [c for c in REQUIRED_COLS if c not in df.columns]
-    if missing_cols:
-        raise ValueError(f"Dataset is Missing Columns: {missing_cols}")
+        if self.missing_cols:
+            self.logger.error(
+                f"Dataset is Missing Columns: {self.missing_cols} ===> ❌"
+            )
+            raise ValueError(f"Dataset is Missing Columns: {self.missing_cols} ===> ❌")
 
-    logger.info("All Required Columns Present")
-
-    df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
-
-    n_nulls = df["TotalCharges"].isna().sum()
-    if n_nulls:
-        logger.warning(
-            f"TotalCharges: {n_nulls} Values coerced to NaN (will be imputed in preprocessing)"
+        self.df["TotalCharges"] = pd.to_numeric(
+            self.df["TotalCharges"], errors="coerce"
         )
 
-    null_report = df.isnull().sum()
-    if null_report.any():
-        logger.info(f"Null Value Report: {null_report[null_report > 0]}")
-    else:
-        logger.info("No missing values Detected!")
+        self.n_nulls = self.df["TotalCharges"].isna().sum()
+        if self.n_nulls:
+            self.logger.warning(
+                f"⚠️ ===> Null Coerrence in TotalCharges: {self.n_nulls}"
+            )
 
-    churn_dist = df[TARGET_COLUMN].value_counts(normalize=True).round(3)
-    logger.info(f"Target Distribution: {churn_dist}")
+        self.null_report = self.df.isnull().sum()
+        if self.null_report.any():
+            self.logger.warning(
+                f"⚠️ ===> Null Value Report: {self.null_report[self.null_report > 0].to_string()}"
+            )
+        else:
+            self.logger.info("No missing values Detected! ===> ✅")
 
-    return df
+        self.churn_dist = self.df[TARGET_COLUMN].value_counts(normalize=True).round(3)
+        self.logger.info(
+            f"Target Distribution: {self.churn_dist['Yes']:.3%} Churn | {self.churn_dist['No']:.3%} No Churn ===> ℹ️"
+        )
 
+        self.logger.info("✅ ===> Data_Ingestion Stage: Completed Validating")
 
-def run_ingestion() -> pd.DataFrame:
-    logger.info("Data Ingestion Started")
-    df = load_raw_data()
-    logger.info("Row Data Loaded")
-    df = validate_data(df)
-    logger.info("Data Ingestion Complete")
-    return df
-
-
-if __name__ == "__main__":
-    run_ingestion()
+        return self.df
