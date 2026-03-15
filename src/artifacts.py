@@ -9,7 +9,7 @@ from sklearn.metrics import (
     roc_curve,
 )
 import matplotlib.pyplot as plt
-from config import ARTIFACT_TRAIN_PATH, ARTIFACT_EVOLUATION_PATH
+from config import ARTIFACT_TRAIN_PATH, ARTIFACT_EVALUATION_PATH
 
 
 class ComputeMatrics:
@@ -67,6 +67,10 @@ class Visualization:
 
         plt.colorbar(self.im)
 
+        if not ARTIFACT_TRAIN_PATH.exists():
+            ARTIFACT_TRAIN_PATH.mkdir(parents=True, exist_ok=True)
+            self.logger.info(f"Artifacts directory not found: {ARTIFACT_TRAIN_PATH}")
+
         path = ARTIFACT_TRAIN_PATH / f"{self.run_name.replace(' ', '_')}_cm.png"
         self.fig.savefig(path, bbox_inches="tight")
         plt.close(self.fig)
@@ -85,6 +89,10 @@ class Visualization:
         self.ax.set_xlabel("FPR")
         self.ax.set_ylabel("TPR")
         self.ax.set_title(f"ROC Curve – {self.run_name}")
+
+        if not ARTIFACT_TRAIN_PATH.exists():
+            ARTIFACT_TRAIN_PATH.mkdir(parents=True, exist_ok=True)
+            self.logger.info(f"Artifacts directory not found: {ARTIFACT_TRAIN_PATH}")
 
         self.path = ARTIFACT_TRAIN_PATH / f"{self.run_name.replace(' ', '_')}_roc.png"
         self.fig.savefig(self.path, bbox_inches="tight")

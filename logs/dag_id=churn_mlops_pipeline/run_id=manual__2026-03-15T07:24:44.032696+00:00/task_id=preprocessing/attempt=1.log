@@ -1,0 +1,19 @@
+{"timestamp":"2026-03-15T07:24:44.644120Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-03-15T07:24:44.645576Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/airflow_pipeline.py","logger":"airflow.models.dagbag.BundleDagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-03-15T07:24:44.736271Z","level":"info","event":"Stats instance was created in PID 7 but accessed in PID 211. Re-initializing.","logger":"airflow.stats","filename":"stats.py","lineno":57}
+{"timestamp":"2026-03-15T07:24:46.650345Z","level":"info","event":"2026-03-15 07:24:46,650 [INFO] 🚀 ===> Data_Ingestion Stage: Start Processing","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:46.683588Z","level":"info","event":"2026-03-15 07:24:46,683 [INFO] DataFrame: 7,043 rows | 21 columns ===> ℹ️","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:46.686060Z","level":"info","event":"2026-03-15 07:24:46,684 [INFO] ✅ ===> Data_Ingestion Stage: Completed Processing","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:46.687142Z","level":"info","event":"2026-03-15 07:24:46,684 [INFO] 🚀 ===> Data_Ingestion Stage: Start Validating","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:46.695095Z","level":"info","event":"2026-03-15 07:24:46,694 [INFO] No missing values Detected! ===> ✅","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:46.696572Z","level":"info","event":"2026-03-15 07:24:46,696 [INFO] Target Distribution: 26.500% Churn | 73.500% No Churn ===> ℹ️","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:46.698258Z","level":"info","event":"2026-03-15 07:24:46,696 [INFO] ✅ ===> Data_Ingestion Stage: Completed Validating","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:46.716894Z","level":"info","event":"2026-03-15 07:24:46,716 [INFO] 🚀 ===> Preprocessor Stage: Started Processing","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:46.717910Z","level":"info","event":"2026-03-15 07:24:46,717 [WARNING] ⚠️ ===> Processed file already exists.","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:46.720239Z","level":"info","event":"2026-03-15 07:24:46,718 [INFO] ℹ️ ===> Build processed file.","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:46.730987Z","level":"info","event":"2026-03-15 07:24:46,730 [INFO] Train: 5,634  |  Test: 1,409","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:47.186185Z","level":"info","event":"2026-03-15 07:24:47,184 [INFO]  Saved Preprocessor ===> ℹ️","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:47.186704Z","level":"info","event":"2026-03-15 07:24:47,184 [INFO]  Saved Train Data ===> ℹ️","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:47.189201Z","level":"info","event":"2026-03-15 07:24:47,184 [INFO]  Saved Test Data ===> ℹ️","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:47.191074Z","level":"info","event":"2026-03-15 07:24:47,184 [INFO] ✅ ===> Preprocessing Stage: Completed Processing","logger":"task.stdout"}
+{"timestamp":"2026-03-15T07:24:47.431646Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator","filename":"python.py","lineno":230}

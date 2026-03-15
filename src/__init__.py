@@ -30,7 +30,10 @@ from .ml_flow import MLflowConfig
 
 from .data_ingestion import DataIngestion
 from .preprocessing import DataPreprocessor
-from .artifacts import ComputeMatrics, Visualization
+from .artifacts import (
+    ComputeMatrics,
+    Visualization,
+)
 from .train import ModelTrainer
 
 __all__ = [
@@ -57,6 +60,7 @@ __all__ = [
     "XGB_PARAMS",
     "X_FEATURE_COLS",
     "Y_FEATURE_COLS",
+    "GENERATED_DATA_DIR",
     "setup_logger",
     "MLflowConfig",
     "DataIngestion",

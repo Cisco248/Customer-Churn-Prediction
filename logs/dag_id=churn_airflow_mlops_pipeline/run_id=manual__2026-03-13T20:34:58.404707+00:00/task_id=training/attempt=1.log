@@ -1,0 +1,671 @@
+{"timestamp":"2026-03-13T20:35:09.756095Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-03-13T20:35:09.756795Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/airflow_pipeline.py","logger":"airflow.models.dagbag.BundleDagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-03-13T20:35:09.763245Z","level":"info","event":"Stats instance was created in PID 7 but accessed in PID 110. Re-initializing.","logger":"airflow.stats","filename":"stats.py","lineno":57}
+{"timestamp":"2026-03-13T20:35:15.092541Z","level":"error","event":"/home/airflow/.local/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.3) or chardet (6.0.0.post1)/charset_normalizer (3.4.5) doesn't match a supported version!","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:35:15.092678Z","level":"error","event":"  warnings.warn(","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:35:17.191013Z","level":"info","event":"2026-03-13 20:35:17,190 [INFO] ✅ ===> DAGsHub authentication successful","logger":"task.stdout"}
+{"timestamp":"2026-03-13T20:35:17.194894Z","level":"info","event":"                      ❗❗❗ AUTHORIZATION REQUIRED ❗❗❗","logger":"task.stdout"}
+{"timestamp":"2026-03-13T20:37:18.509758Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-03-13T20:37:18.509886Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-03-13T20:37:18.509953Z","level":"info","event":"Open the following link in your browser to authorize the client:","logger":"task.stdout"}
+{"timestamp":"2026-03-13T20:37:18.510015Z","level":"info","event":"https://dagshub.com/login/oauth/authorize?state=d4de9042-5eb2-4792-a6b8-ad7365ea4d05&client_id=32b60ba385aa7cecf24046d8195a71c07dd345d9657977863b52e7748e0f0f28&middleman_request_id=5381d9b8afdf44a9f3297f8d8eb7e9b8b20875cf8cac9fb38779ebb5d0aff4ff","logger":"task.stdout"}
+{"timestamp":"2026-03-13T20:37:18.510074Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-03-13T20:37:18.510133Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-03-13T20:37:18.510191Z","level":"info","event":"2026-03-13 20:37:18,509 [INFO] HTTP Request: POST https://dagshub.com/login/oauth/middleman \"HTTP/1.1 504 Gateway Time-out\"","logger":"task.stdout"}
+{"timestamp":"2026-03-13T20:37:18.510590Z","level":"info","event":"2026-03-13 20:37:18,510 [ERROR] Error initializing DAGsHub: Expecting value: line 1 column 1 (char 0) ===> ❌","logger":"task.stdout"}
+{"timestamp":"2026-03-13T20:37:19.616994Z","level":"error","event":"Traceback (most recent call last):","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617122Z","level":"error","event":"  File \"/opt/airflow/src/train.py\", line 224, in <module>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617269Z","level":"error","event":"    trainer.run_training()","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617340Z","level":"error","event":"  File \"/opt/airflow/src/train.py\", line 142, in run_training","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617400Z","level":"error","event":"    self.mlflow.init_experiment(\"churn-training\")","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617459Z","level":"error","event":"  File \"/opt/airflow/src/ml_flow.py\", line 35, in init_experiment","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617557Z","level":"error","event":"    mlflow.set_experiment(self.experiment_name)","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617621Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/fluent.py\", line 194, in set_experiment","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617678Z","level":"error","event":"    experiment = client.get_experiment_by_name(experiment_name)","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617736Z","level":"error","event":"                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617818Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/client.py\", line 283, in get_experiment_by_name","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617918Z","level":"error","event":"    return self.store.get_experiment_by_name(name)","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.617982Z","level":"error","event":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618037Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/store/tracking/rest_store.py\", line 965, in get_experiment_by_name","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618095Z","level":"error","event":"    response_proto = self._call_endpoint(GetExperimentByName, req_body)","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618150Z","level":"error","event":"                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618204Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/store/tracking/rest_store.py\", line 233, in _call_endpoint","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618297Z","level":"error","event":"    return call_endpoint(","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618360Z","level":"error","event":"           ^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618415Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/utils/rest_utils.py\", line 627, in call_endpoint","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618471Z","level":"error","event":"    response = verify_rest_response(","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618535Z","level":"error","event":"               ^^^^^^^^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618590Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/utils/rest_utils.py\", line 348, in verify_rest_response","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618645Z","level":"error","event":"    raise MlflowException(","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618758Z","level":"error","event":"mlflow.exceptions.MlflowException: API request to endpoint /api/2.0/mlflow/experiments/get-by-name failed with error code 404 != 200. Response body: '<!DOCTYPE html>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618823Z","level":"error","event":"<html lang=\"en-US\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618880Z","level":"error","event":"  <head data-suburl=\"\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618935Z","level":"error","event":"    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.618990Z","level":"error","event":"    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619046Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619101Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619160Z","level":"error","event":"      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619217Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619273Z","level":"error","event":"    <meta name=\"referrer\" content=\"no-referrer\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619329Z","level":"error","event":"    <meta name=\"_csrf\" content=\"o9Ner6tRiwjFPYQAHLIVk1sxADo6MTc3MzQzNDIzOTQ1MTg3NjA1Ng\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619386Z","level":"error","event":"    <meta name=\"_suburl\" content=\"\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619454Z","level":"error","event":"    <meta name=\"_appversion\" content=\"543c98c366695bcd3eaf0a006047330b0ebe36fa\" />","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619510Z","level":"error","event":"    <meta name=\"_bareRepo\" content=\"\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619567Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619621Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619675Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619729Z","level":"error","event":"  <script>(function(w, d, s, l, i) {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619795Z","level":"error","event":"      w[l] = w[l] || [];","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619851Z","level":"error","event":"      w[l].push({","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619906Z","level":"error","event":"        'gtm.start':","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.619963Z","level":"error","event":"          new Date().getTime(), event: 'gtm.js'","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620018Z","level":"error","event":"      });","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620072Z","level":"error","event":"      var f = d.getElementsByTagName(s)[0],","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620129Z","level":"error","event":"        j = d.createElement(s),","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620184Z","level":"error","event":"        dl = l != 'dataLayer' ? '&l=' + l : '';","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620238Z","level":"error","event":"      j.async = true;","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620294Z","level":"error","event":"      j.src =","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620349Z","level":"error","event":"        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620404Z","level":"error","event":"      f.parentNode.insertBefore(j, f);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620458Z","level":"error","event":"    })(window, document, 'script', 'dataLayer', 'GTM-PGHTMDN');</script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620518Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620573Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620627Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620684Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620738Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620800Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620856Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620910Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.620964Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621018Z","level":"error","event":"    <title>Page Not Found · DagsHub</title>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621075Z","level":"error","event":"    <meta name=\"description\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621130Z","level":"error","event":"          content=\"DagsHub is where people build machine learning projects. DagsHub helps AI teams build better models and manage their data effectively.\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621186Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621239Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621293Z","level":"error","event":"  <meta property=\"og:url\" content=\"https://dagshub.com/\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621370Z","level":"error","event":"  <meta property=\"og:type\" content=\"website\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621426Z","level":"error","event":"  <meta property=\"og:site_name\" content=\"DagsHub\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621481Z","level":"error","event":"  <meta property=\"og:title\" content=\"DagsHub: The Home for Machine Learning Collaboration\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621537Z","level":"error","event":"  <meta property=\"og:description\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621592Z","level":"error","event":"        content=\"DagsHub is where people build machine learning projects. DagsHub helps AI teams build better models and manage their data effectively.\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621647Z","level":"error","event":"  <meta property=\"og:image\" content=\"https://dagshub.com/img/open_graph/dagshub-logo.jpg\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621702Z","level":"error","event":"  <meta property=\"og:image:type\" content=\"image/png\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621772Z","level":"error","event":"  <meta property=\"og:image:width\" content=\"1200\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621829Z","level":"error","event":"  <meta property=\"og:image:height\" content=\"630\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621882Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621939Z","level":"error","event":"  <meta property=\"twitter:site\" content=\"@TheRealDagsHub\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.621993Z","level":"error","event":"  <meta property=\"twitter:creator\" content=\"@TheRealDagsHub\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622048Z","level":"error","event":"  <meta property=\"twitter:card\" content=\"summary_large_image\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622104Z","level":"error","event":"  <meta property=\"twitter:title\" content=\"DagsHub: The Home for Machine Learning Collaboration\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622160Z","level":"error","event":"  <meta property=\"twitter:description\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622214Z","level":"error","event":"        content=\"DagsHub is where people build machine learning projects. DagsHub helps AI teams build better models and manage their data effectively.\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622268Z","level":"error","event":"  <meta property=\"twitter:image:src\" content=\"https://dagshub.com/img/open_graph/dagshub-logo.jpg\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622324Z","level":"error","event":"  <meta property=\"twitter:image:width\" content=\"1200\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622380Z","level":"error","event":"  <meta property=\"twitter:image:height\" content=\"630\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622434Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622489Z","level":"error","event":"  <script type=\"application/ld+json\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622544Z","level":"error","event":"    {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622599Z","level":"error","event":"        \"@context\": \"http://schema.org\",","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622655Z","level":"error","event":"        \"@type\": \"WebSite\",","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622711Z","level":"error","event":"        \"name\": \"DagsHub\",","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622774Z","level":"error","event":"        \"url\": \"https://dagshub.com/\",","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622832Z","level":"error","event":"        \"sameAs\": [","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622914Z","level":"error","event":"            \"https://www.facebook.com/DagsHub/\",","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.622973Z","level":"error","event":"            \"https://twitter.com/TheRealDagsHub/\",","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623031Z","level":"error","event":"            \"https://linkedin.com/company/dagshub/\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623096Z","level":"error","event":"        ],","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623153Z","level":"error","event":"        \"potentialAction\": {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623217Z","level":"error","event":"        \"@type\": \"SearchAction\",","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623280Z","level":"error","event":"        \"description\": \"Search for data science projects on DagsHub.\",","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623338Z","level":"error","event":"        \"target\": \"https://dagshub.com/explore/repos?q={search_term}\",","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623392Z","level":"error","event":"        \"query-input\": \"required name=search_term\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623449Z","level":"error","event":"        }","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623510Z","level":"error","event":"    }","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623569Z","level":"error","event":"  </script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623626Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623688Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623761Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623820Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623876Z","level":"error","event":"    <link rel=\"shortcut icon\" href=\"/img/favicon-black.svg\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623930Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.623991Z","level":"error","event":"    <script src=\"/js/jquery-3.6.0.min.js\"></script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624047Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624100Z","level":"error","event":"  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624155Z","level":"error","event":"        integrity=\"sha512-3icgkoIO5qm2D4bGSUkPqeQ96LS8+ukJC7Eqhl1H5B2OJMEnFqLmNDxXVmtV/eq5M65tTDkUYS/Q0P4gvZv+yA==\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624209Z","level":"error","event":"        crossorigin=\"anonymous\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624263Z","level":"error","event":"        referrerpolicy=\"no-referrer\" />","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624316Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624370Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624423Z","level":"error","event":"    <link rel=\"stylesheet\" href=\"/assets/octicons-4.3.0/octicons.min.css\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624476Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624529Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624582Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624641Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624695Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.624912Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625022Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625224Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625289Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625342Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625397Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625450Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625502Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625567Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625625Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625679Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625731Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625792Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625848Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.625901Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.626441Z","level":"error","event":"    <link rel=\"preload\" href=\"/css/themes/default/assets/fonts/brand-icons.woff2\" as=\"font\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.626593Z","level":"error","event":"          type=\"font/woff2\" crossorigin/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.626653Z","level":"error","event":"    <link rel=\"preload\" href=\"/css/themes/default/assets/fonts/icons.woff2\" as=\"font\" type=\"font/woff2\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.626709Z","level":"error","event":"          crossorigin/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.626774Z","level":"error","event":"    <link rel=\"preload\" href=\"/assets/fontawesome-5.15.3/webfonts/fa-solid-900.woff2\" as=\"font\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.626830Z","level":"error","event":"          type=\"font/woff2\" crossorigin/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.626889Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.626944Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.626998Z","level":"error","event":"    <link rel=\"stylesheet\" href=\"/css/semantic-2.4.2.min.css\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627054Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627115Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627169Z","level":"error","event":"    <link rel=\"stylesheet\" href=\"/css/build/dagshub.css?v=543c98c366695bcd3eaf0a006047330b0ebe36fa\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627226Z","level":"error","event":"    <link rel=\"stylesheet\" href=\"/css/gogs.css?v=543c98c366695bcd3eaf0a006047330b0ebe36fa\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627282Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627336Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627390Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627445Z","level":"error","event":"    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627500Z","level":"error","event":"    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627555Z","level":"error","event":"    <link href=\"https://fonts.googleapis.com/css?family=Comfortaa|Lato:300,400,700,900|Jaldi|Open+Sans&display=swap\" rel=\"stylesheet\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627625Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627681Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627735Z","level":"error","event":"    <noscript>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627802Z","level":"error","event":"      <style>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627862Z","level":"error","event":"        .dropdown:hover > .menu {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627916Z","level":"error","event":"          display: block;","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.627973Z","level":"error","event":"        }","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628027Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628081Z","level":"error","event":"        .ui.secondary.menu .dropdown.item > .menu {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628136Z","level":"error","event":"          margin-top: 0;","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628192Z","level":"error","event":"        }","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628247Z","level":"error","event":"      </style>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628301Z","level":"error","event":"    </noscript>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628357Z","level":"error","event":"    <script src=\"/js/semantic-2.4.2.min.js\"></script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628412Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628466Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628521Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628576Z","level":"error","event":"      <link rel=\"stylesheet\" href=\"/css/build/static_dagshub.css?v=543c98c366695bcd3eaf0a006047330b0ebe36fa\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628631Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628684Z","level":"error","event":"      <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap\" rel=\"stylesheet\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628741Z","level":"error","event":"      <link href='https://fonts.googleapis.com/css?family=Fira Code:wght@300;400;500;600;700;900' rel='stylesheet'>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628827Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628884Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628938Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.628992Z","level":"error","event":"    <meta name=\"theme-color\" content=\"#103037\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629055Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629111Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629165Z","level":"error","event":"  <script src=\"https://www.google.com/recaptcha/api.js\" async defer></script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629219Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629275Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629328Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629381Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629435Z","level":"error","event":"  </head>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629491Z","level":"error","event":"  <body>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629545Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629599Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629667Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629724Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629786Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629842Z","level":"error","event":"  <noscript>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629898Z","level":"error","event":"    <iframe src=\"https://www.googletagmanager.com/ns.html?id=GTM-PGHTMDN\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.629953Z","level":"error","event":"            height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630008Z","level":"error","event":"  </noscript>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630064Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630119Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630173Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630235Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630290Z","level":"error","event":"<div class=\"ui tiny modal\" id=\"contact-modal\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630345Z","level":"error","event":"  <i class=\"close icon\"></i>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630401Z","level":"error","event":"  <div class=\"header\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630456Z","level":"error","event":"    Contact us","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630511Z","level":"error","event":"  </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630566Z","level":"error","event":"  <form id=\"contact-form\" class=\"ui form content\" action=\"contact_form\" method=\"post\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630622Z","level":"error","event":"    <input type=\"hidden\" name=\"_csrf\" value=\"o9Ner6tRiwjFPYQAHLIVk1sxADo6MTc3MzQzNDIzOTQ1MTg3NjA1Ng\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630678Z","level":"error","event":"    <div class=\"required field\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630732Z","level":"error","event":"      <label for=\"user_name\">Your email address</label>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630799Z","level":"error","event":"      <input name=\"email\" type=\"email\" value=\"\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630855Z","level":"error","event":"             placeholder=\"tony@stark-industries.com\" required>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630909Z","level":"error","event":"    </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.630965Z","level":"error","event":"    <div class=\"required field\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631021Z","level":"error","event":"      <label for=\"subject\">Subject</label>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631076Z","level":"error","event":"      <input name=\"subject\" value=\"Hi DagsHub, let's talk\" placeholder=\"What would you like to talk about?\" required>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631133Z","level":"error","event":"    </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631189Z","level":"error","event":"    <div class=\"required field\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631243Z","level":"error","event":"      <textarea class=\"autosize\" name=\"body\" rows=\"7\" ></textarea>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631297Z","level":"error","event":"    </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631353Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631408Z","level":"error","event":"      <script type=\"text/javascript\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631475Z","level":"error","event":"        var myRecaptchaListeners = {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631534Z","level":"error","event":"          callAllListeners: function(listeners) {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631590Z","level":"error","event":"            return () => listeners.forEach((f) => f());","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631645Z","level":"error","event":"          },","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631701Z","level":"error","event":"          successListeners: [],","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631768Z","level":"error","event":"          expireListeners: [],","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631824Z","level":"error","event":"        };","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631881Z","level":"error","event":"        contactFormCaptchaCallback = myRecaptchaListeners.callAllListeners(myRecaptchaListeners.successListeners);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631938Z","level":"error","event":"        contactFormCaptchaExpired = myRecaptchaListeners.callAllListeners(myRecaptchaListeners.expireListeners);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.631998Z","level":"error","event":"      </script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632055Z","level":"error","event":"      <div class=\"g-recaptcha field\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632110Z","level":"error","event":"           data-sitekey=\"6Lf0Z7gUAAAAAKCsW1V-PqN58BcBNAUxe-oIU3nw\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632167Z","level":"error","event":"           data-callback=\"contactFormCaptchaCallback\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632223Z","level":"error","event":"           data-expired-callback=\"contactFormCaptchaExpired\"></div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632280Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632335Z","level":"error","event":"    <input type=\"hidden\" name=\"page\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632389Z","level":"error","event":"    <input type=\"hidden\" name=\"referring_page\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632445Z","level":"error","event":"    <input type=\"hidden\" name=\"referrer\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632500Z","level":"error","event":"    <button class=\"ui positive center aligned labeled icon button\" id=\"send-contact-request-btn\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632554Z","level":"error","event":"      Send","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632609Z","level":"error","event":"      <i class=\"checkmark icon\"></i>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632663Z","level":"error","event":"    </button>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632717Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632778Z","level":"error","event":"      <script type=\"text/javascript\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632836Z","level":"error","event":"        (function() {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632891Z","level":"error","event":"          const submitBtn = document.getElementById('send-contact-request-btn');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.632946Z","level":"error","event":"          onExpire = () => submitBtn.style.display = 'none';","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.633002Z","level":"error","event":"          onExpire();","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.633308Z","level":"error","event":"          myRecaptchaListeners.successListeners.push(() => {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.636343Z","level":"error","event":"            submitBtn.style.display = 'block';","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.636486Z","level":"error","event":"          });","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.636553Z","level":"error","event":"          myRecaptchaListeners.expireListeners.push(onExpire);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.636615Z","level":"error","event":"        })();","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.636672Z","level":"error","event":"      </script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.636731Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.636796Z","level":"error","event":"    <div class=\"ui hidden dimmer inverted\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.636852Z","level":"error","event":"      <div class=\"ui loader\"></div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.636910Z","level":"error","event":"      <div class=\"ui hidden positive message\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637008Z","level":"error","event":"        <p>Thank you! We'll be in touch ASAP.</p>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637071Z","level":"error","event":"      </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637127Z","level":"error","event":"      <div class=\"ui hidden negative message\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637182Z","level":"error","event":"        <p>Something went wrong, please try again or contact us directly at <a","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637237Z","level":"error","event":"                  href=\"mailto:contact@dagshub.com\">contact@dagshub.com</a></p>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637294Z","level":"error","event":"      </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637349Z","level":"error","event":"    </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637404Z","level":"error","event":"  </form>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637460Z","level":"error","event":"  <script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637515Z","level":"error","event":"    (function() {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637569Z","level":"error","event":"      const $contactModal = $('#contact-modal');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637626Z","level":"error","event":"      const $contactForm = $('#contact-form');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637680Z","level":"error","event":"      const $dimmer = $contactForm.find('.dimmer');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637735Z","level":"error","event":"      const $loader = $dimmer.find('.loader');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637807Z","level":"error","event":"      const $okMsg = $dimmer.find('.positive');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.637863Z","level":"error","event":"      const $errorMsg = $dimmer.find('.negative');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638088Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638164Z","level":"error","event":"      $contactForm.find('input[name=page]').val(document.URL);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638221Z","level":"error","event":"      $contactForm.find('input[name=referring_page]').val(new URL(document.URL).searchParams.get('referring_page'));","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638277Z","level":"error","event":"      $contactForm.find('input[name=referrer]').val(document.referrer);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638332Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638388Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638576Z","level":"error","event":"      $contactModal.modal({","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638647Z","level":"error","event":"        onShow: () => {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638704Z","level":"error","event":"          $dimmer.dimmer('hide');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638767Z","level":"error","event":"          $loader.transition('fade in', 0);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638823Z","level":"error","event":"          $okMsg.transition('fade out', 0);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638877Z","level":"error","event":"          $errorMsg.transition('fade out', 0);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.638933Z","level":"error","event":"        }","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639034Z","level":"error","event":"      });","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639091Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639148Z","level":"error","event":"      $contactForm.submit((e) => {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639202Z","level":"error","event":"        e.preventDefault();","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639256Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639312Z","level":"error","event":"        $dimmer.dimmer('show');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639366Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639420Z","level":"error","event":"        function hideModal() {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639476Z","level":"error","event":"          setTimeout(() => {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639530Z","level":"error","event":"            $contactModal.modal('hide');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639727Z","level":"error","event":"          }, 3000);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639800Z","level":"error","event":"        }","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639859Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639914Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.639999Z","level":"error","event":"        const loaderToMessage = function(targetMsg = $okMsg, afterMsg = hideModal) {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640061Z","level":"error","event":"          $loader.transition('fade out');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640116Z","level":"error","event":"          targetMsg.transition('fade in');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640170Z","level":"error","event":"          if (afterMsg) afterMsg();","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640227Z","level":"error","event":"        };","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640281Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640335Z","level":"error","event":"        $.ajax({","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640392Z","level":"error","event":"          url: $contactForm.attr('action'),","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640447Z","level":"error","event":"          method: 'post',","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640503Z","level":"error","event":"          data: $contactForm.serialize(),","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640556Z","level":"error","event":"          success: () => loaderToMessage(),","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640614Z","level":"error","event":"          error: e => {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640668Z","level":"error","event":"            console.error(e);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640723Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640804Z","level":"error","event":"            loaderToMessage($errorMsg, null);","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640861Z","level":"error","event":"          }","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640916Z","level":"error","event":"        });","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.640972Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.641027Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.641780Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.641877Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642253Z","level":"error","event":"      });","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642336Z","level":"error","event":"    })();","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642390Z","level":"error","event":"  </script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642448Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642502Z","level":"error","event":"  <div class=\"ui secondary segment\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642557Z","level":"error","event":"    Or if you want, you can join our community at <a href=\"https://discord.com/invite/9gU36Y6\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642611Z","level":"error","event":"                                                     class=\"ui basic discord icon\"><i class=\"discord grey icon big\"></i></a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642668Z","level":"error","event":"  </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642723Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642788Z","level":"error","event":"</div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642846Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642901Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.642955Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643009Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643065Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643120Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643175Z","level":"error","event":"<div class=\"mobile dagshub-navbar\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643233Z","level":"error","event":"    <div class=\"line-divider\"></div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643287Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643342Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643398Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643452Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643506Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643559Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643615Z","level":"error","event":"      <div class=\"primary center button\" style=\"margin-bottom: 10px;\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643671Z","level":"error","event":"        <a  id=\"sign-up-navbar-mobile\" data-analytics-event=\"Navbar_Register_Clicked\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643726Z","level":"error","event":"            href=\"/user/sign_up?redirect_to=%2fCisco248%2fcustomer-churn-prediction.dvc%2fapi%2f2.0%2fmlflow%2fexperiments%2fget-by-name","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643792Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643847Z","level":"error","event":"\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643915Z","level":"error","event":"          Register","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.643973Z","level":"error","event":"        </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644028Z","level":"error","event":"      </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644083Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644137Z","level":"error","event":"      <div class=\"secondary center button\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644194Z","level":"error","event":"        <a id=\"sign-in-navbar-mobile\" data-analytics-event=\"Navbar_Login_Clicked\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644250Z","level":"error","event":"           href=\"/user/login?redirect_to=%2fCisco248%2fcustomer-churn-prediction.dvc%2fapi%2f2.0%2fmlflow%2fexperiments%2fget-by-name","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644304Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644360Z","level":"error","event":"\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644415Z","level":"error","event":"          Login","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644470Z","level":"error","event":"        </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644539Z","level":"error","event":"      </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644595Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644657Z","level":"error","event":"  <div class=\"line-divider\"></div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644715Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644777Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644831Z","level":"error","event":"    <div class=\"subtitle\">Resources</div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644887Z","level":"error","event":"    <a class=\"navbar-item\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644944Z","level":"error","event":"       href=\"/docs\" onclick=\"trackAnalyticsEvent('Resources_Docs_Clicked')\">Docs</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.644999Z","level":"error","event":"    <a class=\"navbar-item\" href=\"/blog\" onclick=\"trackAnalyticsEvent('Resources_Blog_Clicked')\">Blog</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645056Z","level":"error","event":"    <a class=\"navbar-item\" data-analytics-event=\"Resources_Datasets_Clicked\" href=\"/datasets\">Datasets</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645114Z","level":"error","event":"    <a class=\"navbar-item\" data-analytics-event=\"Resources_Glossary_Clicked\" href=\"/glossary\">Glossary</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645169Z","level":"error","event":"    <a class=\"navbar-item\" href=\"/blog/tag/case-study\" onclick=\"trackAnalyticsEvent('Resources_Case_Studies_Clicked')\">Case Studies</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645307Z","level":"error","event":"    <a class=\"navbar-item\" href=\"/blog/tag/tutorials\" onclick=\"trackAnalyticsEvent('Resources_Tutorials_Clicked')\">Tutorials &amp; Webinars</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645374Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645431Z","level":"error","event":"      <div class=\"line-divider\"></div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645488Z","level":"error","event":"      <div class=\"subtitle\">Product</div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645543Z","level":"error","event":"      <a class=\"navbar-item\" tabindex=\"0\" href=\"/data-engine\">Data Engine</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645599Z","level":"error","event":"      <a class=\"navbar-item\" tabindex=\"0\" href=\"/use-cases/llm\">LLMs</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645667Z","level":"error","event":"      <a class=\"navbar-item\" tabindex=\"0\" href=\"/product\">Platform</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645724Z","level":"error","event":"      <a class=\"navbar-item\" tabindex=\"0\" href=\"/enterprise\">Enterprise</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645793Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645851Z","level":"error","event":"    <div class=\"line-divider\"></div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645906Z","level":"error","event":"    <a class=\"navbar-item\" href=\"/pricing\">Pricing</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.645961Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646016Z","level":"error","event":"  <a class=\"navbar-item\" href=\"/explore/repos\">Explore</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646074Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646129Z","level":"error","event":"  <div class=\"line-divider\"></div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646184Z","level":"error","event":"  <a class=\"navbar-item\" href=\"https://discord.com/invite/9gU36Y6\" onclick=\"trackAnalyticsEvent('DiscordIcon_Clicked')\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646242Z","level":"error","event":"    <img src=\"/assets/social_icons/discord.svg\" aria-label=\"Connect to our Discord channel\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646299Z","level":"error","event":"    <span>Connect to our Discord channel</span>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646353Z","level":"error","event":"  </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646409Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646464Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646518Z","level":"error","event":"</div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646572Z","level":"error","event":"<div class=\"pusher\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646629Z","level":"error","event":"<div class=\"ui full height\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646685Z","level":"error","event":"  <noscript>This website works better with JavaScript</noscript>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646740Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646807Z","level":"error","event":"    <div class=\" navbar-container\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646863Z","level":"error","event":"      <div id=\"menu-container\" class=\"dagshub-navbar \">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646918Z","level":"error","event":"        <div class=\"left-menu\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.646975Z","level":"error","event":"          <div class=\"fixed-content\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647038Z","level":"error","event":"            <a href=\"https://dagshub.com/\" tabindex=\"0\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647093Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647150Z","level":"error","event":"              <img width=\"34\" height=\"30\" alt=\"DagsHub navbar logo\" aria-label=\"DagsHub Home\" class=\"navbar-logo\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647206Z","level":"error","event":"                   src=\"/img/favicon.svg\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647260Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647314Z","level":"error","event":"            </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647371Z","level":"error","event":"            <form class=\"search-bar-container\" action=\"/explore/repos\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647438Z","level":"error","event":"                <input class=\"search-bar\" name=\"q\" value=\"\" aria-label=\"Search public projects\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647496Z","level":"error","event":"                       placeholder=\"Search public repositories...\" tabindex=\"0\" autocomplete=\"off\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647553Z","level":"error","event":"            </form>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647608Z","level":"error","event":"          </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647663Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647717Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647783Z","level":"error","event":"            <div class=\"dropdown navbar-item\" tabindex=\"0\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647839Z","level":"error","event":"              Resources &nbsp; <img class=\"flip\" src=\"/assets/chevron-icon.svg\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647894Z","level":"error","event":"                <div class=\"submenu\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.647952Z","level":"error","event":"                  <a href=\"/docs\" tabindex=\"0\" onclick=\"trackAnalyticsEvent('Resources_Docs_Clicked')\">Docs</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648008Z","level":"error","event":"                  <a href=\"/blog\" tabindex=\"0\" onclick=\"trackAnalyticsEvent('Resources_Blog_Clicked')\">Blog</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648063Z","level":"error","event":"                  <a href=\"/datasets\" tabindex=\"0\" data-analytics-event=\"Resources_Datasets_Clicked\">Datasets</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648118Z","level":"error","event":"                  <a href=\"/glossary\" tabindex=\"0\" data-analytics-event=\"Resources_Glossary_Clicked\">Glossary</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648175Z","level":"error","event":"                  <a href=\"/blog/tag/case-study\" tabindex=\"0\" onclick=\"trackAnalyticsEvent('Resources_Case_Studies_Clicked')\">Case Studies</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648231Z","level":"error","event":"                  <a href=\"/blog/tag/tutorials\" tabindex=\"0\" onclick=\"trackAnalyticsEvent('Resources_Tutorials_Clicked')\">Tutorials &amp; Webinars</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648287Z","level":"error","event":"                </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648343Z","level":"error","event":"            </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648398Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648452Z","level":"error","event":"          <a class=\"navbar-item\" tabindex=\"0\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648509Z","level":"error","event":"             href=\"/explore/repos\" onclick=\"trackAnalyticsEvent('ExploreTab_Clicked')\">Explore</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648564Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648619Z","level":"error","event":"            <a class=\"navbar-item\" tabindex=\"0\" href=\"/pricing\">Pricing</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648674Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648730Z","level":"error","event":"          <div class=\"dropdown navbar-item\" tabindex=\"0\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648799Z","level":"error","event":"            Product &nbsp; <img class=\"flip\" src=\"/assets/chevron-icon.svg\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648869Z","level":"error","event":"            <div class=\"submenu\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648925Z","level":"error","event":"              <a class=\"navbar-item\" tabindex=\"0\" href=\"/data-engine\">Data Engine</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.648982Z","level":"error","event":"              <a class=\"navbar-item\" tabindex=\"0\" href=\"/use-cases/llm\">LLMs</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649037Z","level":"error","event":"              <a class=\"navbar-item\" tabindex=\"0\" href=\"/product\">Platform</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649091Z","level":"error","event":"              <a class=\"navbar-item\" tabindex=\"0\" href=\"/enterprise\">Enterprise</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649148Z","level":"error","event":"            </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649203Z","level":"error","event":"          </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649256Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649311Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649371Z","level":"error","event":"        </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649426Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649480Z","level":"error","event":"          <input type=\"checkbox\" id=\"menu-toggle\" style=\"display: none;\" tabindex=\"0\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649536Z","level":"error","event":"          <label id=\"menu-toggle-label\" for=\"menu-toggle\"><img src=\"/assets/menu-open.svg\"></label>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649591Z","level":"error","event":"          <div id=\"menu-close-label\" style=\"display: none;\"><img src=\"/assets/x.svg\"></div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649645Z","level":"error","event":"          <div id=\"menu-open-label\" style=\"display: none;\"><img src=\"/assets/menu-open.svg\"></div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649701Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649765Z","level":"error","event":"        <div class=\"right-menu\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649820Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649876Z","level":"error","event":"            <a aria-label=\"join our discord\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.649930Z","level":"error","event":"               class=\"navbar-icon dagshub-tooltip\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650066Z","level":"error","event":"               tabindex=\"0\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650132Z","level":"error","event":"               href=\"https://discord.com/invite/9gU36Y6\" onclick=\"trackAnalyticsEvent('DiscordIcon_Clicked')\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650189Z","level":"error","event":"              <img src=\"/assets/social_icons/discord.svg\" aria-label=\"Connect to our Discord channel\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650246Z","level":"error","event":"              <span>Connect to Dagshub Discord channel</span>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650302Z","level":"error","event":"            </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650356Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650412Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650467Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650521Z","level":"error","event":"                <div class=\"primary button\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650576Z","level":"error","event":"                  <a id=\"sign-up-navbar\" data-analytics-event=\"Navbar_Register_Clicked\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650645Z","level":"error","event":"                     href=\"/user/sign_up?redirect_to=%2fCisco248%2fcustomer-churn-prediction.dvc%2fapi%2f2.0%2fmlflow%2fexperiments%2fget-by-name","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650703Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650768Z","level":"error","event":"\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650825Z","level":"error","event":"                    Register","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650881Z","level":"error","event":"                  </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650936Z","level":"error","event":"                </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.650993Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651048Z","level":"error","event":"              <a id=\"sign-in-navbar\" class=\"secondary button\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651103Z","level":"error","event":"                 data-analytics-event=\"Navbar_Login_Clicked\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651158Z","level":"error","event":"                 href=\"/user/login?redirect_to=%2fCisco248%2fcustomer-churn-prediction.dvc%2fapi%2f2.0%2fmlflow%2fexperiments%2fget-by-name","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651215Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651271Z","level":"error","event":"\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651326Z","level":"error","event":"                Login","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651383Z","level":"error","event":"              </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651438Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651492Z","level":"error","event":"        </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651550Z","level":"error","event":"      </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651605Z","level":"error","event":"    </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651659Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651713Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651777Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651833Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651887Z","level":"error","event":"<div class=\"ui container center\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.651945Z","level":"error","event":"  <p style=\"margin-top: 100px\"><img src=\"/img/404.png\" alt=\"404\"/></p>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652001Z","level":"error","event":"  <div class=\"ui divider\"></div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652056Z","level":"error","event":"  <br>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652112Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652168Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652222Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652276Z","level":"error","event":"  <p>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652332Z","level":"error","event":"    If you think this is an error, please report it on our","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652387Z","level":"error","event":"    <strong>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652442Z","level":"error","event":"      <a href=\"https://discord.com/invite/9gU36Y6\">Discord support channel <i class=\"discord icon\"></i></a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652512Z","level":"error","event":"    </strong>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652568Z","level":"error","event":"  </p>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652622Z","level":"error","event":"  Or, contact us at <a href=\"mailto:support@dagshub.com\">support@dagshub.com</a>.</p>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652678Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652732Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652796Z","level":"error","event":"  <br><br>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652851Z","level":"error","event":"  Provide this support ID: <strong>629ba5e2553910526faecdb4a2de73a3</strong>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652909Z","level":"error","event":"</div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.652964Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653017Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653073Z","level":"error","event":"</div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653127Z","level":"error","event":"<footer>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653182Z","level":"error","event":"  <div class=\"ui footer\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653239Z","level":"error","event":"      <div class=\"dagshub-footer\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653293Z","level":"error","event":"          <a href=\"https://dagshub.com/\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653347Z","level":"error","event":"            <img alt=\"footer DagsHub logo\" id=\"footer-logo\" class=\"ui centered image\" aria-label=\"Dagshub home\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653402Z","level":"error","event":"                           src=\"/img/footerlogo.svg\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653458Z","level":"error","event":"          </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653513Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653567Z","level":"error","event":"          <div id=\"footer-social\" class=\"\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653624Z","level":"error","event":"            <a aria-label=\"DagsHub on Twitter\" class=\"icon-link\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653680Z","level":"error","event":"               rel=\"nofollow\" target=\"_blank\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653735Z","level":"error","event":"               href=\"https://twitter.com/TheRealDAGsHub\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653801Z","level":"error","event":"              <i class=\"twitter large icon\"></i>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653857Z","level":"error","event":"            </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653912Z","level":"error","event":"            <a aria-label=\"DagsHub on YouTube\" class=\"icon-link\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.653966Z","level":"error","event":"               rel=\"nofollow\" target=\"_blank\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654024Z","level":"error","event":"               href=\"https://youtube.com/c/dagshub\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654079Z","level":"error","event":"              <i class=\"youtube large icon\"></i>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654134Z","level":"error","event":"            </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654190Z","level":"error","event":"            <a aria-label=\"DagsHub on LinkedIn\" class=\"icon-link\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654246Z","level":"error","event":"               rel=\"nofollow\" target=\"_blank\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654315Z","level":"error","event":"               href=\"https://www.linkedin.com/company/dagshub\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654372Z","level":"error","event":"              <i class=\"linkedin large icon\"></i>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654430Z","level":"error","event":"            </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654484Z","level":"error","event":"            <a aria-label=\"join our Discord\" class=\"icon-link\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654540Z","level":"error","event":"               rel=\"nofollow\" target=\"_blank\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654593Z","level":"error","event":"               href=\"https://discord.com/invite/9gU36Y6\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654650Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654706Z","level":"error","event":"              <svg width=\"24\" height=\"19\" viewBox=\"0 0 24 19\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654862Z","level":"error","event":"                <path d=\"M20.2415 2.18566C18.7257 1.49015 17.1003 0.977731 15.4007 0.684245C15.3698 0.678581 15.3389 0.692736 15.3229 0.721047C15.1139 1.09286 14.8823 1.57791 14.7202 1.95916C12.8922 1.6855 11.0736 1.6855 9.28318 1.95916C9.12099 1.56944 8.88103 1.09286 8.67104 0.721047C8.6551 0.693681 8.62418 0.679525 8.59323 0.684245C6.89465 0.976793 5.26918 1.48921 3.75245 2.18566C3.73932 2.19133 3.72807 2.20077 3.7206 2.21303C0.637438 6.8192 -0.207169 11.3122 0.207167 15.7494C0.209041 15.7711 0.221228 15.7919 0.238101 15.8051C2.27228 17.2989 4.24273 18.2058 6.17659 18.807C6.20754 18.8164 6.24034 18.8051 6.26003 18.7796C6.71749 18.1549 7.12527 17.4962 7.4749 16.8035C7.49553 16.7629 7.47584 16.7148 7.43366 16.6988C6.78686 16.4534 6.17097 16.1542 5.57852 15.8145C5.53166 15.7872 5.52791 15.7201 5.57102 15.688C5.69569 15.5946 5.8204 15.4974 5.93944 15.3993C5.96098 15.3814 5.99099 15.3776 6.01631 15.3889C9.90842 17.1659 14.1221 17.1659 17.9683 15.3889C17.9936 15.3766 18.0236 15.3804 18.0461 15.3983C18.1652 15.4965 18.2898 15.5946 18.4154 15.688C18.4585 15.7201 18.4557 15.7872 18.4089 15.8145C17.8164 16.1608 17.2005 16.4534 16.5528 16.6978C16.5106 16.7139 16.4919 16.7629 16.5125 16.8035C16.8696 17.4952 17.2774 18.1539 17.7264 18.7787C17.7452 18.8051 17.7789 18.8164 17.8099 18.807C19.7531 18.2058 21.7235 17.2989 23.7577 15.8051C23.7755 15.7919 23.7868 15.7721 23.7887 15.7503C24.2845 10.6204 22.9581 6.16429 20.2724 2.21397C20.2659 2.20077 20.2546 2.19133 20.2415 2.18566ZM8.05612 13.0476C6.88433 13.0476 5.91881 11.9718 5.91881 10.6506C5.91881 9.32943 6.86561 8.25364 8.05612 8.25364C9.25598 8.25364 10.2122 9.33887 10.1934 10.6506C10.1934 11.9718 9.2466 13.0476 8.05612 13.0476ZM15.9585 13.0476C14.7867 13.0476 13.8212 11.9718 13.8212 10.6506C13.8212 9.32943 14.768 8.25364 15.9585 8.25364C17.1584 8.25364 18.1145 9.33887 18.0958 10.6506C18.0958 11.9718 17.1584 13.0476 15.9585 13.0476Z\"/>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.654945Z","level":"error","event":"              </svg>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655009Z","level":"error","event":"            </a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655065Z","level":"error","event":"          </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655119Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655177Z","level":"error","event":"        <div class=\"links\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655232Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655288Z","level":"error","event":"          <a class=\"footer-item\" rel=\"noopener noreferrer\" href=\"/about\">Our Story</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655354Z","level":"error","event":"          <a class=\"footer-item\" rel=\"noopener noreferrer\" href=\"/careers\">Careers</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655412Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655467Z","level":"error","event":"          <a id=\"merch-store\" class=\"footer-item\" rel=\"noopener noreferrer\"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655524Z","level":"error","event":"             href=\"https://teespring.com/stores/dagshub\">Merch</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655579Z","level":"error","event":"          <a class=\"footer-item\" id=\"contact-us-footer\" href=\"javascript:\">Contact Us</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655634Z","level":"error","event":"          <script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655688Z","level":"error","event":"            (function() {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655756Z","level":"error","event":"              const $contactModal = $('#contact-modal');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655813Z","level":"error","event":"              const $contactForm = $contactModal.find('#contact-form');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655869Z","level":"error","event":"              $contactModal.modal('attach events', '#contact-us-footer', 'show');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655925Z","level":"error","event":"              $('#contact-us-footer').on('click', () => {","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.655981Z","level":"error","event":"                $contactForm.attr('action', 'contact_form');","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656035Z","level":"error","event":"              });","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656089Z","level":"error","event":"            })();","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656148Z","level":"error","event":"          </script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656202Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656256Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656310Z","level":"error","event":"                <a class=\"footer-item\" rel=\"noopener noreferrer\" href=\"/enterprise\">Enterprise</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656369Z","level":"error","event":"                <a class=\"footer-item\" rel=\"noopener noreferrer\" href=\"/pricing\">Pricing</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656423Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656478Z","level":"error","event":"        </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656544Z","level":"error","event":"          <h2>The home for data science collaboration</h2>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656605Z","level":"error","event":"          <div class=\"legal\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656661Z","level":"error","event":"            <p>© Copyright Dagshub 2026</p>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656716Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656783Z","level":"error","event":"            <div class=\"\">","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656839Z","level":"error","event":"              <a class=\"footer-item\" rel=\"noopener noreferrer\" href=\"/terms\">Terms of Service</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656894Z","level":"error","event":"              <a class=\"footer-item\" rel=\"noopener noreferrer\" href=\"/privacy\">Privacy Policy</a>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.656948Z","level":"error","event":"            </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657017Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657180Z","level":"error","event":"            <div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657259Z","level":"error","event":"              DagsHub Enterprise","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657316Z","level":"error","event":"            </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657371Z","level":"error","event":"          </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657425Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657478Z","level":"error","event":"        </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657534Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657589Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657643Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657695Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657761Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657818Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657871Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657926Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.657981Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658035Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658087Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658142Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658197Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658249Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658302Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658358Z","level":"error","event":"  </div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658413Z","level":"error","event":"</footer>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658465Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658521Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658575Z","level":"error","event":"</div>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658629Z","level":"error","event":"</body>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658685Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658740Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658852Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658932Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.658988Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659041Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659096Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659151Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659204Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659259Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659312Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659366Z","level":"error","event":"<script src=\"/js/libs/emojify-1.1.0.min.js\"></script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659421Z","level":"error","event":"<script src=\"/js/libs/clipboard-1.5.9.min.js\"></script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659489Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659545Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659601Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659656Z","level":"error","event":"<script src=\"/js/gogs.js?v=543c98c366695bcd3eaf0a006047330b0ebe36fa\"></script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.659711Z","level":"error","event":"<script src=\"/js/dagshub.js?v=543c98c366695bcd3eaf0a006047330b0ebe36fa\"></script>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.660599Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.660716Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.660784Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.660840Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.660893Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.660949Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661003Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661055Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661109Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661163Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661216Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661269Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661324Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661377Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661429Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661484Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661537Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661590Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661645Z","level":"error","event":"</html>","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661699Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661760Z","level":"error","event":"","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:19.661815Z","level":"error","event":"'","logger":"task.stderr"}
+{"timestamp":"2026-03-13T20:37:20.075408Z","level":"error","event":"Task failed with exception","logger":"task","filename":"task_runner.py","lineno":1186,"error_detail":[{"exc_type":"CalledProcessError","exc_value":"Command '['python', '/opt/airflow/src/train.py', '--model_name', 'Logistic_Regression']' returned non-zero exit status 1.","exc_notes":[],"syntax_error":null,"is_cause":false,"frames":[{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/execution_time/task_runner.py","lineno":1112,"name":"run"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/execution_time/task_runner.py","lineno":1528,"name":"_execute_task"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/bases/operator.py","lineno":417,"name":"wrapper"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/standard/operators/python.py","lineno":228,"name":"execute"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/standard/operators/python.py","lineno":251,"name":"execute_callable"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/execution_time/callback_runner.py","lineno":82,"name":"run"},{"filename":"/opt/airflow/dags/airflow_pipeline.py","lineno":15,"name":"run_training"},{"filename":"/usr/python/lib/python3.12/subprocess.py","lineno":571,"name":"run"}],"is_group":false,"exceptions":[]}]}

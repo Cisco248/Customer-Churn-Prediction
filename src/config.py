@@ -1,8 +1,3 @@
-"""
-Central configuration for the Churn MLOps Project.
-All paths, hyperparameters, and settings live here.
-"""
-
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -19,25 +14,29 @@ PROCESSED_DATA_DIR = ROOT_DIR / "data" / "processed"
 GENERATED_DATA_DIR = ROOT_DIR / "data" / "generated"
 TRAIN_DATA_PATH = PROCESSED_DATA_DIR / "train.csv"
 TEST_DATA_PATH = PROCESSED_DATA_DIR / "test.csv"
-PREPROCESSOR_PATH = PROCESSED_DATA_DIR / "preprocessor.joblib"
 
 # ─── Models ──────────────────────────────────────────────────────────────
 MODELS_DIR = ROOT_DIR / "models"
+PREPROCESSOR_PATH = MODELS_DIR / "preprocessing"
 REPORT_TITLE = "\nClassification Report:"
 TARGET_NAMES = ["No Churn", "Churn"]
 TRUST_LIST = [Booster, XGBClassifier]
 
 
 # ─── MLflow ───────────────────────────────────────────────────────────────────
-DAGSHUB_USERNAME = os.getenv("DAGSHUB_USERNAME")
-DAGSHUB_REPO_NAME = os.getenv("DAGSHUB_REPO_NAME")
-MLFLOW_TRACKING_URI = os.getenv(
-    "MLFLOW_TRACKING_URI",
-    "https://dagshub.com/Cisco248/customer-churn-prediction.mlflow",
-)
-DAGSHUB_TOKEN = os.getenv("DAGSHUB_TOKEN")
+DAGSHUB_USERNAME = os.getenv("DAGSHUB_USERNAME", "").strip()
+DAGSHUB_REPO_NAME = os.getenv("DAGSHUB_REPO_NAME", "").strip()
+DAGSHUB_TOKEN = os.getenv("DAGSHUB_TOKEN", "").strip()
 
-MLFLOW_EXPERIMENT_NAME = "customer-churn-prediction"
+# Construct MLFLOW_TRACKING_URI from credentials or use explicit override
+if DAGSHUB_USERNAME and DAGSHUB_REPO_NAME and DAGSHUB_USERNAME != "ENTER_USERNAME":
+    _default_uri = f"https://dagshub.com/{DAGSHUB_USERNAME}/{DAGSHUB_REPO_NAME}/mlflow"
+else:
+    _default_uri = "https://dagshub.com/ENTER_USERNAME/ENTER_REPO_NAME/mlflow"
+
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", _default_uri)
+
+MLFLOW_EXPERIMENT_NAME = os.getenv("MLFLOW_EXPERIMENT_NAME")
 
 # ─── Pre-processing ───────────────────────────────────────────────────────────
 TEST_SIZE = 0.2
@@ -164,20 +163,19 @@ XGB_PARAMS = {
     "learning_rate": 0.05,
     "subsample": 0.8,
     "colsample_bytree": 0.8,
-    "use_label_encoder": False,
     "eval_metric": "logloss",
     "random_state": RANDOM_STATE,
 }
 
 # Model locations for evaluation
 
-LR_EXPORT_PATH = str(MODELS_DIR / "logistic_regression.skops")
-RF_EXPORT_PATH = str(MODELS_DIR / "random_forest.skops")
-XGB_EXPORT_PATH = str(MODELS_DIR / "xgboost.skops")
+LR_EXPORT_PATH = str(MODELS_DIR / "Logistic_Regression.skops")
+RF_EXPORT_PATH = str(MODELS_DIR / "Random_Forest.skops")
+XGB_EXPORT_PATH = str(MODELS_DIR / "XGBoost.skops")
 
 # Logger Constants
 
-LOG_FILE = "logs/model.log"
+LOG_FILE = "debug.log"
 FORMAT = "%(asctime)s [%(levelname)s] %(message)s"
 
 # Evaluation Parameters
@@ -190,4 +188,4 @@ BEST_RESULTS = None
 ARTIFACT_PATH = ROOT_DIR / "artifacts"
 
 ARTIFACT_TRAIN_PATH = ARTIFACT_PATH / "train"
-ARTIFACT_EVOLUATION_PATH = ARTIFACT_PATH / "evaluation"
+ARTIFACT_EVALUATION_PATH = ARTIFACT_PATH / "evaluation"

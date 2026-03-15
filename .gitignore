@@ -1,8 +1,7 @@
-venv/
+.venv/
+logs/
 __pycache__/
 *.pyc
 mlruns/
 /data-file.bin
-.env
-/logs
-/airflow_dags
+.dvcignore

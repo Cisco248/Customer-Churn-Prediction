@@ -7,6 +7,7 @@ import mlflow.xgboost as ml_xgb
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
+import dagshub
 
 from config import (
     TRAIN_DATA_PATH,
@@ -41,9 +42,7 @@ class ModelTrainer:
         params: dict,
         model_name: str,
         export_path: str,
-        mlflow_config: MLflowConfig,
     ):
-        self.mlflow = mlflow_config
         self.x_train = X_train
         self.y_train = y_train
         self.x_test = X_test
@@ -58,19 +57,17 @@ class ModelTrainer:
 
         self.logger.info("🚀 ===> Training Stage: Started Processing")
 
-        self.mlflow
-
-        with mlflow.start_run(run_name=f"{self.model_name}"):
+        with mlflow.start_run():
 
             mlflow.log_params(self.params)
 
-            if self.model == LogisticRegression:
+            if self.model_name == "Logistic_Regression":
                 self.model = LogisticRegression(**self.params)
 
-            elif self.model == RandomForestClassifier:
+            elif self.model_name == "Random_Forest":
                 self.model = RandomForestClassifier(**self.params)
 
-            elif self.model == XGBClassifier:
+            elif self.model_name == "XGBoost":
                 self.model = XGBClassifier(**self.params)
             else:
                 raise ValueError("Unavailable model type provided.")
@@ -91,7 +88,7 @@ class ModelTrainer:
                 self.y_test, self.y_prob, self.y_pred, self.model_name
             )
 
-            if self.model_name == "Logistic Regression":
+            if self.model_name == "Logistic_Regression":
                 self.artifacts_builder.build_train_confusion_matrix()
                 self.artifacts_builder.build_train_roc_curve(self.model_name)
 
@@ -104,8 +101,9 @@ class ModelTrainer:
 
                 sio.dump(self.model, self.exp_path)
                 mlflow.log_artifact(str(self.exp_path))
+                mlflow.set_tag("Training Info", f"{self.model_name} for MLOps")
 
-            elif self.model_name == "Random Forest":
+            elif self.model_name == "Random_Forest":
                 self.artifacts_builder.build_train_confusion_matrix()
                 self.artifacts_builder.build_train_roc_curve(self.model_name)
 
@@ -118,6 +116,7 @@ class ModelTrainer:
 
                 sio.dump(self.model, self.exp_path)
                 mlflow.log_artifact(str(self.exp_path))
+                mlflow.set_tag("Training Info", f"{self.model_name} for MLOps")
 
             elif self.model_name == "XGBoost":
                 self.artifacts_builder.build_train_confusion_matrix()
@@ -132,19 +131,58 @@ class ModelTrainer:
 
                 sio.dump(self.model, self.exp_path)
                 mlflow.log_artifact(str(self.exp_path))
+                mlflow.set_tag("Training Info", f"{self.model_name} for MLOps")
 
             else:
                 raise ValueError("Unavailable model type provided.")
 
     def run_training(self):
 
-        self.mlflow
+        try:
+            # Validate credentials are properly set (not placeholder values)
+            if not DAGSHUB_TOKEN or DAGSHUB_TOKEN == "ENTER_TOKEN" or "ENTER" in DAGSHUB_TOKEN.upper():
+                self.logger.error("❌ ===> DAGsHub Token is missing or invalid (placeholder value)")
+                raise ValueError(
+                    "❌ ===> DAGsHub Token is required. Set DAGSHUB_TOKEN environment variable with a valid token."
+                )
+            
+            if not DAGSHUB_USERNAME or DAGSHUB_USERNAME == "ENTER_USERNAME" or "ENTER" in DAGSHUB_USERNAME.upper():
+                self.logger.error("❌ ===> DAGsHub Username is missing or invalid (placeholder value)")
+                raise ValueError(
+                    "❌ ===> DAGsHub Username is required. Set DAGSHUB_USERNAME environment variable."
+                )
+            
+            if not DAGSHUB_REPO_NAME or DAGSHUB_REPO_NAME == "ENTER_REPO_NAME" or "ENTER" in DAGSHUB_REPO_NAME.upper():
+                self.logger.error("❌ ===> DAGsHub Repo Name is missing or invalid (placeholder value)")
+                raise ValueError(
+                    "❌ ===> DAGsHub Repo Name is required. Set DAGSHUB_REPO_NAME environment variable."
+                )
+            
+            if not MLFLOW_TRACKING_URI or "ENTER" in MLFLOW_TRACKING_URI.upper():
+                self.logger.error("❌ ===> MLflow Tracking URI is missing or invalid (placeholder value)")
+                raise ValueError(
+                    "❌ ===> MLflow Tracking URI is required. Set MLFLOW_TRACKING_URI environment variable."
+                )
 
-        if MODELS_DIR:
+            dagshub.init(
+                repo_owner=DAGSHUB_USERNAME,
+                repo_name=DAGSHUB_REPO_NAME,
+                mlflow=True,
+            )
+            mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+            self.logger.info("✅ ===> DAGsHub authentication successful")
+            self.logger.info(f"✅ ===> MLflow: {MLFLOW_TRACKING_URI}")
+
+        except Exception as e:
+            self.logger.error(f"Error initializing DAGsHub: {e} ===> ❌")
+            raise
+
+        mlflow.set_experiment("churn-training")
+
+        if not MODELS_DIR.exists():
             MODELS_DIR.mkdir(parents=True, exist_ok=True)
-            self.logger.info("⚠️ ===> Models directory already exists!")
+            self.logger.info(f"⚠️ ===> Models directory not found! {MODELS_DIR}")
 
-        MODELS_DIR.mkdir(parents=True, exist_ok=True)
         self.logger.info("Models directory build successfully! ===> ℹ️")
 
         self.logger.info(f"Training Features: {self.x_train.shape[1]} ===> ℹ️")
@@ -165,13 +203,6 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    ml_config = MLflowConfig(
-        MLFLOW_TRACKING_URI,
-        DAGSHUB_TOKEN,
-        DAGSHUB_USERNAME,
-        DAGSHUB_REPO_NAME,
-    )
-
     train_df = pd.read_csv(TRAIN_DATA_PATH)
     test_df = pd.read_csv(TEST_DATA_PATH)
 
@@ -189,9 +220,8 @@ if __name__ == "__main__":
             y_test,
             LogisticRegression,
             LR_PARAMS,
-            "Logistic Regression",
+            "Logistic_Regression",
             LR_EXPORT_PATH,
-            ml_config,
         )
     elif args.model_name == "Random_Forest":
         trainer = ModelTrainer(
@@ -201,9 +231,8 @@ if __name__ == "__main__":
             y_test,
             RandomForestClassifier,
             RF_PARAMS,
-            "Random Forest",
+            "Random_Forest",
             RF_EXPORT_PATH,
-            ml_config,
         )
     elif args.model_name == "XGBoost":
         trainer = ModelTrainer(
@@ -215,7 +244,6 @@ if __name__ == "__main__":
             XGB_PARAMS,
             "XGBoost",
             XGB_EXPORT_PATH,
-            ml_config,
         )
     else:
         raise ValueError(f"Model {args.model_name} not recognized!")

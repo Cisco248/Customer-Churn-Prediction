@@ -1,182 +1,188 @@
 schema: '2.0'
 stages:
   preprocessing:
-    cmd: venv\Scripts\python src/preprocessing.py
+    cmd: .venv/bin/python src/preprocessing.py
     deps:
     - path: data/raw/churn_prediction_data.csv
       hash: md5
-      md5: 0f9de68e012bd3aed5fa7cdc9fc421af
-      size: 977501
+      md5: 3b0bfab28a8101b4e4fdd08025a5c235
+      size: 970457
+      isexec: true
     - path: src/data_ingestion.py
       hash: md5
-      md5: 822aada83689a37a36442d6ae78690ae
-      size: 2379
+      md5: be68bbdd0cd49f2321d6e134d50a4769
+      size: 2201
+      isexec: true
     - path: src/preprocessing.py
       hash: md5
-      md5: dbaf2a258b8b89da8ce72cf4b0434fac
-      size: 5146
+      md5: 92a4f12bd5ebffabdfc7d054638c877f
+      size: 5171
+      isexec: true
     outs:
     - path: data/processed/test.csv
       hash: md5
-      md5: a11fe63be543fe95fd434199bea98f26
-      size: 296517
+      md5: 74729b471a2b996796b9da763913fb9d
+      size: 295107
     - path: data/processed/train.csv
       hash: md5
-      md5: 8337cb518267caaca47444a0950ed08e
-      size: 1182765
+      md5: 909a71b28ffde3bae39216b7002ce08d
+      size: 1177130
   training@Logistic_Regression:
-    cmd: venv\Scripts\python src/train.py --model_name Logistic_Regression
+    cmd: .venv/bin/python src/train.py --model_name Logistic_Regression
     deps:
     - path: data/processed/train.csv
       hash: md5
-      md5: 8337cb518267caaca47444a0950ed08e
-      size: 1182765
+      md5: 909a71b28ffde3bae39216b7002ce08d
+      size: 1177130
     - path: src/train.py
       hash: md5
-      md5: 3df6b1bbc9b024d0d942aae892a32acb
-      size: 6854
+      md5: 2810f3d8a167114913ae0d5f46711f3c
+      size: 7210
+      isexec: true
     outs:
     - path: artifacts/train/Logistic_Regression_cm.png
       hash: md5
-      md5: 84f1d7d6a04513bac8edc2c59385904a
-      size: 20391
+      md5: 9a1bbdc0b89c35a37612bfca1c58921c
+      size: 23305
     - path: artifacts/train/Logistic_Regression_roc.png
       hash: md5
-      md5: ba8750071d606d0355ce67645401f34f
-      size: 24590
+      md5: 92a4829007440d856d48287806d5330e
+      size: 27384
     - path: models/Logistic_Regression.skops
       hash: md5
-      md5: b203271dba37d75030af9775c47ea0b0
-      size: 9403
+      md5: 76a753eae15b1395fb313a85dc31dd22
+      size: 9252
   training@Random_Forest:
-    cmd: venv\Scripts\python src/train.py --model_name Random_Forest
+    cmd: .venv/bin/python src/train.py --model_name Random_Forest
     deps:
     - path: data/processed/train.csv
       hash: md5
-      md5: 8337cb518267caaca47444a0950ed08e
-      size: 1182765
+      md5: 909a71b28ffde3bae39216b7002ce08d
+      size: 1177130
     - path: src/train.py
       hash: md5
-      md5: 3df6b1bbc9b024d0d942aae892a32acb
-      size: 6854
+      md5: 2810f3d8a167114913ae0d5f46711f3c
+      size: 7210
+      isexec: true
     outs:
     - path: artifacts/train/Random_Forest_cm.png
       hash: md5
-      md5: d14636a4ff565d6c33c52195990bd159
-      size: 19404
+      md5: 014762bed8ae2aa7e2dd1c1c828fc11e
+      size: 21989
     - path: artifacts/train/Random_Forest_roc.png
       hash: md5
-      md5: 024045a91e0d59ef38f1eb71fb659c2a
-      size: 23951
+      md5: 4215335d6d7289e1080eff05a2739e7a
+      size: 26354
     - path: models/Random_Forest.skops
       hash: md5
-      md5: b935d161435a197f360f7b6720c7f6e1
-      size: 13718448
+      md5: 181b3bcbb584c41bee0ab32912a1ff0b
+      size: 13681903
   training@XGBoost:
-    cmd: venv\Scripts\python src/train.py --model_name XGBoost
+    cmd: .venv/bin/python src/train.py --model_name XGBoost
     deps:
     - path: data/processed/train.csv
       hash: md5
-      md5: 8337cb518267caaca47444a0950ed08e
-      size: 1182765
+      md5: 909a71b28ffde3bae39216b7002ce08d
+      size: 1177130
     - path: src/train.py
       hash: md5
-      md5: 3df6b1bbc9b024d0d942aae892a32acb
-      size: 6854
+      md5: 2810f3d8a167114913ae0d5f46711f3c
+      size: 7210
+      isexec: true
     outs:
     - path: artifacts/train/XGBoost_cm.png
       hash: md5
-      md5: 132815a64d36f429b749d38b916c4311
-      size: 19188
+      md5: 049aa48ba1fe148b705be69359ee5f95
+      size: 21250
     - path: artifacts/train/XGBoost_roc.png
       hash: md5
-      md5: 8561e20b41eb8ab8efbfd553fd8649c6
-      size: 23575
+      md5: 37d73340b1f4750caa92571bb06e8f1a
+      size: 25811
     - path: models/XGBoost.skops
       hash: md5
-      md5: 2e56f30278b3291dc9670c074b2a8761
-      size: 691427
+      md5: 0fb931671c21ab9234654b2943b4a5a4
+      size: 706849
   evaluation@Logistic_Regression:
-    cmd: venv\Scripts\python src/evaluate.py --model_name Logistic_Regression
+    cmd: .venv/bin/python src/evaluate.py --model_name Logistic_Regression
     deps:
     - path: data/processed/test.csv
       hash: md5
-      md5: a11fe63be543fe95fd434199bea98f26
-      size: 296517
+      md5: 74729b471a2b996796b9da763913fb9d
+      size: 295107
     - path: models/Logistic_Regression.skops
       hash: md5
-      md5: b203271dba37d75030af9775c47ea0b0
-      size: 9403
+      md5: a14b2bfabba37333213a79278718a8a0
+      size: 9653
     - path: src/evaluate.py
       hash: md5
-      md5: a6c40797c33f482909a68779d2487b18
-      size: 7751
+      md5: 2a60184713a52786bd6dd53d992dbe13
+      size: 7298
     outs:
     - path: artifacts/evaluation/Logistic_Regression_feature.png
       hash: md5
-      md5: 88bec8893cbf04fb2743b61d44ba17fd
-      size: 96940
+      md5: 2c158667c3317e5e82680f283e95482a
+      size: 121880
     - path: artifacts/evaluation/Logistic_Regression_roc.png
       hash: md5
-      md5: d40b8aaaf5aa0d95d072b19477dce41b
-      size: 24768
+      md5: e6709dcc55c85b3be7f320272d25bbb0
+      size: 27375
     - path: data/generated/Logistic_Regression_data.csv
       hash: md5
-      md5: ef8d6a7b94b85a16cd9579af35e493e8
-      size: 1691
+      md5: da206710716ea7f6d7ce17dc179e1622
+      size: 1662
   evaluation@Random_Forest:
-    cmd: venv\Scripts\python src/evaluate.py --model_name Random_Forest
+    cmd: .venv/bin/python src/evaluate.py --model_name Random_Forest
     deps:
     - path: data/processed/test.csv
       hash: md5
-      md5: a11fe63be543fe95fd434199bea98f26
-      size: 296517
+      md5: 74729b471a2b996796b9da763913fb9d
+      size: 295107
     - path: models/Random_Forest.skops
       hash: md5
-      md5: b935d161435a197f360f7b6720c7f6e1
-      size: 13718448
+      md5: c9e1ef3bcabc916a67d065919fe67c4f
+      size: 13682304
     - path: src/evaluate.py
       hash: md5
-      md5: a6c40797c33f482909a68779d2487b18
-      size: 7751
+      md5: 2a60184713a52786bd6dd53d992dbe13
+      size: 7298
     outs:
     - path: artifacts/evaluation/Random_Forest_feature.png
       hash: md5
-      md5: a8ca99d4d72cb3c922297a059de5b950
-      size: 95886
+      md5: 7bf59bc2f06239958e3bc31e22c0b678
+      size: 119416
     - path: artifacts/evaluation/Random_Forest_roc.png
       hash: md5
-      md5: 42baec5644b16332bc82af8586191fca
-      size: 24017
+      md5: b36feb7e2fa73ce7bd5c847174ac10c8
+      size: 26428
     - path: data/generated/Random_Forest_data.csv
       hash: md5
-      md5: 13022a2e33d1cd54f27d80b8da77cc7c
-      size: 1740
+      md5: 4a5162ead53289e818ecf7510ac42a8d
+      size: 1699
   evaluation@XGBoost:
-    cmd: venv\Scripts\python src/evaluate.py --model_name XGBoost
+    cmd: .venv/bin/python src/evaluate.py --model_name XGBoost
     deps:
     - path: data/processed/test.csv
       hash: md5
-      md5: a11fe63be543fe95fd434199bea98f26
-      size: 296517
+      md5: 74729b471a2b996796b9da763913fb9d
+      size: 295107
     - path: models/XGBoost.skops
       hash: md5
-      md5: 2e56f30278b3291dc9670c074b2a8761
-      size: 691427
+      md5: 350b60ed3bde38b2c2bbe73fd5c3f4c3
+      size: 708221
     - path: src/evaluate.py
       hash: md5
-      md5: a6c40797c33f482909a68779d2487b18
-      size: 7751
+      md5: 2a60184713a52786bd6dd53d992dbe13
+      size: 7298
     outs:
     - path: artifacts/evaluation/XGBoost_feature.png
       hash: md5
-      md5: fb9f70f5878a690fd19d50cce4673602
-      size: 96063
+      md5: 23163fec71ac7b05d58054f857631c74
+      size: 118937
     - path: artifacts/evaluation/XGBoost_roc.png
       hash: md5
-      md5: 0791f9ea78b15f18f02138cd2a9fb492
-      size: 23580
+      md5: ba406d610bb1eaf7062fe2bc2d221f8e
+      size: 25781
     - path: data/generated/XGBoost_data.csv
       hash: md5
-      md5: e6acacf39ae5afb4321f21921d27e472
-      size: 1341
+      md5: ff140ca4fbc4e0cfc53d9e148db6dd62
+      size: 1308
