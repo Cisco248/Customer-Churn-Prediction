@@ -33,6 +33,7 @@ def run_training(model_name: str) -> None:
     dagshub.init(
         repo_owner=os.environ.get("DAGSHUB_USERNAME", ""),
         repo_name=os.environ.get("DAGSHUB_REPO_NAME", ""),
+        root="/opt/airflow/src",
         mlflow=True,
         dvc=True,
     )
