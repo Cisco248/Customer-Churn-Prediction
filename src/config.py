@@ -6,18 +6,18 @@ from xgboost import Booster, XGBClassifier
 load_dotenv()
 
 # ─── Project Root ─────────────────────────────────────────────────────────────
-ROOT_DIR = str(Path(__file__).resolve().parent.parent)
+ROOT_DIR = Path(__file__).resolve().parent.parent
 
 # ─── Data Paths ───────────────────────────────────────────────────────────────
-RAW_DATA_PATH = f"{ROOT_DIR}/data/raw/churn_prediction_data.csv"
-PROCESSED_DATA_DIR = f"{ROOT_DIR}/data/processed"
-GENERATED_DATA_DIR = f"{ROOT_DIR}/data/generated"
-TRAIN_DATA_PATH = f"{PROCESSED_DATA_DIR}/train.csv"
-TEST_DATA_PATH = f"{PROCESSED_DATA_DIR}/test.csv"
+RAW_DATA_PATH = ROOT_DIR / "data" / "raw" / "churn_prediction_data.csv"
+PROCESSED_DATA_DIR = ROOT_DIR / "data" / "processed"
+GENERATED_DATA_DIR = ROOT_DIR / "data" / "generated"
+TRAIN_DATA_PATH = PROCESSED_DATA_DIR / "train.csv"
+TEST_DATA_PATH = PROCESSED_DATA_DIR / "test.csv"
 
 # ─── Models ──────────────────────────────────────────────────────────────
-MODELS_DIR = f"{ROOT_DIR}/models"
-PREPROCESSOR_PATH = f"{MODELS_DIR}/preprocessing"
+MODELS_DIR = ROOT_DIR / "models"
+PREPROCESSOR_PATH = MODELS_DIR / "preprocessing"
 REPORT_TITLE = "\nClassification Report:"
 TARGET_NAMES = ["No Churn", "Churn"]
 TRUST_LIST = [Booster, XGBClassifier]
@@ -169,9 +169,9 @@ XGB_PARAMS = {
 
 # Model locations for evaluation
 
-LR_EXPORT_PATH = f"{MODELS_DIR}/Logistic_Regression.skops"
-RF_EXPORT_PATH = f"{MODELS_DIR}/Random_Forest.skops"
-XGB_EXPORT_PATH = f"{MODELS_DIR}/XGBoost.skops"
+LR_EXPORT_PATH = MODELS_DIR / "Logistic_Regression.skops"
+RF_EXPORT_PATH = MODELS_DIR / "Random_Forest.skops"
+XGB_EXPORT_PATH = MODELS_DIR / "XGBoost.skops"
 
 # Logger Constants
 
@@ -185,7 +185,7 @@ BEST_MODEL_NAME = None
 BEST_RESULTS = None
 
 # ─── Artifact Paths ───────────────────────────────────────────────────────────
-ARTIFACT_PATH = f"{ROOT_DIR}/artifacts"
+ARTIFACT_PATH = ROOT_DIR / "artifacts"
 
-ARTIFACT_TRAIN_PATH = f"{ARTIFACT_PATH} / train"
-ARTIFACT_EVALUATION_PATH = f"{ARTIFACT_PATH}/evaluation"
+ARTIFACT_TRAIN_PATH = ARTIFACT_PATH / "train"
+ARTIFACT_EVALUATION_PATH = ARTIFACT_PATH / "evaluation"

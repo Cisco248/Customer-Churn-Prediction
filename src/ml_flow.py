@@ -1,6 +1,6 @@
 import dagshub
 import mlflow
-from src.utils.logger import setup_logger
+from utils.logger import setup_logger
 
 
 class MLflowConfig:

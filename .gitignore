@@ -1,7 +1,17 @@
 .venv/
+.vscode/
+debug.log
 logs/
+artifacts/
+models/
+plugins/
 __pycache__/
 *.pyc
 mlruns/
 /data-file.bin
 .dvcignore
+.dockerignore
+simple_auth_manager_passwords.json.generated
+.python-version
+airflow.db-shm
+airflow.db-wal

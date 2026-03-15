@@ -9,6 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 import dagshub
+from pathlib import Path
 
 from config import (
     TRAIN_DATA_PATH,
@@ -28,25 +29,17 @@ from config import (
     Y_FEATURE_COLS,
 )
 from utils.logger import setup_logger
-from artifacts import ComputeMatrics, Visualization
+from artifacts import ComputeMetrics, Visualization
 
 
 class ModelTrainer:
     def __init__(
         self,
-        X_train,
-        y_train,
-        X_test,
-        y_test,
         model,
         params: dict,
         model_name: str,
-        export_path: str,
+        export_path: Path,
     ):
-        self.x_train = X_train
-        self.y_train = y_train
-        self.x_test = X_test
-        self.y_test = y_test
         self.model = model
         self.params = params
         self.model_name = model_name
@@ -57,7 +50,17 @@ class ModelTrainer:
 
         self.logger.info("🚀 ===> Training Stage: Started Processing")
 
-        with mlflow.start_run():
+        self.train_df = pd.read_csv(TRAIN_DATA_PATH)
+        self.test_df = pd.read_csv(TEST_DATA_PATH)
+
+        self.x_train = self.train_df[X_FEATURE_COLS].values
+        self.y_train = self.train_df[Y_FEATURE_COLS].values
+
+        self.x_test = self.test_df[X_FEATURE_COLS].values
+        self.y_test = self.test_df[Y_FEATURE_COLS].values
+
+        self.runner_name = f"Training_{self.model_name}"
+        with mlflow.start_run(run_name=self.runner_name):
 
             mlflow.log_params(self.params)
 
@@ -79,7 +82,7 @@ class ModelTrainer:
             self.y_pred = self.model.predict(self.x_test)
             self.y_prob = self.model.predict_proba(self.x_test)[:, 1]
 
-            self.metrics = ComputeMatrics(self.y_test, self.y_pred, self.y_prob)
+            self.metrics = ComputeMetrics(self.y_test, self.y_pred, self.y_prob)
             mlflow.log_metrics(self.metrics.init_comput_matrics())
 
             self.logger.info(f"{self.model_name}: Metrics: {str(self.metrics)} ===> ℹ️")
@@ -131,6 +134,7 @@ class ModelTrainer:
 
                 sio.dump(self.model, self.exp_path)
                 mlflow.log_artifact(str(self.exp_path))
+
                 mlflow.set_tag("Training Info", f"{self.model_name} for MLOps")
 
             else:
@@ -197,15 +201,13 @@ class ModelTrainer:
             self.logger.error(f"Error initializing DAGsHub: {e} ===> ❌")
             raise
 
-        mlflow.set_experiment("churn-training")
+        mlflow.set_experiment("mlops-training")
 
         if not MODELS_DIR.exists():
             MODELS_DIR.mkdir(parents=True, exist_ok=True)
             self.logger.info(f"⚠️ ===> Models directory not found! {MODELS_DIR}")
 
         self.logger.info("Models directory build successfully! ===> ℹ️")
-
-        self.logger.info(f"Training Features: {self.x_train.shape[1]} ===> ℹ️")
 
         self._setup_model_train()
 
@@ -223,21 +225,8 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    train_df = pd.read_csv(TRAIN_DATA_PATH)
-    test_df = pd.read_csv(TEST_DATA_PATH)
-
-    X_train = train_df[X_FEATURE_COLS].values
-    y_train = train_df[Y_FEATURE_COLS].values
-
-    X_test = test_df[X_FEATURE_COLS].values
-    y_test = test_df[Y_FEATURE_COLS].values
-
     if args.model_name == "Logistic_Regression":
         trainer = ModelTrainer(
-            X_train,
-            y_train,
-            X_test,
-            y_test,
             LogisticRegression,
             LR_PARAMS,
             "Logistic_Regression",
@@ -245,10 +234,6 @@ if __name__ == "__main__":
         )
     elif args.model_name == "Random_Forest":
         trainer = ModelTrainer(
-            X_train,
-            y_train,
-            X_test,
-            y_test,
             RandomForestClassifier,
             RF_PARAMS,
             "Random_Forest",
@@ -256,10 +241,6 @@ if __name__ == "__main__":
         )
     elif args.model_name == "XGBoost":
         trainer = ModelTrainer(
-            X_train,
-            y_train,
-            X_test,
-            y_test,
             XGBClassifier,
             XGB_PARAMS,
             "XGBoost",

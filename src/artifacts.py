@@ -9,10 +9,10 @@ from sklearn.metrics import (
     roc_curve,
 )
 import matplotlib.pyplot as plt
-from .config import ARTIFACT_TRAIN_PATH
+from config import ARTIFACT_TRAIN_PATH
 
 
-class ComputeMatrics:
+class ComputeMetrics:
     def __init__(self, y_true, y_pred, y_prob):
         self.y_true = y_true
         self.y_pred = y_pred
@@ -67,10 +67,10 @@ class Visualization:
 
         plt.colorbar(self.im)
 
-        if not ARTIFACT_TRAIN_PATH.exists():
+        if ARTIFACT_TRAIN_PATH.exists():
             ARTIFACT_TRAIN_PATH.mkdir(parents=True, exist_ok=True)
 
-        path = ARTIFACT_TRAIN_PATH / f"{self.run_name.replace(' ', '_')}_cm.png"
+        path = f"{ARTIFACT_TRAIN_PATH}/{self.run_name}_cm.png"
         self.fig.savefig(path, bbox_inches="tight")
         plt.close(self.fig)
 
@@ -92,7 +92,7 @@ class Visualization:
         if not ARTIFACT_TRAIN_PATH.exists():
             ARTIFACT_TRAIN_PATH.mkdir(parents=True, exist_ok=True)
 
-        self.path = ARTIFACT_TRAIN_PATH / f"{self.run_name.replace(' ', '_')}_roc.png"
+        self.path = f"{ARTIFACT_TRAIN_PATH}/{self.run_name.replace(' ', '_')}_roc.png"
         self.fig.savefig(self.path, bbox_inches="tight")
         plt.close(self.fig)
 

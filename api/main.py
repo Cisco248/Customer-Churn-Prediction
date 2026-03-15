@@ -1,10 +1,11 @@
+# type: ignore
 from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 import skops.io as sio
 import numpy as np
 import pandas as pd
-import joblib
+import joblib as jlb
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 from config import MODELS_DIR, PREPROCESSOR_PATH
@@ -14,9 +15,10 @@ app = FastAPI()
 
 model = sio.load(MODELS_DIR / "Logistic_Regression.skops")
 try:
-    preprocessor = joblib.load(PREPROCESSOR_PATH / "preprocessor.joblib")
+    preprocessor = jlb.load(PREPROCESSOR_PATH / "preprocessor.joblib")
 except FileNotFoundError:
     preprocessor = None
+
 
 @app.get("/", response_class=HTMLResponse)
 def ui():
@@ -97,20 +99,28 @@ def ui():
     </html>
     """
 
+
 @app.post("/")
 async def predict(request: Request):
     body = await request.json()
     features_dict = body["features"]
 
     df = pd.DataFrame([features_dict])
-    
+
     # 1. Basic Cleaning
     df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce").fillna(0)
     if "customerID" in df.columns:
         df = df.drop(columns=["customerID"])
-        
+
     # 2. Binary Encoding
-    yes_no_cols = ["gender", "Partner", "Dependents", "PhoneService", "PaperlessBilling", "SeniorCitizen"]
+    yes_no_cols = [
+        "gender",
+        "Partner",
+        "Dependents",
+        "PhoneService",
+        "PaperlessBilling",
+        "SeniorCitizen",
+    ]
     for col in yes_no_cols:
         if col in df.columns:
             if col == "gender":
@@ -129,4 +139,3 @@ async def predict(request: Request):
         "churn_probability": float(prob),
         "prediction": "Yes" if prob > 0.5 else "No",
     }
-

@@ -103,6 +103,7 @@ services:
       - postgres-db-volume:/var/lib/postgresql/data
     ports:
       - 5433:5432
+    platform: linux/amd64
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 10s

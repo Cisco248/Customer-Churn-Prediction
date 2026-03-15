@@ -35,7 +35,7 @@ from config import (
 
 class FeatureEvaluationArtifacts:
 
-    def __init__(self, loc: str | Path, name: str) -> None:
+    def __init__(self, loc: Path, name: str) -> None:
         self.location = loc
         self.model_name = name
         self.logger = setup_logger()
@@ -94,6 +94,9 @@ class FeatureEvaluationArtifacts:
         self.ax.set_title(f"{self.model_name}: {title}")
         self.ax.set_xlabel("Importance Score")
 
+        if not self.location.exists():
+            raise ValueError("Directory Missing!")
+
         self.fig.savefig(
             f"{self.location}/{self.model_name}_feature.png",
             bbox_inches="tight",
@@ -107,7 +110,7 @@ class FeatureEvaluationArtifacts:
 
 class RocEvaluationArtifacts:
 
-    def __init__(self, loc: str | Path, name: str):
+    def __init__(self, loc: Path, name: str):
         self.location = loc
         self.model_name = name
 
@@ -131,9 +134,10 @@ class RocEvaluationArtifacts:
         self.ax.set_xlabel("FPR")
         self.ax.set_ylabel("TPR")
 
-        self.path = (
-            ARTIFACT_EVALUATION_PATH / f"{self.model_name.replace(' ', '_')}_roc.png"
-        )
+        if not self.location.exists():
+            raise ValueError("Directory Missing!")
+
+        self.path = self.location / f"{self.model_name.replace(' ', '_')}_roc.png"
         self.fig.savefig(self.path, bbox_inches="tight")
         plt.close(self.fig)
 
@@ -146,7 +150,7 @@ class EvaluationModel:
         self,
         model_name,
         model_path,
-        imp_curve_loc: str | Path,
+        imp_curve_loc: Path,
     ) -> None:
         self.model = None
         self.metrics = {}
@@ -169,6 +173,11 @@ class EvaluationModel:
         self.y_pred = self.model.predict(self.X_test)
         self.y_prob = self.model.predict_proba(self.X_test)[:, 1]
 
+        self.logger.info(f"Logging metrics: {self.model_name} ===> ℹ️")
+
+        self.roc_builder.build_evaluate_roc_curve(self.y_test, self.y_prob)
+        self.feature_builder.build_feature_artifact(self.model, self.X_test)
+
         self.metrics = {
             "accuracy": round(float(accuracy_score(self.y_test, self.y_pred)), 4),
             "precision": round(float(precision_score(self.y_test, self.y_pred)), 4),
@@ -176,6 +185,9 @@ class EvaluationModel:
             "f1": round(float(f1_score(self.y_test, self.y_pred)), 4),
             "roc_auc": round(float(roc_auc_score(self.y_test, self.y_prob)), 4),
         }
+
+        mlflow.log_metrics(self.metrics)
+        mlflow.set_tag("Evaluating info", f"{self.model_name} for MLOps")
 
         self.logger.info(f"Evaluating Completed: {self.model_name} ===> ✅")
 
@@ -250,19 +262,12 @@ class EvaluationModel:
             self.logger.error(f"Error initializing DAGsHub: {e} ===> ❌")
             raise
 
-        mlflow.set_experiment("churn-evaluation")
+        mlflow.set_experiment("mlops-evaluation")
 
         self.runner_name = f"Evaluation_{self.model_name}"
         with mlflow.start_run(run_name=self.runner_name):
 
             self.setup_evaluation()
-
-            self.logger.info(f"Logging metrics: {self.model_name} ===> ℹ️")
-
-            mlflow.log_metrics(self.metrics)
-
-            self.roc_builder.build_evaluate_roc_curve(self.y_test, self.y_prob)
-            self.feature_builder.build_feature_artifact(self.model, self.X_test)
 
             self.logger.info(f"✅ ===> Evaluating Stage: {self.model_name} Completed!")
 

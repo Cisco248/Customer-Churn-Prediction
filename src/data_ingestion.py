@@ -2,10 +2,11 @@
 import pandas as pd
 from config import REQUIRED_COLS, TARGET_COLUMN
 from utils.logger import setup_logger
+from pathlib import Path
 
 
 class DataIngestion:
-    def __init__(self, path: str):
+    def __init__(self, path: Path):
         self.logger = setup_logger()
         self.location = path
 
