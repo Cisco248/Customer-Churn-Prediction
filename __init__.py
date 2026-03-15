@@ -6,6 +6,13 @@ from src.config import (
     MLFLOW_EXPERIMENT_NAME,
 )
 
+from src.data_ingestion import DataIngestion
+
+from src.preprocessing import DataPreprocessor
+
+from src.train import ModelTrainer
+
+from src.evaluate import EvaluationModel
 
 __all__ = (
     "DAGSHUB_USERNAME",
@@ -13,4 +20,8 @@ __all__ = (
     "DAGSHUB_REPO_NAME",
     "MLFLOW_TRACKING_URI",
     "MLFLOW_EXPERIMENT_NAME",
+    "DataIngestion",
+    "DataPreprocessor",
+    "ModelTrainer",
+    "EvaluationModel",
 )

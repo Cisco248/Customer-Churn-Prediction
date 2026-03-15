@@ -1,6 +1,6 @@
 import dagshub
 import mlflow
-from utils.logger import setup_logger
+from src.utils.logger import setup_logger
 
 
 class MLflowConfig:
@@ -16,20 +16,40 @@ class MLflowConfig:
 
         try:
             # Validate credentials are properly set (not placeholder values)
-            if not self.token or self.token == "ENTER_TOKEN" or "ENTER" in self.token.upper():
-                self.logger.error("❌ ===> DAGsHub Token is missing or invalid (placeholder value)")
+            if (
+                not self.token
+                or self.token == "ENTER_TOKEN"
+                or "ENTER" in self.token.upper()
+            ):
+                self.logger.error(
+                    "❌ ===> DAGsHub Token is missing or invalid (placeholder value)"
+                )
                 raise ValueError("❌ ===> DAGsHub Token is required")
-            
-            if not self.dagshub_username or self.dagshub_username == "ENTER_USERNAME" or "ENTER" in self.dagshub_username.upper():
-                self.logger.error("❌ ===> DAGsHub Username is missing or invalid (placeholder value)")
+
+            if (
+                not self.dagshub_username
+                or self.dagshub_username == "ENTER_USERNAME"
+                or "ENTER" in self.dagshub_username.upper()
+            ):
+                self.logger.error(
+                    "❌ ===> DAGsHub Username is missing or invalid (placeholder value)"
+                )
                 raise ValueError("❌ ===> DAGsHub Username is required")
-            
-            if not self.dagshub_repo_name or self.dagshub_repo_name == "ENTER_REPO_NAME" or "ENTER" in self.dagshub_repo_name.upper():
-                self.logger.error("❌ ===> DAGsHub Repo Name is missing or invalid (placeholder value)")
+
+            if (
+                not self.dagshub_repo_name
+                or self.dagshub_repo_name == "ENTER_REPO_NAME"
+                or "ENTER" in self.dagshub_repo_name.upper()
+            ):
+                self.logger.error(
+                    "❌ ===> DAGsHub Repo Name is missing or invalid (placeholder value)"
+                )
                 raise ValueError("❌ ===> DAGsHub Repo Name is required")
-            
+
             if not self.tracking_uri or "ENTER" in self.tracking_uri.upper():
-                self.logger.error("❌ ===> MLflow Tracking URI is missing or invalid (placeholder value)")
+                self.logger.error(
+                    "❌ ===> MLflow Tracking URI is missing or invalid (placeholder value)"
+                )
                 raise ValueError("❌ ===> MLflow Tracking URI is required")
 
             dagshub.init(

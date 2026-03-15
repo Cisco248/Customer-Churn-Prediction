@@ -1,18 +1,18 @@
+# type: ignore
 import pandas as pd
-from pathlib import Path
-from config import REQUIRED_COLS, TARGET_COLUMN, RAW_DATA_PATH
+from config import REQUIRED_COLS, TARGET_COLUMN
 from utils.logger import setup_logger
 
 
 class DataIngestion:
-    def __init__(self, path: Path):
+    def __init__(self, path: str):
         self.logger = setup_logger()
         self.location = path
 
     def load_dataset(self) -> pd.DataFrame:
         self.logger.info("🚀 ===> Data_Ingestion Stage: Start Processing")
 
-        if not self.location.exists():
+        if not self.location:
             self.logger.error(f"Raw data not found at {self.location} ===> ❌")
             raise ValueError(f"Raw data not found at {self.location} ===> ❌")
 

@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 import subprocess
 from datetime import datetime
 from pathlib import Path
@@ -6,6 +7,8 @@ from airflow import DAG
 from airflow.providers.standard.operators.python import PythonOperator
 from airflow.providers.standard.operators.bash import BashOperator
 import dagshub
+
+load_dotenv()
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 SRC_DIR = ROOT_DIR / "src"
@@ -15,43 +18,52 @@ MODELS = ["Logistic_Regression", "Random_Forest", "XGBoost"]
 def _build_env() -> dict:
     return {
         **os.environ,
-        "DAGSHUB_TOKEN": os.environ.get("DAGSHUB_TOKEN", ""),
-        "DAGSHUB_USERNAME": os.environ.get("DAGSHUB_USERNAME", ""),
-        "DAGSHUB_REPO_NAME": os.environ.get("DAGSHUB_REPO_NAME", ""),
-        "MLFLOW_TRACKING_URI": os.environ.get("MLFLOW_TRACKING_URI", ""),
-        # Ensure local src/ imports (config, utils, …) resolve inside the worker
-        "PYTHONPATH": str(SRC_DIR),
+        "DEFAULT_ACCESS_TOKEN": os.environ.get("DEFAULT_ACCESS_TOKEN"),
+        "DAGSHUB_USERNAME": os.environ.get("DAGSHUB_USERNAME"),
+        "DAGSHUB_REPO_NAME": os.environ.get("DAGSHUB_REPO_NAME"),
+        "MLFLOW_TRACKING_URI": os.environ.get("MLFLOW_TRACKING_URI"),
     }
 
 
-def run_preprocessing() -> None:
-    subprocess.run(["python", str(SRC_DIR / "preprocessing.py")], check=True)
+def run_preprocessing():
+    subprocess.run(
+        [
+            "python",
+            str(SRC_DIR / "preprocessing.py"),
+        ],
+        check=True,
+    )
 
 
 def run_training(model_name: str) -> None:
 
     dagshub.init(
-        repo_owner=os.environ.get("DAGSHUB_USERNAME", ""),
-        repo_name=os.environ.get("DAGSHUB_REPO_NAME", ""),
-        root="/opt/airflow/src",
-        mlflow=True,
-        dvc=True,
+        repo_owner=os.getenv("DAGSHUB_USERNAME"),
+        repo_name=os.getenv("DAGSHUB_REPO_NAME"),
     )
 
     subprocess.run(
-        ["python", str(SRC_DIR / "train.py"), "--model_name", model_name],
+        [
+            "python",
+            str(SRC_DIR / "train.py"),
+            "--model_name",
+            model_name,
+        ],
         env=_build_env(),
         check=True,
-        cwd=str(ROOT_DIR),
     )
 
 
 def run_evaluation(model_name: str) -> None:
     subprocess.run(
-        ["python", str(SRC_DIR / "evaluate.py"), "--model_name", model_name],
+        [
+            "python",
+            str(SRC_DIR / "evaluate.py"),
+            "--model_name",
+            model_name,
+        ],
         env=_build_env(),
         check=True,
-        cwd=str(ROOT_DIR),
     )
 
 
@@ -65,15 +77,14 @@ with DAG(
     doc_md=__doc__,
 ) as dag:
 
-    run_dvc = BashOperator(
-        task_id="run_dvc_repro",
-        bash_command="""
-            dagshub login --token d425126e6c80f1211dafe8843bdde04e7eab9e16
-        """,
+    auth = BashOperator(
+        task_id="authentication",
+        bash_command=f"dagshub login --token {os.getenv('DEFAULT_ACCESS_TOKEN')}",
     )
 
     task_preprocessing = PythonOperator(
-        task_id="preprocessing", python_callable=run_preprocessing
+        task_id="preprocessing",
+        python_callable=run_preprocessing,
     )
 
     training_tasks = [
@@ -94,7 +105,7 @@ with DAG(
         for model_name in MODELS
     ]
 
-    task_preprocessing >> training_tasks
+    auth >> task_preprocessing >> training_tasks
 
     for train_task, eval_task in zip(training_tasks, evaluation_tasks):
         train_task >> eval_task

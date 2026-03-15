@@ -1,3 +1,4 @@
+# type: ignore
 import argparse
 import skops.io as sio
 import pandas as pd
@@ -27,8 +28,7 @@ from config import (
     Y_FEATURE_COLS,
 )
 from utils.logger import setup_logger
-from ml_flow import MLflowConfig
-from artifacts import ComputeMatrics, Visualization  # type: ignore
+from artifacts import ComputeMatrics, Visualization
 
 
 class ModelTrainer:
@@ -140,26 +140,46 @@ class ModelTrainer:
 
         try:
             # Validate credentials are properly set (not placeholder values)
-            if not DAGSHUB_TOKEN or DAGSHUB_TOKEN == "ENTER_TOKEN" or "ENTER" in DAGSHUB_TOKEN.upper():
-                self.logger.error("❌ ===> DAGsHub Token is missing or invalid (placeholder value)")
+            if (
+                not DAGSHUB_TOKEN
+                or DAGSHUB_TOKEN == "ENTER_TOKEN"
+                or "ENTER" in DAGSHUB_TOKEN.upper()
+            ):
+                self.logger.error(
+                    "❌ ===> DAGsHub Token is missing or invalid (placeholder value)"
+                )
                 raise ValueError(
                     "❌ ===> DAGsHub Token is required. Set DAGSHUB_TOKEN environment variable with a valid token."
                 )
-            
-            if not DAGSHUB_USERNAME or DAGSHUB_USERNAME == "ENTER_USERNAME" or "ENTER" in DAGSHUB_USERNAME.upper():
-                self.logger.error("❌ ===> DAGsHub Username is missing or invalid (placeholder value)")
+
+            if (
+                not DAGSHUB_USERNAME
+                or DAGSHUB_USERNAME == "ENTER_USERNAME"
+                or "ENTER" in DAGSHUB_USERNAME.upper()
+            ):
+                self.logger.error(
+                    "❌ ===> DAGsHub Username is missing or invalid (placeholder value)"
+                )
                 raise ValueError(
                     "❌ ===> DAGsHub Username is required. Set DAGSHUB_USERNAME environment variable."
                 )
-            
-            if not DAGSHUB_REPO_NAME or DAGSHUB_REPO_NAME == "ENTER_REPO_NAME" or "ENTER" in DAGSHUB_REPO_NAME.upper():
-                self.logger.error("❌ ===> DAGsHub Repo Name is missing or invalid (placeholder value)")
+
+            if (
+                not DAGSHUB_REPO_NAME
+                or DAGSHUB_REPO_NAME == "ENTER_REPO_NAME"
+                or "ENTER" in DAGSHUB_REPO_NAME.upper()
+            ):
+                self.logger.error(
+                    "❌ ===> DAGsHub Repo Name is missing or invalid (placeholder value)"
+                )
                 raise ValueError(
                     "❌ ===> DAGsHub Repo Name is required. Set DAGSHUB_REPO_NAME environment variable."
                 )
-            
+
             if not MLFLOW_TRACKING_URI or "ENTER" in MLFLOW_TRACKING_URI.upper():
-                self.logger.error("❌ ===> MLflow Tracking URI is missing or invalid (placeholder value)")
+                self.logger.error(
+                    "❌ ===> MLflow Tracking URI is missing or invalid (placeholder value)"
+                )
                 raise ValueError(
                     "❌ ===> MLflow Tracking URI is required. Set MLFLOW_TRACKING_URI environment variable."
                 )

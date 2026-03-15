@@ -1,9 +1,11 @@
+# type:ignore
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
+from pathlib import Path
 
 from config import (
     PROCESSED_DATA_DIR,
@@ -31,7 +33,7 @@ class DataPreprocessor:
         self.logger = setup_logger()
 
     def _encode_binary(self) -> pd.DataFrame:
-        
+
         self.df["TotalCharges"] = pd.to_numeric(
             self.df["TotalCharges"], errors="coerce"
         ).fillna(0)
@@ -91,9 +93,9 @@ class DataPreprocessor:
         self.preprocessor = self.setup_preprocessing()
         self.logger.info("🚀 ===> Preprocessor Stage: Started Processing ")
 
-        if PROCESSED_DATA_DIR.exists():
+        if PROCESSED_DATA_DIR:
             self.logger.warning("⚠️ ===> Processed file already exists.")
-        PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
+        Path(PROCESSED_DATA_DIR).mkdir(parents=True, exist_ok=True)
         self.logger.info("ℹ️ ===> Build processed file.")
 
         self.X = self.df.drop(columns=[TARGET_COLUMN])
@@ -136,10 +138,10 @@ class DataPreprocessor:
         self.train_df.to_csv(TRAIN_DATA_PATH, index=False)
         self.test_df.to_csv(TEST_DATA_PATH, index=False)
 
-        if not PREPROCESSOR_PATH.exists():
-            PREPROCESSOR_PATH.mkdir(parents=True, exist_ok=True)
+        if not Path(PREPROCESSOR_PATH).exists():
+            Path(PREPROCESSOR_PATH).mkdir(parents=True, exist_ok=True)
 
-        joblib.dump(self.preprocessor, PREPROCESSOR_PATH / "preprocessor.joblib")
+        joblib.dump(self.preprocessor, f"{PREPROCESSOR_PATH}/preprocessor.joblib")
         self.logger.info(" Saved Preprocessor ===> ℹ️")
         self.logger.info(f" Saved Train Data ===> ℹ️")
         self.logger.info(f" Saved Test Data ===> ℹ️")
