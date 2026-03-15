@@ -1,0 +1,54 @@
+{"timestamp":"2026-03-14T08:20:09.276559Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-03-14T08:20:09.277267Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/airflow_pipeline.py","logger":"airflow.models.dagbag.BundleDagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-03-14T08:20:09.284822Z","level":"info","event":"Stats instance was created in PID 7 but accessed in PID 857. Re-initializing.","logger":"airflow.stats","filename":"stats.py","lineno":57}
+{"timestamp":"2026-03-14T08:20:13.913244Z","level":"error","event":"/home/airflow/.local/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.3) or chardet (6.0.0.post1)/charset_normalizer (3.4.5) doesn't match a supported version!","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:20:13.913806Z","level":"error","event":"  warnings.warn(","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:20:18.049690Z","level":"info","event":"2026-03-14 08:20:18,048 [INFO] ✅ ===> DAGsHub authentication successful","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:20:18.141485Z","level":"info","event":"                      ❗❗❗ AUTHORIZATION REQUIRED ❗❗❗","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:18.911501Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:18.911658Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:18.911723Z","level":"info","event":"Open the following link in your browser to authorize the client:","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:18.911783Z","level":"info","event":"https://dagshub.com/login/oauth/authorize?state=b0b1ac54-5b29-43ab-a7f3-8ce935acff74&client_id=32b60ba385aa7cecf24046d8195a71c07dd345d9657977863b52e7748e0f0f28&middleman_request_id=fc0f53c2b799a4e030ddb0a877b81c503e739080bf961ab92b7527f3145e8ee1","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:18.911842Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:18.911898Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:18.911954Z","level":"info","event":"2026-03-14 08:22:18,910 [INFO] HTTP Request: POST https://dagshub.com/login/oauth/middleman \"HTTP/1.1 504 Gateway Time-out\"","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:18.913958Z","level":"info","event":"2026-03-14 08:22:18,912 [ERROR] Error initializing DAGsHub: Expecting value: line 1 column 1 (char 0) ===> ❌","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:20.268648Z","level":"error","event":"2026/03/14 08:22:20 INFO mlflow.tracking.fluent: Autologging successfully enabled for sklearn.","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.281979Z","level":"error","event":"2026/03/14 08:22:20 INFO mlflow.tracking.fluent: Autologging successfully enabled for xgboost.","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.282680Z","level":"info","event":"2026-03-14 08:22:20,282 [INFO] ⚠️ ===> Models directory already exists!","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:20.282868Z","level":"info","event":"2026-03-14 08:22:20,282 [INFO] Models directory build successfully! ===> ℹ️","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:20.282940Z","level":"info","event":"2026-03-14 08:22:20,282 [INFO] Training Features: 40 ===> ℹ️","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:20.284608Z","level":"info","event":"2026-03-14 08:22:20,282 [INFO] 🚀 ===> Training Stage: Started Processing","logger":"task.stdout"}
+{"timestamp":"2026-03-14T08:22:20.952644Z","level":"error","event":"Traceback (most recent call last):","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.952799Z","level":"error","event":"  File \"/opt/airflow/src/train.py\", line 226, in <module>","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.952879Z","level":"error","event":"    trainer.run_training()","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.952938Z","level":"error","event":"  File \"/opt/airflow/src/train.py\", line 155, in run_training","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.953007Z","level":"error","event":"    self._setup_model_train()","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.953063Z","level":"error","event":"  File \"/opt/airflow/src/train.py\", line 61, in _setup_model_train","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.953118Z","level":"error","event":"    with mlflow.start_run():","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.953171Z","level":"error","event":"         ^^^^^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.953224Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/fluent.py\", line 544, in start_run","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.954298Z","level":"error","event":"    active_run_obj = client.create_run(","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.954428Z","level":"error","event":"                     ^^^^^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.954484Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/client.py\", line 604, in create_run","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.957074Z","level":"error","event":"    return self._tracking_client.create_run(experiment_id, start_time, tags, run_name)","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.957530Z","level":"error","event":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.957850Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/telemetry/track.py\", line 30, in wrapper","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.958020Z","level":"error","event":"    result = func(*args, **kwargs)","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.958083Z","level":"error","event":"             ^^^^^^^^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.958137Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/client.py\", line 186, in create_run","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.958503Z","level":"error","event":"    return self.store.create_run(","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.958600Z","level":"error","event":"           ^^^^^^^^^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.958921Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/store/tracking/rest_store.py\", line 370, in create_run","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.959062Z","level":"error","event":"    response_proto = self._call_endpoint(CreateRun, req_body)","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.959423Z","level":"error","event":"                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.959513Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/store/tracking/rest_store.py\", line 233, in _call_endpoint","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.959568Z","level":"error","event":"    return call_endpoint(","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.959796Z","level":"error","event":"           ^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.960727Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/utils/rest_utils.py\", line 627, in call_endpoint","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.960912Z","level":"error","event":"    response = verify_rest_response(","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.960973Z","level":"error","event":"               ^^^^^^^^^^^^^^^^^^^^^","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.961037Z","level":"error","event":"  File \"/home/airflow/.local/lib/python3.12/site-packages/mlflow/utils/rest_utils.py\", line 348, in verify_rest_response","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.961092Z","level":"error","event":"    raise MlflowException(","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:20.961145Z","level":"error","event":"mlflow.exceptions.MlflowException: API request to endpoint /api/2.0/mlflow/runs/create failed with error code 403 != 200. Response body: ''","logger":"task.stderr"}
+{"timestamp":"2026-03-14T08:22:21.685150Z","level":"error","event":"Task failed with exception","logger":"task","filename":"task_runner.py","lineno":1186,"error_detail":[{"exc_type":"CalledProcessError","exc_value":"Command '['python', '/opt/airflow/src/train.py', '--model_name', 'Logistic_Regression']' returned non-zero exit status 1.","exc_notes":[],"syntax_error":null,"is_cause":false,"frames":[{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/execution_time/task_runner.py","lineno":1112,"name":"run"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/execution_time/task_runner.py","lineno":1528,"name":"_execute_task"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/bases/operator.py","lineno":417,"name":"wrapper"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/standard/operators/python.py","lineno":228,"name":"execute"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/standard/operators/python.py","lineno":251,"name":"execute_callable"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/execution_time/callback_runner.py","lineno":82,"name":"run"},{"filename":"/opt/airflow/dags/airflow_pipeline.py","lineno":25,"name":"run_training"},{"filename":"/usr/python/lib/python3.12/subprocess.py","lineno":571,"name":"run"}],"is_group":false,"exceptions":[]}]}

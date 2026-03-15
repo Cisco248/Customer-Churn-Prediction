@@ -1,6 +1,6 @@
 stages:
   preprocessing:
-    cmd: venv\Scripts\python src/preprocessing.py
+    cmd: .venv/bin/python src/preprocessing.py
     deps:
       - src/data_ingestion.py
       - src/preprocessing.py
@@ -12,7 +12,7 @@ stages:
   training:
     matrix:
       model: [Logistic_Regression, Random_Forest, XGBoost]
-    cmd: venv\Scripts\python src/train.py --model_name ${item.model}
+    cmd: .venv/bin/python src/train.py --model_name ${item.model}
     deps:
       - src/train.py
       - data/processed/train.csv
@@ -24,7 +24,7 @@ stages:
   evaluation:
     matrix:
       model: [Logistic_Regression, Random_Forest, XGBoost]
-    cmd: venv\Scripts\python src/evaluate.py --model_name ${item.model}
+    cmd: .venv/bin/python src/evaluate.py --model_name ${item.model}
     deps:
       - src/evaluate.py
       - models/${item.model}.skops

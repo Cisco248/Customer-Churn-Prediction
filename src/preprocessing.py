@@ -1,5 +1,4 @@
 import pandas as pd
-from pyparsing import col
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
@@ -18,7 +17,9 @@ from config import (
     TEST_SIZE,
     RANDOM_STATE,
     RAW_DATA_PATH,
+    PREPROCESSOR_PATH,
 )
+import joblib
 from data_ingestion import DataIngestion
 from utils.logger import setup_logger
 
@@ -29,18 +30,12 @@ class DataPreprocessor:
         self.df = df.df
         self.logger = setup_logger()
 
-    def clean_data(self):
-
+    def _encode_binary(self) -> pd.DataFrame:
+        
         self.df["TotalCharges"] = pd.to_numeric(
             self.df["TotalCharges"], errors="coerce"
         ).fillna(0)
-
         self.df = self.df.drop(columns=DROP_COLUMNS)
-
-        return self.df
-
-    def _encode_binary(self) -> pd.DataFrame:
-        self.df = self.clean_data()
 
         self.yes_no_cols = [c for c in BINARY_FEATURES if self.df[c].dtype == object]
 
@@ -141,6 +136,11 @@ class DataPreprocessor:
         self.train_df.to_csv(TRAIN_DATA_PATH, index=False)
         self.test_df.to_csv(TEST_DATA_PATH, index=False)
 
+        if not PREPROCESSOR_PATH.exists():
+            PREPROCESSOR_PATH.mkdir(parents=True, exist_ok=True)
+
+        joblib.dump(self.preprocessor, PREPROCESSOR_PATH / "preprocessor.joblib")
+        self.logger.info(" Saved Preprocessor ===> ℹ️")
         self.logger.info(f" Saved Train Data ===> ℹ️")
         self.logger.info(f" Saved Test Data ===> ℹ️")
         self.logger.info("✅ ===> Preprocessing Stage: Completed Processing")

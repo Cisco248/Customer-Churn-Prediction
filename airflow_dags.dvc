@@ -1,6 +1,0 @@
-outs:
-- md5: d2bb9dd5572be4c779ecc88844551804.dir
-  size: 774
-  nfiles: 2
-  hash: md5
-  path: airflow_dags

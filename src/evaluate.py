@@ -13,10 +13,11 @@ from sklearn.metrics import (
     roc_curve,
 )
 import numpy as np
+import dagshub
 
 from utils.logger import setup_logger
 from config import (
-    ARTIFACT_EVOLUATION_PATH,
+    ARTIFACT_EVALUATION_PATH,
     TRUST_LIST,
     TEST_DATA_PATH,
     TARGET_COLUMN,
@@ -29,7 +30,6 @@ from config import (
     DAGSHUB_TOKEN,
     DAGSHUB_REPO_NAME,
 )
-from ml_flow import MLflowConfig
 
 
 class FeatureEvaluationArtifacts:
@@ -73,6 +73,10 @@ class FeatureEvaluationArtifacts:
             "importance",
             ascending=True,
         )
+
+        if not GENERATED_DATA_DIR.exists():
+            self.logger.info(f"Directory not found: {GENERATED_DATA_DIR} ===> ❌")
+            GENERATED_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
         importances_df.to_csv(
             GENERATED_DATA_DIR / f"{self.model_name}_data.csv",
@@ -127,7 +131,7 @@ class RocEvaluationArtifacts:
         self.ax.set_ylabel("TPR")
 
         self.path = (
-            ARTIFACT_EVOLUATION_PATH / f"{self.model_name.replace(' ', '_')}_roc.png"
+            ARTIFACT_EVALUATION_PATH / f"{self.model_name.replace(' ', '_')}_roc.png"
         )
         self.fig.savefig(self.path, bbox_inches="tight")
         plt.close(self.fig)
@@ -141,25 +145,21 @@ class EvaluationModel:
         self,
         model_name,
         model_path,
-        ml_config: MLflowConfig,
         imp_curve_loc: str | Path,
     ) -> None:
         self.model = None
         self.metrics = {}
         self.model_name = model_name
         self.model_path = model_path
-        self.ml_config = ml_config
         self.logger = setup_logger()
         self.feature_builder = FeatureEvaluationArtifacts(imp_curve_loc, model_name)
         self.roc_builder = RocEvaluationArtifacts(imp_curve_loc, model_name)
 
     def setup_evaluation(self) -> tuple:
 
-        self.logger.info("🚀 ===> Evaluating Stage: Started Processing")
-
         self.model = sio.load(self.model_path, trusted=TRUST_LIST)
 
-        self.logger.info(f"Evaluating: {self.model_name} ===> ℹ️")
+        self.logger.info(f"Evaluating Started: {self.model_name} ===> ℹ️")
 
         self.test_df = pd.read_csv(TEST_DATA_PATH)
         self.X_test = self.test_df.drop(columns=[TARGET_COLUMN])
@@ -176,6 +176,8 @@ class EvaluationModel:
             "roc_auc": round(float(roc_auc_score(self.y_test, self.y_prob)), 4),
         }
 
+        self.logger.info(f"Evaluating Completed: {self.model_name} ===> ✅")
+
         return (
             self.model,
             self.metrics,
@@ -185,11 +187,54 @@ class EvaluationModel:
         )
 
     def run_evaluation(self):
-        self.setup_evaluation()
-        self.ml_config
+
+        self.logger.info("🚀 ===> Evaluating Stage: Started Processing")
+
+        try:
+            # Validate credentials are properly set (not placeholder values)
+            if not DAGSHUB_TOKEN or DAGSHUB_TOKEN == "ENTER_TOKEN" or "ENTER" in DAGSHUB_TOKEN.upper():
+                self.logger.error("❌ ===> DAGsHub Token is missing or invalid (placeholder value)")
+                raise ValueError(
+                    "❌ ===> DAGsHub Token is required. Set DAGSHUB_TOKEN environment variable with a valid token."
+                )
+            
+            if not DAGSHUB_USERNAME or DAGSHUB_USERNAME == "ENTER_USERNAME" or "ENTER" in DAGSHUB_USERNAME.upper():
+                self.logger.error("❌ ===> DAGsHub Username is missing or invalid (placeholder value)")
+                raise ValueError(
+                    "❌ ===> DAGsHub Username is required. Set DAGSHUB_USERNAME environment variable."
+                )
+            
+            if not DAGSHUB_REPO_NAME or DAGSHUB_REPO_NAME == "ENTER_REPO_NAME" or "ENTER" in DAGSHUB_REPO_NAME.upper():
+                self.logger.error("❌ ===> DAGsHub Repo Name is missing or invalid (placeholder value)")
+                raise ValueError(
+                    "❌ ===> DAGsHub Repo Name is required. Set DAGSHUB_REPO_NAME environment variable."
+                )
+            
+            if not MLFLOW_TRACKING_URI or "ENTER" in MLFLOW_TRACKING_URI.upper():
+                self.logger.error("❌ ===> MLflow Tracking URI is missing or invalid (placeholder value)")
+                raise ValueError(
+                    "❌ ===> MLflow Tracking URI is required. Set MLFLOW_TRACKING_URI environment variable."
+                )
+
+            dagshub.init(
+                repo_owner=DAGSHUB_USERNAME,
+                repo_name=DAGSHUB_REPO_NAME,
+                mlflow=True,
+            )
+            mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+            self.logger.info("✅ ===> DAGsHub authentication successful")
+            self.logger.info(f"✅ ===> MLflow: {MLFLOW_TRACKING_URI}")
+
+        except Exception as e:
+            self.logger.error(f"Error initializing DAGsHub: {e} ===> ❌")
+            raise
+
+        mlflow.set_experiment("churn-evaluation")
 
         self.runner_name = f"Evaluation_{self.model_name}"
         with mlflow.start_run(run_name=self.runner_name):
+
+            self.setup_evaluation()
 
             self.logger.info(f"Logging metrics: {self.model_name} ===> ℹ️")
 
@@ -220,32 +265,14 @@ if __name__ == "__main__":
         "XGBoost": XGB_EXPORT_PATH,
     }
 
-    config = MLflowConfig(
-        MLFLOW_TRACKING_URI,
-        DAGSHUB_TOKEN,
-        DAGSHUB_USERNAME,
-        DAGSHUB_REPO_NAME,
-    )
-
-    # for name, filename in models:
-    #     evoluate = EvaluationModel(
-    #         name,
-    #         filename,
-    #         config,
-    #         ARTIFACT_EVOLUATION_PATH,
-    #     )
-    #     evoluate.run_evaluation()
-
     if args.model_name not in models:
         raise ValueError(
             f"Model {args.model_name} not recognized! Choose from {list(models.keys())}"
         )
 
-    # 4. Run evaluation ONLY for the specified model
     evaluate = EvaluationModel(
         args.model_name,
         models[args.model_name],
-        config,
-        ARTIFACT_EVOLUATION_PATH,
+        ARTIFACT_EVALUATION_PATH,
     )
     evaluate.run_evaluation()

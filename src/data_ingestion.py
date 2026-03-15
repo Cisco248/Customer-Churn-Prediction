@@ -37,10 +37,6 @@ class DataIngestion:
             )
             raise ValueError(f"Dataset is Missing Columns: {self.missing_cols} ===> ❌")
 
-        self.df["TotalCharges"] = pd.to_numeric(
-            self.df["TotalCharges"], errors="coerce"
-        )
-
         self.n_nulls = self.df["TotalCharges"].isna().sum()
         if self.n_nulls:
             self.logger.warning(
